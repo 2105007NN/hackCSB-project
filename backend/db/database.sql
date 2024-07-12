@@ -21,6 +21,27 @@ create table categories(
     category_name TEXT
 );
 
+DROP TABLE IF EXISTS room;
+CREATE TABLE IF NOT EXISTS room (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE  NOT NULL,
+    user1 TEXT NOT NULL,
+    user2 TEXT NOT NULL,
+
+    FOREIGN KEY (user1) REFERENCES users(username),
+    FOREIGN KEY (user1) REFERENCES users(username)
+);
+
+DROP TABLE IF EXISTS message;
+    CREATE TABLE IF NOT EXISTS message (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    author TEXT NOT NULL,
+    time TEXT NOT NULL,
+    room_id INTEGER,
+    FOREIGN KEY (author) REFERENCES users(username),
+    FOREIGN KEY (room_id) REFERENCES room(id)
+);
 
 -- CREATE TABLE clients (
 --     id INTEGER PRIMARY KEY AUTOINCREMENT,
