@@ -4,6 +4,8 @@ import globalErrorHandler from "./errors/globalErrorHandler.js";
 import notFound from "./errors/notFound.js";
 import catchAsync from "./utils/catchAsync.js";
 import sendResponse from "./utils/sendResponse.js";
+import UserRoutes from "./routes/UserRoutes.js"
+import CategoryRoutes from "./routes/CategoryRoutes.js"
 
 const port = 3000;
 
@@ -19,40 +21,11 @@ io.on("connection", async (socket) => {
 /****************   
  * AUTH
 ****************/
-/****************
-    USERS
-****************/
-app.get("/users", catchAsync(async (req, res) => {
-    const db = await dbPromise;
-    const result = await db.all("SELECT * FROM users");
+app.use('/users',UserRoutes)
+app.use('/categories',CategoryRoutes)
 
-    sendResponse(res,{
-        statusCode: 200,
-        success: true,
-        message: "users retrieved successfully",
-        data: result,
-    });
-}));
-
-
-
-/****************
-    CATEGORY
-****************/
-app.get("/categories", catchAsync(async (req, res) => {
-    const db = await dbPromise;
-    const result = await db.all("SELECT * FROM categories");
-
-    sendResponse(res,{
-        statusCode: 200,
-        success: true,
-        message: "categories retrieved successfully",
-        data: result,
-    });
-}));
-
+//global error handler
 app.use(globalErrorHandler);
-
 //Not Found
 app.use(notFound);
 
