@@ -6,10 +6,11 @@ const Header = () => {
   const { user, setUser } = useContext(AuthContext);
   console.log(user ? user : "null");
   const imgUrl = user?.user_photo?.substring(6 + 1);
-
+  console.log(user?.role);
   //logout user
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("access-token");
     setUser(null);
   };
   // useEffect(() => {
@@ -31,7 +32,7 @@ const Header = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-base-100  text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Edukate
+              HelpUrSelf
             </span>
           </Link>
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -66,12 +67,12 @@ const Header = () => {
                       className="mt-3 p-2 text-black shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
                     >
                       <li>
-                        {user?.role === "student" ? (
-                          <Link to={`/student/profile/${user?.student_id}`}>
+                        {user?.role === "client" ? (
+                          <Link to={`/client/profile/${user?.id}`}>
                             Profile
                           </Link>
                         ) : (
-                          <Link to={`/teacher/profile/${user?.teacher_id}`}>
+                          <Link to={`/therapist/profile/${user?.id}`}>
                             teacher Profile
                           </Link>
                         )}
@@ -79,10 +80,10 @@ const Header = () => {
                       <li>
                         {user?.role === "admin" ? (
                           <Link to="/admin/dashboard">Admin </Link>
-                        ) : user?.role === "student" ? (
-                          <Link to="/student/dashboard">Dashboard</Link>
+                        ) : user?.role === "client" ? (
+                          <Link to="/client/dashboard">Dashboard</Link>
                         ) : (
-                          <Link to="/teacher/dashboard">Dashboard</Link>
+                          <Link to="/therapist/dashboard">Dashboard</Link>
                         )}
                         {/* <Link to='/mycourses' className="justify-between">
                     Dashboard
@@ -129,18 +130,13 @@ const Header = () => {
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
               <li className="block py-2 px-3 text-base-100  rounded hover:bg-orange-600md:hover:bg-transparent md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                {user?.role === "student" ? (
-                  <Link to="/student/dashboard"> Dashboard</Link>
+                {user?.role === "client" ? (
+                  <Link to="/client/dashboard"> Dashboard</Link>
                 ) : (
                   <> </>
                 )}
-                {user?.role === "admin" ? (
-                  <Link to="/admin/dashboard"> Admin Dashboard</Link>
-                ) : (
-                  <> </>
-                )}
-                {user?.role === "teacher" ? (
-                  <Link to="/teacher/dashboard"> Dashboard</Link>
+                {user?.role === "therapist" ? (
+                  <Link to="/therapist/dashboard"> Admin Dashboard</Link>
                 ) : (
                   <> </>
                 )}
