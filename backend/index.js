@@ -16,6 +16,14 @@ app.get("/", (req, res) => {
 
 io.on("connection", async (socket) => {
   console.log("Client connected\n", socket.id);
+
+  socket.on("join_room", (data) => {
+    console.log(data);
+  })
+
+  socket.on("disconnect", async() => {
+    console.log("Client disconnected")
+})
 });
 
 /****************   
