@@ -1,6 +1,6 @@
 import {app, server, io} from './app.js'
 // Connect database
-import dbPromise from './db/db_init.js'
+import databaseRoute from "./routes/databaseRoute.js"
 
 const port = 3000;
 
@@ -16,16 +16,9 @@ io.on("connection", async(socket) => {
     console.log("Client connected\n", socket.id)
 })
 
+app.use(databaseRoute)
+
 app.get('/', (req, res) => {
     res.send('Express server started');
 })
 
-app.get('/users', async(req, res)=>{
-    try {
-        const db = await dbPromise
-        const users = await db.all("SELECT * FROM user")
-        res.json(users)
-    } catch (error) {
-        console.log(error)
-    }
-})

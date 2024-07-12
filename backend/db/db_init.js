@@ -8,17 +8,20 @@ const dbPromise = (async () => {
   });
 
   await db.exec(`
-        DROP TABLE IF EXISTS user;
+        DROP TABLE IF EXISTS users;
         
-        CREATE TABLE IF NOT EXISTS user (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL,
-            role TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE
-        );
+        CREATE TABLE users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT NOT NULL UNIQUE,
+          password TEXT NOT NULL,
+          role TEXT NOT NULL,
+          email TEXT NOT NULL UNIQUE,
+          createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
 
-        INSERT INTO user (name) VALUES ("test");
+      INSERT INTO users (username, password, role, email) VALUES ("a", "b", "c", "d");
+
     `);
 
   return db;
