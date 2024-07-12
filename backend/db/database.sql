@@ -30,7 +30,7 @@ CREATE TABLE therapists (
     firstname TEXT,
     lastname TEXT,
     dateOfBirth TEXT, -- You can use TEXT to store dates or use a specific format
-    experience TEXT, -- Assuming this is text-based, could be INTEGER for years of experience
+    experience INTEGER, -- Assuming this is text-based, could be INTEGER for years of experience
     contactNo TEXT,
     profileImg TEXT,
     gender TEXT
