@@ -28,7 +28,7 @@ const Login = () => {
     const email = form.email.value;
     console.log(email, password);
     console.log("before login");
-    fetch("http://localhost:5002/login", {
+    fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -37,25 +37,13 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        console.log("dafdf");
+        console.log(data);
+        setUser(data.data.user);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
+        localStorage.setItem("access_token", JSON.stringify(data.data.accessToken));
+        // console.log("dafdf");
         // notify();
       });
-    //get jwt token
-    // fetch('https://assignment-11-server-topaz.vercel.app/jwt', {
-    //     method: 'POST',
-    //     headers:{
-    //         'content-type': 'application/json'
-    //     },
-    //     body:JSON.stringify(user)
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //     console.log(data)
-    //     localStorage.setItem('hikaru-token', data.token);
-    // })
-
     // Navigate()
     navigate(from, { replace: true });
   };

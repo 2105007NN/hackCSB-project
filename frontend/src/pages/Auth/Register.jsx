@@ -24,7 +24,7 @@ const Register = () => {
     const password = form.password.value;
     console.log(username, email, password);
 
-    fetch("http://localhost:5002/register", {
+    fetch("http://localhost:3000/auth/create-client", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -33,9 +33,10 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.user);
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        console.log(data);
+        setUser(data.data.newUser);
+        localStorage.setItem("user", JSON.stringify(data.data.newUser));
+        localStorage.setItem("access_token", JSON.stringify(data.data.accessToken));
       });
     navigate(from, { replace: true });
   };
