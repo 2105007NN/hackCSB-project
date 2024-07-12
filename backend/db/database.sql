@@ -21,6 +21,27 @@ create table categories(
     category_name TEXT
 );
 
+DROP TABLE IF EXISTS room;
+CREATE TABLE IF NOT EXISTS room (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE  NOT NULL,
+    user1 TEXT NOT NULL,
+    user2 TEXT NOT NULL,
+
+    FOREIGN KEY (user1) REFERENCES users(username),
+    FOREIGN KEY (user1) REFERENCES users(username)
+);
+
+DROP TABLE IF EXISTS message;
+    CREATE TABLE IF NOT EXISTS message (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    author TEXT NOT NULL,
+    time TEXT NOT NULL,
+    room_id INTEGER,
+    FOREIGN KEY (author) REFERENCES users(username),
+    FOREIGN KEY (room_id) REFERENCES room(id)
+);
 
 -- CREATE TABLE clients (
 --     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,38 +68,6 @@ create table categories(
 --     profileImg TEXT,
 --     gender TEXT
 -- );
-    user_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    firstname TEXT,
-    lastname TEXT,
-    dateOfBirth TEXT, -- You can use TEXT to store dates or use a specific format
-    experience INTEGER, -- Assuming this is text-based, could be INTEGER for years of experience
-    contactNo TEXT,
-    profileImg TEXT,
-    gender TEXT
-);
-
-DROP TABLE IF EXISTS room;
-CREATE TABLE IF NOT EXISTS room (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT UNIQUE  NOT NULL,
-    user1 TEXT NOT NULL,
-    user2 TEXT NOT NULL,
-
-    FOREIGN KEY (user1) REFERENCES users(username),
-    FOREIGN KEY (user1) REFERENCES users(username)
-);
-
-DROP TABLE IF EXISTS message;
-    CREATE TABLE IF NOT EXISTS message (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    content TEXT NOT NULL,
-    author TEXT NOT NULL,
-    time TEXT NOT NULL,
-    room_id INTEGER,
-    FOREIGN KEY (author) REFERENCES users(username),
-    FOREIGN KEY (room_id) REFERENCES room(id)
-);
 
 -- INSERT INTO users (username, password, role, email)
 -- VALUES ('client_username', 'hashed_password', 'client', 'client@example.com');
