@@ -6,6 +6,8 @@ import catchAsync from "./utils/catchAsync.js";
 import sendResponse from "./utils/sendResponse.js";
 import UserRoutes from "./routes/UserRoutes.js"
 import CategoryRoutes from "./routes/CategoryRoutes.js"
+import AuthRoutes from "./routes/AuthRoutes.js"
+import dotenv from 'dotenv';
 
 const port = 3000;
 
@@ -13,6 +15,7 @@ const port = 3000;
 app.get("/", (req, res) => {
   res.send("Express server started");
 });
+
 
 io.on("connection", async (socket) => {
   console.log("Client connected\n", socket.id);
@@ -23,6 +26,7 @@ io.on("connection", async (socket) => {
 ****************/
 app.use('/users',UserRoutes)
 app.use('/categories',CategoryRoutes)
+app.use('/auth',AuthRoutes)
 
 //global error handler
 app.use(globalErrorHandler);

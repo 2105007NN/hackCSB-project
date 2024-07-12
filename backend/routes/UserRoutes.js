@@ -1,22 +1,11 @@
 import express from 'express'
-import dbPromise from '../db/db_init.js';
-import catchAsync from '../utils/catchAsync.js';
-import sendResponse from '../utils/sendResponse.js';
+import { UserController } from '../controllers/User.js';
 const router = express.Router();
 
-router.get("/", catchAsync(async (req, res) => {
-    const db = await dbPromise;
-    const result = await db.all("SELECT * FROM users");
+router.get("/", UserController.getUsers);
 
-    sendResponse(res,{
-        statusCode: 200,
-        success: true,
-        message: "users retrieved successfully",
-        data: result,
-    });
-}));
-
-
+//user registration
+router.post("/login")
 
 export default router;
 
