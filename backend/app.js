@@ -3,13 +3,11 @@ import cors from "cors"
 // Stuff for socket.io
 import {Server} from 'socket.io'
 import http from 'http'
+// import { UserRouter } from "./routes/User/userRoutes";
 
 const app = express();
 
-//to resolve cross origin resource sharing issue
 app.use(cors());
-
-//to parse incoming objects
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 
@@ -24,7 +22,6 @@ const io = new Server(server, {
         methods : ["GET", "POST"]
     }
 })
-
 
 
 export {app, server, io};
