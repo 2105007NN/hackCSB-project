@@ -2,22 +2,26 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 
 const dbPromise = (async () => {
-	const db = await open({
-		filename: "./db/database.db",
-		driver: sqlite3.Database,
-	});
+  const db = await open({
+    filename: "./db/database.db",
+    driver: sqlite3.Database,
+  });
 
-	await db.exec(`
+  await db.exec(`
         DROP TABLE IF EXISTS user;
+        
         CREATE TABLE IF NOT EXISTS user (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE NOT NULL
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            role TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE
         );
 
         INSERT INTO user (name) VALUES ("test");
     `);
 
-	return db;
+  return db;
 })();
 
 export default dbPromise;
