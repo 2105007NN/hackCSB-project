@@ -155,6 +155,14 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to="/support"
+                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Support
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/tests"
                   class="block py-2 px-3 text-base-100  rounded hover:bg-orange-600md:hover:bg-transparent md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
@@ -167,6 +175,14 @@ const Header = () => {
                   class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Articles
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/forum"
+                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Forum
                 </Link>
               </li>
               {/* <li>
