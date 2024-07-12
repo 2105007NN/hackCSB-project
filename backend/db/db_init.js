@@ -27,13 +27,30 @@ const dbPromise = (async () => {
       updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+    DROP TABLE IF EXISTS categories;
     CREATE TABLE IF NOT EXISTS categories (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      category_name TEXT
+      category_name TEXT NOT NULL UNIQUE
     );
 
     INSERT INTO users (username, password, role, email)
     VALUES ('asif', '123456', 'client', 'asif@gmail.com');
+
+    INSERT INTO users (username, password, role, email)
+    VALUES ('tmzd', '123456', 'client', 'tmzd@gmail.com');
+
+    INSERT INTO users (username, password, role, email)
+    VALUES ('nafis', '123456', 'client', 'nafis@gmail.com');
+
+    INSERT INTO categories (category_name) VALUES ('anxiety');
+    INSERT INTO categories (category_name) VALUES ('depression');
+    INSERT INTO categories (category_name) VALUES ('autism');
+    INSERT INTO categories (category_name) VALUES ('adhd');
+    INSERT INTO categories (category_name) VALUES ('schizophrenia');  
+    INSERT INTO categories (category_name) VALUES ('ptsd');
+
+
+
   `);
 
   return db;

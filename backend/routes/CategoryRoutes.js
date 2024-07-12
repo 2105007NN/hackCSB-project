@@ -6,17 +6,15 @@ const router = express.Router();
 
 router.get("/", catchAsync(async (req, res) => {
     const db = await dbPromise;
-    const result = await db.all("SELECT * FROM users");
+    const result = await db.all("SELECT * FROM categories");
 
     sendResponse(res,{
         statusCode: 200,
         success: true,
-        message: "users retrieved successfully",
+        message: "categories retrieved successfully",
         data: result,
     });
 }));
 
 
-
 export default router;
-
