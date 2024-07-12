@@ -11,6 +11,8 @@ import Register from "../pages/Auth/Register";
 import Forum from "../pages/Forum/Forum";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Support from "../pages/Support/Support";
+import ClientDashboard from "../pages/dashboard/ClientDashboard";
+import ClientProfile from "../pages/Profile/ClientProfile";
 
 export const routes = createBrowserRouter([
   {
@@ -32,6 +34,18 @@ export const routes = createBrowserRouter([
       {
         path: "/forum",
         element: <Forum></Forum>,
+      },
+      {
+        path: "/support",
+        element: <Support></Support>,
+      },
+      {
+        path: "/client/dashboard",
+        element: <ClientDashboard></ClientDashboard>,
+      },
+      {
+        path: "/client/profile/:id",
+        element: <ClientProfile></ClientProfile>,
       },
       {
         path: "/support",
