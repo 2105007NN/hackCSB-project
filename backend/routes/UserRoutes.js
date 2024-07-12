@@ -1,13 +1,11 @@
 import express from 'express'
-import dbPromise from '../db/db_init.js';
-import catchAsync from '../utils/catchAsync.js';
-import sendResponse from '../utils/sendResponse.js';
-import { UserController } from '../controllers/UserController.js';
+import { UserController } from '../controllers/User.js';
 const router = express.Router();
 
-router.get("/", UserController.get_users);
+router.get("/", UserController.getUsers);
 
-
+//user registration
+router.post("/login")
 
 export default router;
 

@@ -4,7 +4,7 @@ import catchAsync from '../utils/catchAsync.js';
 import sendResponse from '../utils/sendResponse.js';
 
 
-const get_users = catchAsync(async (req, res) => {
+const getUsers = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const result = await db.all("SELECT * FROM users");
 
@@ -18,6 +18,6 @@ const get_users = catchAsync(async (req, res) => {
 
 
 export const UserController = {
-    get_users,
+    getUsers,
     
 }
