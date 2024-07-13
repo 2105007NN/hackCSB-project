@@ -13,7 +13,8 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Support from "../pages/Support/Support";
 import ClientDashboard from "../pages/dashboard/ClientDashboard";
 import ClientProfile from "../pages/Profile/ClientProfile";
-import CreateTest from "../pages/Tests/createTest";
+import CreateTest from "../pages/Tests/CreateTest";
+import TakeTest from "../pages/Tests/TakeTest";
 
 export const routes = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const routes = createBrowserRouter([
       {
         path: "/create-quiz",
         element: <CreateTest></CreateTest>,
+      },
+      {
+        path: "/take-test",
+        element: <TakeTest></TakeTest>,
       },
     ],
   },
