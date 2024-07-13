@@ -1,13 +1,9 @@
-const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, setTargetUser, socket, currentUser}) => {
+const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, setTargetUser, socket, currentUser, joinChat}) => {
 
-    const joinChat = (targetUser) => {
-        console.log(targetUser)
-        socket.emit("join_room", {currentUser, targetUser})
-        setTargetUser(targetUser)
-    }
+    
 
     return (
-        <div className="p-4 bg-gray-800">
+        <div className="p-4 bg-gray-800  h-[680px]">
             
             <form class="max-w-md mx-auto">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -24,7 +20,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
 
             <div>
                 {connectedUserList.map(u => {
-                    return (
+                    if(u.id != currentUser.id){return (
                         <p 
                             key={u.id} 
                             className="p-4 m-4 bg-gray-700 border border-blue-600 rounded font-medium hover:bg-blue-800"
@@ -32,7 +28,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
                         >
                             {u.username}
                         </p>
-                    )
+                    )}
                 })}
             </div>
         </div>
