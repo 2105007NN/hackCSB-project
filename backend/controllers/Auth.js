@@ -10,12 +10,14 @@ const jwt_access_expires_in = '1d';
 
 const login = catchAsync(async (req, res) => {
     const { email, password } = req.body; // Assuming these are sent in the request body
+    console.log(`IN LOGIN : email : ${email} & password : ${password}`);
     const db = await dbPromise;
 
     // Check if the user exists with the given username and password
     const user = await db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password]);
 
     if (!user) {
+        console.log("Invalid login");
         return sendResponse(res, {
             statusCode: 401,
             success: false,
