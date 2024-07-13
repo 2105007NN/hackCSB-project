@@ -7,7 +7,8 @@ import sendResponse from "./utils/sendResponse.js";
 import UserRoutes from "./routes/UserRoutes.js"
 import CategoryRoutes from "./routes/CategoryRoutes.js"
 import AuthRoutes from "./routes/AuthRoutes.js"
-import dotenv from 'dotenv';
+import ChatRoutes from "./routes/ChatRoutes.js"
+// import dotenv from 'dotenv';
 
 const port = 3000;
 
@@ -19,6 +20,37 @@ app.get("/", (req, res) => {
 
 io.on("connection", async (socket) => {
   console.log("Client connected\n", socket.id);
+
+  socket.on("join_room", async (data) => {
+    let room_name = data.currentUser.username.toLowerCase() + "_" + data.targetUser.username.toLowerCase()
+    let alt_room_name = data.targetUser.username.toLowerCase() + "_" + data.currentUser.username.toLowerCase()
+    const db = await dbPromise
+    const r = await db.all("SELECT name FROM room WHERE name = ? OR name = ?", [room_name, alt_room_name])
+    if(r.length == 0){
+        await db.run("INSERT INTO room (name, user1, user2) VALUES (?, ?, ?)", [room_name, data.currentUser.username.toLowerCase(), data.targetUser.username.toLowerCase()])
+    }
+    else{
+        const rl = await db.all("SELECT name FROM room WHERE name = ?", [room_name])
+        if(rl.length == 0){
+            room_name = alt_room_name
+        }
+    }
+    socket.join(room_name)
+    console.log(`User: ${socket.id} with name: ${data.currentUser.username} joined room: ${room_name}`)
+  })
+
+  socket.on("send_message", async(data)=>{
+    console.log("Received\n", data)
+    const db = await dbPromise
+    await db.run("INSERT INTO message (content, author, time, room_id) VALUES (?, ?, ?, ?)", [data.content, data.author, data.time, data.room_id])
+    const room = await db.get("SELECT name FROM room WHERE id = ?", [data.room_id])
+    console.log("Inside send_message\n", room);
+    socket.to(room.name).emit("receive_message", data)
+  })
+
+  socket.on("disconnect", async() => {
+    console.log("Client disconnected")
+})
 });
 
 /****************   
@@ -27,6 +59,21 @@ io.on("connection", async (socket) => {
 app.use('/users',UserRoutes)
 app.use('/categories',CategoryRoutes)
 app.use('/auth',AuthRoutes)
+
+
+/****************   
+ * CHAT
+****************/
+app.use(ChatRoutes)
+
+// Eita delete koris na plz, database check korte shubidha hoy
+app.get("/database", async(req, res)=>{
+  const db = await dbPromise
+  const users = await db.all("SELECT * FROM users")
+  const rooms = await db.all("SELECT * FROM room")
+  const message = await db.all("SELECT * FROM message")
+  res.json({users: users, rooms: rooms, messages: message})
+})
 
 //global error handler
 app.use(globalErrorHandler);
