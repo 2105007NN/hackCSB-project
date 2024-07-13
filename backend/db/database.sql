@@ -69,6 +69,7 @@ DROP TABLE IF EXISTS message;
 --     gender TEXT
 -- );
 
+
 -- INSERT INTO users (username, password, role, email)
 -- VALUES ('client_username', 'hashed_password', 'client', 'client@example.com');
 
