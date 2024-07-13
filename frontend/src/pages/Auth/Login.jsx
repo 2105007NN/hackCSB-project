@@ -58,7 +58,10 @@ const Login = () => {
 						JSON.stringify(data.data.accessToken)
 					);
 					// Navigate()
-					navigate(from, { replace: true });
+					console.log("parent URL : ", from);
+					console.log("Location object : ", location);
+
+					navigate('/client/dashboard', { replace: true });
 				}
 
 				// console.log("dafdf");

@@ -49,7 +49,7 @@ const Header = () => {
                 <>
                   <div className="dropdown dropdown-end">
                     <div className="flex flex-row-reverse items-center">
-                      <h3>{user?.username}</h3>
+                      <h2>{user?.username}</h2>
                       <label
                         tabIndex={0}
                         className="btn btn-ghost btn-circle avatar"
