@@ -49,7 +49,7 @@ const Home = () => {
         {features.map((feature, index) => (
           <div
             key={index}
-            className={`feature-blocks w-5/6 h-1/2 p-5 ${
+            className={`feature-blocks w-5/6 h-1/3 p-5 ${
               index % 2 !== 0 ? "ml-auto" : "mr-auto"
             }`}
           >

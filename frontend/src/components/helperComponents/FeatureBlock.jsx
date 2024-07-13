@@ -13,7 +13,7 @@ const FeatureBlock = ({ title, description, imageUrl }) => {
 				</div>
 			</div>
 			<div className="md:w-1/2 flex items-center justify-center bg-gray-200">
-				<img src={imageUrl} alt={title} className="max-w-full h-auto"/>
+				<img src={imageUrl} alt={title} className="max-w-full h-auto max-h-96"/>
 			</div>
 		</div>
 	);

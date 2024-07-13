@@ -84,7 +84,7 @@ const Header = () => {
                         ) : user?.role === "client" ? (
                           <Link to="/client/dashboard">Dashboard</Link>
                         ) : (
-                          <Link to="/therapist/dashboard">Dashboard</Link>
+                          <Link to="/therapist/dashboard">Therapist Dashboard</Link>
                         )}
                         {/* <Link to='/mycourses' className="justify-between">
                     Dashboard
