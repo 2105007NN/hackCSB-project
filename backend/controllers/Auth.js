@@ -2,7 +2,7 @@ import express from 'express'
 import dbPromise from '../db/db_init.js';
 import catchAsync from '../utils/catchAsync.js';
 import sendResponse from '../utils/sendResponse.js';
-import { createToken } from '../utils/createToken.js';
+import { createToken } from '../utils/handleJWT.js';
 
 const jwt_access_secret = 'e7275323e5c49c75b6a12ebe80da5d6b53f5807a8fdd9537e64bc3a1480d8c072f4d5870109b81f7a26943bcc4b0c6ec0a0825f52b83ac1281f6ebca17a2e1fe';
 
@@ -10,12 +10,14 @@ const jwt_access_expires_in = '1d';
 
 const login = catchAsync(async (req, res) => {
     const { email, password } = req.body; // Assuming these are sent in the request body
+    console.log(`IN LOGIN : email : ${email} & password : ${password}`);
     const db = await dbPromise;
 
     // Check if the user exists with the given username and password
     const user = await db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password]);
 
     if (!user) {
+        console.log("Invalid login");
         return sendResponse(res, {
             statusCode: 401,
             success: false,

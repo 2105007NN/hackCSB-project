@@ -44,6 +44,7 @@ const Header = () => {
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
             >
+              {/* if user is logged in, show UI according to the role */}
               {user?.id ? (
                 <>
                   <div className="dropdown dropdown-end">
@@ -64,7 +65,7 @@ const Header = () => {
                     </div>
                     <ul
                       tabIndex={0}
-                      className="mt-3 p-2 text-black shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
+                      className="mt-3 p-2 text-white shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
                     >
                       <li>
                         {user?.role === "client" ? (
@@ -73,7 +74,7 @@ const Header = () => {
                           </Link>
                         ) : (
                           <Link to={`/therapist/profile/${user?.id}`}>
-                            teacher Profile
+                            Therapist Profile
                           </Link>
                         )}
                       </li>
@@ -83,7 +84,7 @@ const Header = () => {
                         ) : user?.role === "client" ? (
                           <Link to="/client/dashboard">Dashboard</Link>
                         ) : (
-                          <Link to="/therapist/dashboard">Dashboard</Link>
+                          <Link to="/therapist/dashboard">Therapist Dashboard</Link>
                         )}
                         {/* <Link to='/mycourses' className="justify-between">
                     Dashboard
@@ -107,7 +108,11 @@ const Header = () => {
                     </ul>
                   </div>
                 </>
-              ) : (
+              ) : 
+              
+              // if user is not logged in, show login page
+
+              (
                 <>
                   <div>
                     <Link to="/auth/login">
@@ -116,6 +121,17 @@ const Header = () => {
                         className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-orange-600 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >
                         Login
+                      </button>
+                    </Link>
+                  </div>
+
+                  <div>
+                    <Link to="/auth/register">
+                      <button
+                        type="button"
+                        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-orange-600 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >
+                        Register
                       </button>
                     </Link>
                   </div>
@@ -136,7 +152,7 @@ const Header = () => {
                   <> </>
                 )}
                 {user?.role === "therapist" ? (
-                  <Link to="/therapist/dashboard"> Admin Dashboard</Link>
+                  <Link to="/therapist/dashboard"> Expert Dashboard</Link>
                 ) : (
                   <> </>
                 )}
