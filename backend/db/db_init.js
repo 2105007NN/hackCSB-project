@@ -55,6 +55,24 @@ const dbPromise = (async () => {
           FOREIGN KEY (author) REFERENCES users(username),
           FOREIGN KEY (room_id) REFERENCES room(id)
       );
+
+      DROP TABLE IF EXISTS journals;
+      CREATE TABLE IF NOT EXISTS journals (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER NOT NULL,
+          content TEXT NOT NULL,
+          createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (user_id) REFERENCES users(id)
+      );
+
+      DROP TABLE IF EXISTS mood_ratings;
+      CREATE TABLE IF NOT EXISTS mood_ratings (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER NOT NULL,
+          rating INTEGER NOT NULL,
+          createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (user_id) REFERENCES users(id)
+      );
   
       INSERT INTO users (username, password, role, email)
       VALUES ('asif', '123456', 'client', 'asif@gmail.com');
@@ -64,6 +82,9 @@ const dbPromise = (async () => {
   
       INSERT INTO users (username, password, role, email)
       VALUES ('nafis', '123456', 'client', 'nafis@gmail.com');
+
+      INSERT INTO users (username, password, role, email)
+      VALUES ('tanzima', '123456', 'therapist', 'tanzima@gmail.com');
   
       INSERT INTO categories (category_name) VALUES ('anxiety');
       INSERT INTO categories (category_name) VALUES ('depression');
