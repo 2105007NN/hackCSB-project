@@ -8,7 +8,7 @@ import UserRoutes from "./routes/UserRoutes.js"
 import CategoryRoutes from "./routes/CategoryRoutes.js"
 import AuthRoutes from "./routes/AuthRoutes.js"
 import ChatRoutes from "./routes/ChatRoutes.js"
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 const port = 3000;
 

@@ -44,6 +44,7 @@ const Header = () => {
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
             >
+              {/* if user is logged in, show UI according to the role */}
               {user?.id ? (
                 <>
                   <div className="dropdown dropdown-end">
@@ -73,7 +74,7 @@ const Header = () => {
                           </Link>
                         ) : (
                           <Link to={`/therapist/profile/${user?.id}`}>
-                            teacher Profile
+                            Therapist Profile
                           </Link>
                         )}
                       </li>
@@ -107,7 +108,11 @@ const Header = () => {
                     </ul>
                   </div>
                 </>
-              ) : (
+              ) : 
+              
+              // if user is not logged in, show login page
+
+              (
                 <>
                   <div>
                     <Link to="/auth/login">
@@ -116,6 +121,17 @@ const Header = () => {
                         className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-orange-600 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >
                         Login
+                      </button>
+                    </Link>
+                  </div>
+
+                  <div>
+                    <Link to="/auth/register">
+                      <button
+                        type="button"
+                        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-orange-600 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >
+                        Register
                       </button>
                     </Link>
                   </div>

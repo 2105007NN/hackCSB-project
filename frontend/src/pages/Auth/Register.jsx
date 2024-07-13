@@ -9,8 +9,9 @@ const Register = () => {
   const { user, setUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [errorPass, setErrorPass] = useState("");
-  const [errorFirebase, setErrorFirebase] = useState("");
-  const [errorPassConfirm, setErrorPassConfirm] = useState("");
+
+  // const [errorFirebase, setErrorFirebase] = useState("");
+  // const [errorPassConfirm, setErrorPassConfirm] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +23,13 @@ const Register = () => {
     const username = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    console.log("Data entered in registration form : ");
     console.log(username, email, password);
+
+    if(!username || !email || !password){
+      setError("Can't leave any fields empty");
+      return;
+    }
 
     fetch("http://localhost:3000/auth/create-client", {
       method: "POST",
