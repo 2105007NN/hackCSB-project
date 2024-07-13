@@ -86,6 +86,12 @@ const dbPromise = (async () => {
       INSERT INTO users (username, password, role, email)
       VALUES ('tanzima', '123456', 'therapist', 'tanzima@gmail.com');
   
+    INSERT INTO users (username, password, role, email)
+    VALUES ('tuhin', '123456', 'client', 'tuhin@gmail.com');
+
+    INSERT INTO users (username, password, role, email)
+    VALUES ('ibtida', '123456', 'client', 'ibtida@gmail.com');
+
       INSERT INTO categories (category_name) VALUES ('anxiety');
       INSERT INTO categories (category_name) VALUES ('depression');
       INSERT INTO categories (category_name) VALUES ('autism');

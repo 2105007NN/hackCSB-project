@@ -19,16 +19,20 @@ const Support = () => {
     const [roomId, setRoomId] = useState("")
 
     function joinChat(targetUser){
-        console.log(targetUser)
+        console.log("inside joinChat\n", targetUser)
         socket.emit("join_room", {currentUser: user, targetUser})
         setTargetUser(targetUser)
+        console.log("Connected userlist:\n", connectedUserList);
+        if(!connectedUserList.some(user => user.username == targetUser.username)){
+            setConnectedUserList((prev) => [...prev, targetUser])
+        }
     }
 
     useEffect(()=>{
-        fetch("http://localhost:3000/users")
+        fetch("http://localhost:3000/connected/users/" + user.username)
         .then(res => res.json())
         .then(res => {
-            console.log("Userlist received:\n", res.data);
+            console.log("Connected Userlist received:\n", res.data);
             setConnectedUserList(res.data)
         })
     }, [])
@@ -59,14 +63,14 @@ const Support = () => {
         })
         }
 
-        console.log(list);
-        console.log(roomId);
+        console.log("Chatlist: ", list);
+        console.log("roomID: ", roomId);
 
     }, [targetUser])
 
     return ( 
-        <div className="grid grid-cols-3 h-[680px] gap-4">
-            <div className="col-span-1">
+        <div className="grid grid-cols-12 h-[680px] gap-4">
+            <div className="col-span-3">
                 <ConnectedUsers 
                     connectedUserList={connectedUserList}
                     setConnectedUserList={setConnectedUserList}
@@ -77,7 +81,7 @@ const Support = () => {
                     joinChat={joinChat}
                 />
             </div>
-            <div className="col-span-1">
+            <div className="col-span-5">
                 <Chat 
                     currentUser={user}
                     targetUser={targetUser}
@@ -88,7 +92,7 @@ const Support = () => {
                     socket={socket}
                 />
             </div>
-            <div className="col-span-1 grid grid-rows-2">
+            <div className="col-span-4 grid grid-rows-2">
                 <div className="row-span-1">
                     <Therapists />
                 </div>
