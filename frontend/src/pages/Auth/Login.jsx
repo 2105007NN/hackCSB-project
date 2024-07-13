@@ -45,7 +45,7 @@ const Login = () => {
 			.then((data) => {
 				console.log("Data : ", data);
 				if (!data.success) {
-					setError("Email or passeword is incorrect");
+					setError("Email or password is incorrect");
 					return;
 				} else {
 					setUser(data.data.user);
