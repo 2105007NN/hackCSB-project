@@ -189,6 +189,44 @@ const dbPromise = (async () => {
     (9, 1, 1, 'I have had trembling hands'),
     (10, 1, 1, 'I seem to be constantly worrying about things');
 
+
+    INSERT INTO tests (id, title, description, time, type) VALUES 
+(2, 'Schizophrenia Test', 'Are you experiencing the most common symptoms of Schizophrenia? Find out using our online test.', '10', 'schizophrenia');
+
+-- Insert the new questions
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(11, 2, 5, 'I experience hallucinations, such as hearing voices or seeing things that others do not see'),
+(12, 2, 5, 'I have delusions, such as believing that you have special powers or are being controlled by external forces'),
+(13, 2, 5, 'I find it difficult to organize your thoughts or follow conversations'),
+(14, 2, 5, 'I feel disconnected from reality or have trouble distinguishing between what is real and what is not?'),
+(15, 2, 5, 'I experience significant mood swings, such as feeling extremely happy and then very depressed'),
+(16, 2, 5, 'I find it difficult to express emotions or relate to other people?'),
+(17, 2, 5, 'I withdraw from social activities or prefer to be alone most of the time'),
+(18, 2, 5, 'I experience paranoia or believe that others are plotting against you'),
+(19, 2, 5, 'I have trouble taking care of daily responsibilities, such as personal hygiene or managing finances'),
+(20, 2, 5, 'I feel that your thoughts are being inserted or removed from your mind by an outside force');
+
+
+
+-- Insert the new test (example with test_id 3, update as needed)
+INSERT INTO tests (id, title, description, time, type) VALUES 
+(3, 'Depression Test', 'Evaluate your depression symptoms with our comprehensive test.', '10', 'depression');
+
+-- Insert the new questions
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(21, 3, 6, 'I feel overwhelmingly sad at times'),
+(22, 3, 6, 'When I think of the future I feel hopeless'),
+(23, 3, 6, 'I feel like a complete failure'),
+(24, 3, 6, 'I get a lot of satisfaction / joy from doing things'),
+(25, 3, 6, 'I feel guilty about something most of the time'),
+(26, 3, 6, 'I feel like I am being punished'),
+(27, 3, 6, 'I feel disappointed (even disgusted) with myself'),
+(28, 3, 6, 'The bad things in my life aren’t all my fault'),
+(29, 3, 6, 'I am often on the brink of tears or cry'),
+(30, 3, 6, 'I feel irritated and annoyed by things in my life'),
+(31, 3, 6, 'I am very interested in other people’s lives and like to listen to them'),
+(32, 3, 6, 'I find it easy to make decisions, big and small');
+
     `);
   
     return db;

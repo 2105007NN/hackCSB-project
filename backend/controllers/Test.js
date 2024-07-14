@@ -215,10 +215,24 @@ const getCategoryID = async (db, categoryName) => {
   return result.id;
 };
 
+const getResult = catchAsync(async(req,res)=> {
+    const db = await dbPromise;
+    const result = await db.all();
+
+
+    sendResponse(res,{
+        statusCode : 200,
+        success : 200,
+        message : "Results for this tests are retrived successfully",
+        data : result
+    })
+})
+
 export const TestController = {
   createTest,
   getTests,
   takeTest,
   getOptions,
-  getSingleTest
+  getSingleTest,
+  getResult
 };
