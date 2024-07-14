@@ -49,7 +49,9 @@ const Register = () => {
 					JSON.stringify(data.data.accessToken)
 				);
 			});
-		navigate(from, { replace: true });
+		console.log('parent URL : ', from);
+		console.log('Location object : ', location);
+		navigate('/client/dashboard', { replace: true });
 	};
 	//password setting
 	const handlePassword = (event) => {

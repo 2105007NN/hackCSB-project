@@ -14,7 +14,8 @@ import Support from "../pages/Support/Support";
 import ClientDashboard from "../pages/dashboard/ClientDashboard";
 import ClientProfile from "../pages/Profile/ClientProfile";
 import CreateTest from "../pages/Tests/CreateTest";
-import TakeTest from "../pages/Tests/TakeTest";
+import Tools from "../pages/Tools/Tools";
+import Resources from "../pages/Resources/Resources";
 
 export const routes = createBrowserRouter([
   {
@@ -57,6 +58,14 @@ export const routes = createBrowserRouter([
         path: "/create-quiz",
         element: <CreateTest></CreateTest>,
       },
+      {
+        path: "/tools",
+        element : <Tools />
+      },
+      {
+        path: "/resources",
+        element : <Resources />
+      }
       {
         path: "/take-test",
         element: <TakeTest></TakeTest>,

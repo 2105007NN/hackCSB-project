@@ -49,7 +49,7 @@ const Header = () => {
                 <>
                   <div className="dropdown dropdown-end">
                     <div className="flex flex-row-reverse items-center">
-                      <h3>{user?.username}</h3>
+                      <h2>{user?.username}</h2>
                       <label
                         tabIndex={0}
                         className="btn btn-ghost btn-circle avatar"
@@ -65,7 +65,7 @@ const Header = () => {
                     </div>
                     <ul
                       tabIndex={0}
-                      className="mt-3 p-2 text-black shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
+                      className="mt-3 p-2 text-white shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
                     >
                       <li>
                         {user?.role === "client" ? (
@@ -84,7 +84,7 @@ const Header = () => {
                         ) : user?.role === "client" ? (
                           <Link to="/client/dashboard">Dashboard</Link>
                         ) : (
-                          <Link to="/therapist/dashboard">Dashboard</Link>
+                          <Link to="/therapist/dashboard">Therapist Dashboard</Link>
                         )}
                         {/* <Link to='/mycourses' className="justify-between">
                     Dashboard
@@ -152,7 +152,7 @@ const Header = () => {
                   <> </>
                 )}
                 {user?.role === "therapist" ? (
-                  <Link to="/therapist/dashboard"> Admin Dashboard</Link>
+                  <Link to="/therapist/dashboard"> Expert Dashboard</Link>
                 ) : (
                   <> </>
                 )}
