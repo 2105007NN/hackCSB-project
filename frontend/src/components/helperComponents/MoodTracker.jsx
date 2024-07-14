@@ -28,7 +28,8 @@ const MoodTracker = () => {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				moodRating: JSON.stringify(sliderRef.current.value),
+				moodRating: sliderRef.current.value,
+				access_token : JSON.parse(localStorage.getItem('access_token'))
 			}),
 		};
 		fetch("http://localhost:3000/tools/moodTracker", requestOptions)

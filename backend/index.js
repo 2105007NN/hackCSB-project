@@ -11,7 +11,8 @@ import ChatRoutes from "./routes/ChatRoutes.js"
 import TestRoutes from "./routes/TestRoutes.js"
 import QuestionRoutes from "./routes/QuestionRoutes.js"
 import ToolsRoute from './routes/ToolsRoute.js'
-// import dotenv from 'dotenv';
+import 'dotenv/config'
+
 
 const port = 3000;
 
@@ -108,7 +109,9 @@ app.get("/database", async (req, res) => {
 		const users = await db.all("SELECT * FROM users");
 		const rooms = await db.all("SELECT * FROM room");
 		const message = await db.all("SELECT * FROM message");
-		res.json({ users: users, rooms: rooms, messages: message });
+		const journals = await db.all("SELECT * FROM journals");
+		const mood_ratings = await db.all("SELECT * FROM mood_ratings");
+		res.json({ users: users, rooms: rooms, messages: message, journals, mood_ratings });
 	} catch (error) {
     console.log('Error in DB :', error);
   }

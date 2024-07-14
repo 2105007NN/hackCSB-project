@@ -10,7 +10,8 @@ export default function TextEditor() {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					content: JSON.stringify(editorRef.current.getContent()),
+					content: editorRef.current.getContent(),
+					access_token : JSON.parse(localStorage.getItem('access_token'))
 				}),
 			};
 			fetch("http://localhost:3000/tools/journal", requestOptions)
