@@ -17,7 +17,7 @@ const Dashboard = () => {
 					title="Journal"
 					description="Keep a track of your personal thoughts"
 					srcImg="https://img.freepik.com/free-vector/hand-drawn-flat-creative-girl-illustration_23-2151111989.jpg?ga=GA1.1.2119322207.1720886354"
-					targetUrl="/journal"
+					targetUrl="/edit-journal"
 				/>
 			</div>
 

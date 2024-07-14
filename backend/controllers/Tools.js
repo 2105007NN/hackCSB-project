@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { verifyToken } from "../utils/handleJWT.js";
 
-const journalController = async (req, res) => {
+const editJournalController = async (req, res) => {
 	try {
 		const db = await dbPromise;
 		const journalContent = req.body.content;
@@ -65,4 +65,29 @@ const moodTrackerController = async (req, res) => {
 	}
 };
 
-export { journalController, moodTrackerController };
+const viewJournalsController = async (req, res) => {
+
+	try {
+		const db = await dbPromise;
+		const access_token = req.query.access_token;
+		const decodedToken = verifyToken(
+			access_token,
+			process.env.JWT_ACCESS_SECRET
+		);
+		const userId = decodedToken.userId;
+		const loggedJournals = await db.all(`SELECT * FROM journals WHERE user_id = ? ORDER BY createdAt`, [userId]);
+		// const loggedMoods = await db.all(`SELECT * FROM mood_ratings WHERE user_id = ? ORDER BY createdAt`, [userId])
+
+		// console.log('in view journals, request query : ', req.query);
+		res.status(200).json({
+			msg : 'SUCCESS',
+			journals : loggedJournals
+		})
+		
+	} catch (error) {
+		res.status(500).json(new ApiError(500, 'ERROR IN VIEW JOURNALS CONTROLLER'))
+	}
+
+}
+
+export { editJournalController, moodTrackerController, viewJournalsController};

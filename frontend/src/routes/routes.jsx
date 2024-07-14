@@ -19,6 +19,7 @@ import TakeTest from "../pages/Tests/TakeTest";
 import TestsMain from "../pages/Tests/TestsMain";
 import ResultPage from "../pages/Tests/ResultPage";
 import Journal from "../pages/Journal/Journal";
+import ViewJournals from "../pages/Journal/ViewJournals.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -66,8 +67,13 @@ export const routes = createBrowserRouter([
         element : <Tools />
       },
       {
-        path: "/journal",
+        path: "/edit-journal",
         element : <Journal />
+      },
+
+      {
+        path: "/view-journal/:id",
+        element : <ViewJournals/>
       },
 
       {
