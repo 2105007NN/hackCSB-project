@@ -103,3 +103,14 @@ CREATE TABLE IF NOT EXISTS suggestions (
 );
 
  
+
+ INSERT INTO tests (id, title, description, time, type) VALUES
+(1, 'Anxiety Test', 'Find out if your anxiety could be a sign of something more serious.', '5', 'anxiety');
+
+-- Insert data into the questions table
+INSERT INTO questions (id, test_id, category_id, question) VALUES
+(1, 1, 1, 'I find it very hard to unwind, relax or sit still'),
+(2, 1, 1, 'I have had stomach problems, such as feeling sick or stomach cramps'),
+(3, 1, 1, 'I have been irritable and easily become annoyed'),
+(4, 1, 1, 'I have experienced shortness of breath'),
+(5, 1, 1, 'I have felt dizzy and unsteady at times');

@@ -9,7 +9,7 @@ const TakeTest = () => {
     const test = data.test[0];
     const questions = data.questions;
     const options = data.options;
-
+    console.log(test.id);
     const [answers, setAnswers] = useState([]);
     const [count, setCount] = useState(0);
     console.log(count);
@@ -37,7 +37,7 @@ const TakeTest = () => {
 
     const handleSubmit = async()=> {
         
-        fetch(`http://localhost:3000/test/take-test`, {
+        fetch(`http://localhost:3000/tests/take-test`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const TakeTest = () => {
             body: JSON.stringify({
                 answers: answers,
                 user_id : user?.id,
-                test_id : test?.test_id
+                test_id : test?.id
             }),
           })
           .then(response => {
@@ -95,7 +95,7 @@ const TakeTest = () => {
             className="carousel-item relative w-full"
         >
             <div className="p-4 m-auto py-20">
-                <h3 className="text-4xl m-auto text-center text-white font-semibold">{question.question}</h3>
+                <h3 className="text-2xl m-auto text-center text-white font-semibold">{question.question}</h3>
                 <div className="flex gap-20 items-center mt-10">
                     {options
                         .map(option => (

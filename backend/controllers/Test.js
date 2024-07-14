@@ -123,67 +123,75 @@ const getOptions = catchAsync(async (req, res) => {
 const takeTest = catchAsync(async (req, res) => {
     console.log("inside take test api");
     const db = await dbPromise;
-    const {test_id, answers, user_id} = req.body;
+    const { test_id, answers, user_id } = req.body;
     /*
      *    let Obj = {
             questionId : questionId,
             optionId : selectedOption
         }
      */
+    // console.log('test_Id', test_id, 'user+id',  user_id );
+    const highestScoringOption = 4;
+    const questionCount = answers.length;
+    const maximumScore = questionCount * highestScoringOption;
+    let calculatedScore = 0;
 
     await db.run("BEGIN TRANSACTION");
-   
-    try{
-        const highestScoringOption = 4;
-        const questionCount = answers.length;
-        const maximumScore = questionCount*highestScoringOption;
-        const calculatedScore = 0;
 
-        for(const answer of answers) {
-            const option_id = answer.option_id;
-            const option = await db.run(`SELECT * FROM options WHERE id = ?`, [option_id]);
+    try {
+        // Calculate the total score
+        for (const answer of answers) {
+            const { option_id } = answer;
+            const option = await db.get(`SELECT * FROM options WHERE id = ?`, [option_id]);
             calculatedScore += option.score;
         }
-        console.log(calculatedScore);
-        //count score out of 100
-        const percentageScore = (calculatedScore/maximumScore)*100;
-        
-        //insert into user_category table here
-        const category_id = await getCategoryID(db, question.category);
+        console.log('test_Id', test_id, 'user+id',  user_id );
+        // console.log(calculatedScore);
+
+        // Count score out of 100
+        const percentageScore = Math.floor((calculatedScore / maximumScore) * 100);
+        // console.log(percentageScore);
+        // Insert into user_category table
+        const question_id = answers[0].question_id;
+        // console.log('question_id', answers[0].question_id);
+        const question = await db.get(`SELECT * FROM questions WHERE id = ?`, [question_id]);
+        // console.log(question);
+        const category_id = question.category_id;
+
+        // console.log(answers); // Assuming all questions belong to the same category
+        // console.log(user_id, category_id, percentageScore);
         const insertCategoryStmt = await db.prepare(`
             INSERT INTO user_category (user_id, category_id, score)
             VALUES (?, ?, ?)
             ON CONFLICT(user_id, category_id) DO UPDATE SET score = excluded.score
-          `);
-        await insertCategoryStmt.run(user_id, category_id, percentageScore)
+        `);
+        await insertCategoryStmt.run(user_id, category_id, percentageScore);
 
-
-        //insert answers into the database   
+        // Insert answers into the database
         for (const answer of answers) {
             const { question_id, option_id } = answer;
             const insertAnswerStmt = await db.prepare(`
-            INSERT INTO user_answers (user_id, question_id, quiz_id, option_id)
-            VALUES (?, ?, ?, ?)
+                INSERT INTO user_answers (user_id, question_id, test_id, option_id)
+                VALUES (?, ?, ?, ?)
             `);
             await insertAnswerStmt.run(user_id, question_id, test_id, option_id);
-        }    
-
+        }
 
         await db.run("COMMIT");
 
-    }catch(error) {
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: "quiz retrieved successfully",
+            data: null,
+        });
+    } catch (error) {
         await db.run("ROLLBACK");
+        console.error(error);
         throw new AppError(httpStatus.BAD_REQUEST, 'Failed to insert answers');
     }
-    
-
-    sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "quiz retrieved successfully",
-        data: null,
-    });
 });
+
 
 const getTests = catchAsync(async (req, res)=> {
     const db = await dbPromise;
