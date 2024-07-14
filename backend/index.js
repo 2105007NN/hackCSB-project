@@ -10,6 +10,7 @@ import AuthRoutes from "./routes/AuthRoutes.js"
 import ChatRoutes from "./routes/ChatRoutes.js"
 import TestRoutes from "./routes/TestRoutes.js"
 import QuestionRoutes from "./routes/QuestionRoutes.js"
+import ToolsRoute from './routes/ToolsRoute.js'
 // import dotenv from 'dotenv';
 
 const port = 3000;
@@ -87,6 +88,12 @@ app.use('/auth',AuthRoutes)
 // app.use('/tests',TestRoutes)
 app.use('/tests', TestRoutes)
 app.use('/questions', QuestionRoutes)
+
+/******** 
+INTERACTIVE TOOLS  
+********/
+
+app.use('/tools', ToolsRoute)
 
 
 /****************

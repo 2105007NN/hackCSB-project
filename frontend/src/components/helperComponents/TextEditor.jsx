@@ -3,9 +3,25 @@ import { Editor } from "@tinymce/tinymce-react";
 
 export default function TextEditor() {
 	const editorRef = useRef(null);
-	const log = () => {
+	const sendJournalContent = () => {
 		if (editorRef.current) {
 			console.log(editorRef.current.getContent());
+			const requestOptions = {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					content: JSON.stringify(editorRef.current.getContent()),
+				}),
+			};
+			fetch("http://localhost:3000/tools/journal", requestOptions)
+				.then((response) => response.json())
+				.then(data => {
+					console.log('Data : ', data);
+				})
+				.catch(err => {
+					console.log("ERROR IN SENDING JOURNAL CONTENT : ", err);
+				})
+				
 		}
 	};
 	return (
@@ -51,9 +67,9 @@ export default function TextEditor() {
 				<button
 					className="absolute bottom-5 right-0 mb-5 mr-5 
                     btn btn-primary bg-gray-800 text-white"
-					onClick={log}
+					onClick={sendJournalContent}
 				>
-					Log editor content
+					Log Journal
 				</button>
 			</div>
 		</>

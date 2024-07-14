@@ -24,6 +24,21 @@ const MoodTracker = () => {
 
 	const handleClick = () => {
 		console.log(sliderRef.current.value);
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				moodRating: JSON.stringify(sliderRef.current.value),
+			}),
+		};
+		fetch("http://localhost:3000/tools/moodTracker", requestOptions)
+			.then((response) => response.json())
+			.then(data => {
+				console.log('Data : ', data);
+			})
+			.catch(err => {
+				console.log("ERROR IN SENDING mood rating : ", err);
+			})
 	}
 
 	const getColor = (value) => {
