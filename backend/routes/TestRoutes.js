@@ -9,8 +9,11 @@ router.post("/create-test", TestController.createTest);
 //take test
 router.post("/take-test", TestController.takeTest);
 
-//get test
-router.get("/get-test/:testId", TestController.getTest);
+//get all tests
+router.get("/get-tests", TestController.getTests);
+
+//get a single test
+router.get("/get-test/:testId", TestController.getSingleTest);
 
 //get options 
 router.get("/get-options", TestController.getOptions);

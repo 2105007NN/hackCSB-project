@@ -1,4 +1,3 @@
-import React from "react";
 import FeatureBlock from "../../components/helperComponents/FeatureBlock.jsx";
 
 const features = [
@@ -36,8 +35,8 @@ const features = [
 
 const Home = () => {
   return (
-    <>
-      <header className="text-center py-10">
+    <div className="max-w-screen-2xl m-auto">
+      <header className="text-center py-10 ">
         <h1 className="text-5xl font-bold text-primary">
           Welcome to Mental Health Support
         </h1>
@@ -61,7 +60,7 @@ const Home = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
