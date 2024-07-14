@@ -21,6 +21,17 @@ create table categories(
     category_name TEXT
 );
 
+
+DROP TABLE IF EXISTS user_category;
+CREATE table IF NOT EXISTS user_category (
+    user_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+    score INTEGER, --out of 100
+    PRIMARY KEY (user_id, category_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+)
+
 DROP TABLE IF EXISTS room;
 CREATE TABLE IF NOT EXISTS room (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,13 +57,11 @@ DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS tests ;
 CREATE TABLE IF NOT EXISTS tests (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    description TEXT NOT NULL,
     time TEXT NOT NULL,
     type TEXT NOT NULL
 );
 
-DROP TABLE IF EXISTS questions ;
+DROP TABLE IF EXISTS questions ;ƒ
 CREATE TABLE questions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     test_id INTEGER NOT NULL,
@@ -70,15 +79,18 @@ CREATE TABLE IF NOT EXISTS user_answers (
     PRIMARY KEY (user_id, question_id, test_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (question_id) REFERENCES questions(id),
-    FOREIGN KEY (test_id) REFERENCES tests(id),
-    FOREIGN KEY (option_id) REFERENCES options(id)
+    FOREIGN KEY (test_id) REFERENCES tests(id)
+    FOREIGN KEY (option_id) REFERENCES options(id),
 );
 
+-- Table: options
 DROP TABLE IF EXISTS options ;
 CREATE TABLE IF NOT EXISTS options (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    score INTEGER NOT NULL
+    score INTEGER NOT NULL,
+    test_id INTEGER NOT NULL,
+    FOREIGN KEY (test_id) REFERENCES tests(id)
 );
 
 DROP TABLE IF EXISTS suggestions ;
@@ -90,8 +102,4 @@ CREATE TABLE IF NOT EXISTS suggestions (
     FOREIGN KEY (test_id) REFERENCES tests(id)
 );
 
- insert into options (name, score) values('never', 0);
- insert INTO options (name, score) values ('rarely', 1);
- insert INTO options (name, score) values ('sometimes', 2);
- insert INTO options (name, score) values ('often', 3);
- insert INTO options (name, score) values ('very often', 4);
+ 

@@ -17,6 +17,7 @@ import Tools from "../pages/Tools/Tools";
 import Resources from "../pages/Resources/Resources";
 import TakeTest from "../pages/Tests/TakeTest";
 import TestsMain from "../pages/Tests/TestsMain";
+import { Result } from "postcss";
 
 export const routes = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const routes = createBrowserRouter([
       {
         path: "/resources",
         element : <Resources />
+      },
+      {
+        path: "/result/:testId/:userId",
+        element : <Result />
       },
       {
         path: "/take-test/:id",
