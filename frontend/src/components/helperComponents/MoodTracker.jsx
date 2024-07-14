@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 
 const MoodTracker = () => {
 	const [value, setValue] = useState(1);
+	const sliderRef = useRef();
 	let mood;
 
 	if (value <= 2) {
@@ -20,6 +21,10 @@ const MoodTracker = () => {
 	const handleChange = (event) => {
 		setValue(event.target.value);
 	};
+
+	const handleClick = () => {
+		console.log(sliderRef.current.value);
+	}
 
 	const getColor = (value) => {
 		// value is between 1 and 10
@@ -42,12 +47,15 @@ const MoodTracker = () => {
 					max="10"
 					value={value}
 					onChange={handleChange}
-					className="w-1/2 appearance-none h-2 rounded-full"
-					style={{ background: sliderColor }}
+					className="w-48 appearance-none h-4 rounded-full"
+					style={{ background: sliderColor}}
+					ref={sliderRef}
 				/>
 				<div className="mt-4 font-bold" style={{ color: sliderColor }}>
 					Current Mood : {mood}
 				</div>
+				<button className="btn btn-primary my-4
+				" onClick={handleClick}>Track your mood</button>
 			</div>
 		</>
 	);
