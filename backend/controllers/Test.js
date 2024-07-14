@@ -78,6 +78,8 @@ const createTest = catchAsync(async (req, res) => {
   }
 });
 
+
+
 const getTest = catchAsync(async (req, res) => {
   const { testId } = req.params;
   const db = await dbPromise;
@@ -88,11 +90,13 @@ const getTest = catchAsync(async (req, res) => {
     testId
   ]);
 
-  //check if test.id matches test_id and bring in the questions
+  const options = await db.all("SELECT * FROM options");
+
   //also bring in the options
    const result = {
     test,
     questions,
+    options
   };
   sendResponse(res, {
     statusCode: 200,

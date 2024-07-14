@@ -89,3 +89,9 @@ CREATE TABLE IF NOT EXISTS suggestions (
     type TEXT CHECK(type IN ('low', 'medium', 'high')) NOT NULL,
     FOREIGN KEY (test_id) REFERENCES tests(id)
 );
+
+ insert into options (name, score) values('never', 0);
+ insert INTO options (name, score) values ('rarely', 1);
+ insert INTO options (name, score) values ('sometimes', 2);
+ insert INTO options (name, score) values ('often', 3);
+ insert INTO options (name, score) values ('very often', 4);

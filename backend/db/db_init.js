@@ -136,11 +136,16 @@ const dbPromise = (async () => {
   CREATE TABLE IF NOT EXISTS options (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
-      score INTEGER NOT NULL,
-      test_id INTEGER NOT NULL,
-      FOREIGN KEY (test_id) REFERENCES tests(id)
+      score INTEGER NOT NULL
   );
   
+  INSERT INTO options (name, score) VALUES ('never', 0);
+  INSERT INTO options (name, score) VALUES ('rarely', 1);
+  INSERT INTO options (name, score) VALUES ('sometimes', 2);
+  INSERT INTO options (name, score) VALUES ('often', 3);
+  INSERT INTO options (name, score) VALUES ('very often', 4);
+
+
   DROP TABLE IF EXISTS suggestions ;
   CREATE TABLE IF NOT EXISTS suggestions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -150,7 +155,7 @@ const dbPromise = (async () => {
       FOREIGN KEY (test_id) REFERENCES tests(id)
   );
   
-  
+
     `);
   
     return db;
