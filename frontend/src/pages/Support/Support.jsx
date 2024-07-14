@@ -17,18 +17,21 @@ const Support = () => {
     const [targetUser, setTargetUser] = useState(null)
     const [list, setList] = useState([])
     const [roomId, setRoomId] = useState("")
+    const [showTherapist, setShowTherapist] = useState(false)
+    const [showSimilar, setShowSimilar] = useState(false)
 
-    function joinChat(targetUser){
+    function joinChat(targetUser, isTherapist=false){
         console.log("inside joinChat\n", targetUser)
         socket.emit("join_room", {currentUser: user, targetUser})
         setTargetUser(targetUser)
         console.log("Connected userlist:\n", connectedUserList);
-        if(!connectedUserList.some(user => user.username == targetUser.username)){
+        if(!connectedUserList.some(user => user.username == targetUser.username) && !isTherapist){
             setConnectedUserList((prev) => [...prev, targetUser])
         }
     }
 
     useEffect(()=>{
+        console.log("Current user: ", user);
         fetch("http://localhost:3000/connected/users/" + user.username)
         .then(res => res.json())
         .then(res => {
@@ -79,6 +82,8 @@ const Support = () => {
                     socket={socket}
                     currentUser={user}
                     joinChat={joinChat}
+                    setShowTherapist={setShowTherapist}
+                    setShowSimilar={setShowSimilar}
                 />
             </div>
             <div className="col-span-5">
@@ -92,14 +97,22 @@ const Support = () => {
                     socket={socket}
                 />
             </div>
-            <div className="col-span-4 grid grid-rows-2">
-                <div className="row-span-1">
-                    <Therapists />
-                </div>
-                <div className="row-span-1">
-                    <SimilarUsers />
-                </div>
-                
+            <div className="col-span-4">
+                {showTherapist && (
+                    <div>
+                        <Therapists 
+                            joinChat={joinChat}
+                        />
+                    </div>
+                )}
+                {showSimilar && (
+                    <div>
+                        <SimilarUsers
+                            currentUser={user}
+                            joinChat={joinChat}
+                        />
+                    </div>
+                )}
             </div>
         </div>
      );

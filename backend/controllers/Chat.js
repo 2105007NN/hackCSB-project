@@ -25,7 +25,7 @@ const getChats = catchAsync(async (req, res) => {
 
 const getUsers = catchAsync(async (req, res) => {
     const db = await dbPromise
-    const result = await db.all("SELECT * FROM users WHERE username LIKE ?", [`%${req.params.name}%`])
+    const result = await db.all("SELECT * FROM users WHERE username LIKE ? AND role = 'client'", [`%${req.params.name}%`])
 
     sendResponse(res, {
         statusCode: 200,
@@ -44,13 +44,14 @@ const getConnectedUsers = catchAsync(async (req, res) => {
     const filtered2 = r2.map((u) => u.user1)
     const usernames = [...filtered1, ...filtered2]
     console.log(usernames);
-    const result = await Promise.all(
+    const filteredUsers = await Promise.all(
         usernames.map(async (username) => {
-            const t = await db.get("SELECT * FROM users WHERE username = ?", [username]);
+            const t = await db.get("SELECT * FROM users WHERE username = ? AND role = 'client' ", [username]);
             return t;
         })
     );
-    console.log(result);
+    const result = filteredUsers.filter(user => user !== undefined);
+    console.log("Sending connected userlist: \n", result);
     //const result = usernames
 
     sendResponse(res,{
@@ -61,9 +62,57 @@ const getConnectedUsers = catchAsync(async (req, res) => {
     });
 })
 
+const getTherapists = async (req, res) => {
+    const db = await dbPromise;
+    const therapists = await db.all("SELECT * FROM users WHERE role = 'therapist'")
+    const result = await Promise.all(therapists.map(async(therapist) => {
+        const categories = await db.all(`SELECT C.category_name, C.color FROM user_category UC JOIN categories C 
+                WHERE UC.category_id = C.id AND UC.user_id = ?`, [therapist.id])
+        return {...therapist, categories: categories}
+    }))
+    console.log(result);
+    //const result = usernames
+
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "Therapists retrieved successfully",
+        data: result,
+    });
+}
+
+const getSimilarUsers = async (req, res) => {
+    const db = await dbPromise;
+    const name = req.params.name
+    const categories = await db.all(`SELECT category_name FROM users U JOIN user_category UC JOIN categories C
+                    WHERE U.username = ? AND UC.user_id = U.id AND UC.category_id = C.id`, [name])
+    const filteredCategories = categories.map(c => c.category_name)
+    const placeholders = filteredCategories.map(() => '?').join(',');
+    const params = [name, ...filteredCategories]
+    const users = await db.all(`SELECT U.* FROM users U JOIN user_category UC JOIN categories C
+                    WHERE U.id = UC.user_id AND UC.category_id = C.id AND U.role != 'therapist' AND U.username != ? AND C.category_name IN (${placeholders})`, params)
+    const r = await Promise.all(users.map(async(user) => {
+        const categories = await db.all(`SELECT C.category_name, C.color FROM user_category UC JOIN categories C 
+                    WHERE UC.category_id = C.id AND UC.user_id = ?`, [user.id])
+        return {...user, categories: categories}
+    }))
+    const result = r.filter(user => user !== undefined);
+    console.log(result);
+    //const result = usernames
+
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "Users with same categories retrieved successfully",
+        data: result,
+    });
+}
+
 
 export const ChatController = {
     getChats,
     getUsers,
-    getConnectedUsers
+    getConnectedUsers,
+    getTherapists,
+    getSimilarUsers
 }

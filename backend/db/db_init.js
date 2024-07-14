@@ -31,7 +31,8 @@ const dbPromise = (async () => {
       DROP TABLE IF EXISTS categories;
       CREATE TABLE IF NOT EXISTS categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        category_name TEXT NOT NULL UNIQUE
+        category_name TEXT NOT NULL UNIQUE,
+        color TEXT NOT NULL UNIQUE
       );
   
       DROP TABLE IF EXISTS room;
@@ -73,6 +74,14 @@ const dbPromise = (async () => {
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES users(id)
       );
+
+      DROP TABLE IF EXISTS user_category;
+      CREATE TABLE IF NOT EXISTS user_category (
+          user_id INTEGER NOT NULL,
+          category_id INTEGER NOT NULL,
+          FOREIGN KEY (user_id) REFERENCES users(id)
+          FOREIGN KEY (category_id) REFERENCES categories(id)
+      );
   
       INSERT INTO users (username, password, role, email)
       VALUES ('asif', '123456', 'client', 'asif@gmail.com');
@@ -92,13 +101,20 @@ const dbPromise = (async () => {
     INSERT INTO users (username, password, role, email)
     VALUES ('ibtida', '123456', 'client', 'ibtida@gmail.com');
 
-      INSERT INTO categories (category_name) VALUES ('anxiety');
-      INSERT INTO categories (category_name) VALUES ('depression');
-      INSERT INTO categories (category_name) VALUES ('autism');
-      INSERT INTO categories (category_name) VALUES ('adhd');
-      INSERT INTO categories (category_name) VALUES ('schizophrenia');  
-      INSERT INTO categories (category_name) VALUES ('ptsd');
-  
+      INSERT INTO categories (category_name, color) VALUES ('anxiety', 'red');
+      INSERT INTO categories (category_name, color) VALUES ('depression', 'green');
+      INSERT INTO categories (category_name, color) VALUES ('autism','yellow');
+      INSERT INTO categories (category_name, color) VALUES ('adhd', 'indigo');
+      INSERT INTO categories (category_name, color) VALUES ('schizophrenia', 'purple');  
+      INSERT INTO categories (category_name, color) VALUES ('ptsd', 'pink');
+
+      INSERT INTO user_category (user_id, category_id) VALUES (4, 2);
+      INSERT INTO user_category (user_id, category_id) VALUES (4, 5);
+      INSERT INTO user_category (user_id, category_id) VALUES (4, 6);
+      INSERT INTO user_category (user_id, category_id) VALUES (2, 1);
+      INSERT INTO user_category (user_id, category_id) VALUES (2, 2);
+      INSERT INTO user_category (user_id, category_id) VALUES (1, 1);
+      INSERT INTO user_category (user_id, category_id) VALUES (3, 2);
   
       DROP TABLE IF EXISTS quizzes ;
   CREATE TABLE IF NOT EXISTS quizzes (
