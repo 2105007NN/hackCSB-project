@@ -12,5 +12,8 @@ router.post("/take-test", TestController.takeTest);
 //get test
 router.get("/get-test", TestController.getTest);
 
+//get options 
+router.get("/get-options", TestController.getOptions);
+
 export default router;
 

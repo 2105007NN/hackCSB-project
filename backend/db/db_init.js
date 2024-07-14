@@ -76,7 +76,7 @@ const dbPromise = (async () => {
     DROP TABLE IF EXISTS tests ;
   CREATE TABLE IF NOT EXISTS tests (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    title TEXT NOT NULL,
     description TEXT NOT NULL,
     time TEXT NOT NULL,
     type TEXT NOT NULL
@@ -108,9 +108,7 @@ const dbPromise = (async () => {
     CREATE TABLE IF NOT EXISTS options (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        score INTEGER NOT NULL,
-        test_id INTEGER NOT NULL,
-        FOREIGN KEY (test_id) REFERENCES tests(id)
+        score INTEGER NOT NULL
     );
 
     DROP TABLE IF EXISTS suggestions ;
@@ -121,6 +119,12 @@ const dbPromise = (async () => {
         type TEXT CHECK(type IN ('low', 'medium', 'high')) NOT NULL,
         FOREIGN KEY (test_id) REFERENCES tests(id)
     );
+
+    INSERT INTO options (name, score) VALUES ('never', 1);
+    INSERT INTO options (name, score) VALUES ('rarely', 2);
+    INSERT INTO options (name, score) VALUES ('sometimes', 3);
+    INSERT INTO options (name, score) VALUES ('often', 4);
+    INSERT INTO options (name, score) VALUES ('very often', 5);
 
   `);
 
