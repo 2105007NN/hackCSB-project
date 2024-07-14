@@ -85,7 +85,7 @@ const getTest = catchAsync(async (req, res) => {
   const test = await db.all("SELECT * FROM tests WHERE id = ?", [testId]);
 
   const questions = await db.all("SELECT * FROM questions WHERE test_id = ?", [
-    test.id,
+    testId
   ]);
 
   //check if test.id matches test_id and bring in the questions
@@ -97,7 +97,7 @@ const getTest = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "quiz retrieved successfully",
+    message: "test retrieved successfully",
     data: result,
   });
 });

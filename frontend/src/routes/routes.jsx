@@ -16,6 +16,7 @@ import ClientProfile from "../pages/Profile/ClientProfile";
 import CreateTest from "../pages/Tests/CreateTest";
 import Tools from "../pages/Tools/Tools";
 import Resources from "../pages/Resources/Resources";
+import TakeTest from "../pages/Tests/TakeTest";
 
 export const routes = createBrowserRouter([
   {
@@ -65,7 +66,7 @@ export const routes = createBrowserRouter([
       {
         path: "/resources",
         element : <Resources />
-      }
+      },
       {
         path: "/take-test",
         element: <TakeTest></TakeTest>,

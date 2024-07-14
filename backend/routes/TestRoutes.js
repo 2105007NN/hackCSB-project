@@ -10,7 +10,7 @@ router.post("/create-test", TestController.createTest);
 router.post("/take-test", TestController.takeTest);
 
 //get test
-router.get("/get-test", TestController.getTest);
+router.get("/get-test/:testId", TestController.getTest);
 
 //get options 
 router.get("/get-options", TestController.getOptions);
