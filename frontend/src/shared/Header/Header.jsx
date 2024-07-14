@@ -31,7 +31,7 @@ const Header = () => {
               className="h-8"
               alt="Flowbite Logo"
             />
-            <span className="self-center text-base-100  text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="self-center text-base-200  text-2xl font-semibold whitespace-nowrap dark:text-white">
               HelpUrSelf
             </span>
           </Link>
@@ -65,7 +65,7 @@ const Header = () => {
                     </div>
                     <ul
                       tabIndex={0}
-                      className="mt-3 p-2 text-white shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
+                      className="mt-3 p-2 text-white shadow menu menu-compact dropdown-content bg-base-300 rounded-box w-52 z-10"
                     >
                       <li>
                         {user?.role === "client" ? (
@@ -145,7 +145,7 @@ const Header = () => {
             id="navbar-user"
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-              <li className="block py-2 px-3 text-base-100  rounded hover:bg-orange-600md:hover:bg-transparent md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+              <li className="block py-2 px-3 text-base-100  rounded hover:bg-orange-600 md:hover:bg-transparent md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                 {user?.role === "client" ? (
                   <Link to="/client/dashboard"> Dashboard</Link>
                 ) : (
@@ -160,7 +160,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/"
-                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Home
                 </Link>
@@ -168,7 +168,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/support"
-                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Support
                 </Link>
@@ -176,7 +176,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/tests"
-                  class="block py-2 px-3 text-base-100  rounded hover:bg-orange-600md:hover:bg-transparent md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  class="block py-2 px-3 text-base-100  rounded hover:bg-orange-600md:hover:bg-transparent md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Online Tests
                 </Link>
@@ -184,7 +184,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/articles"
-                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Articles
                 </Link>
@@ -192,7 +192,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/forum"
-                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Forum
                 </Link>

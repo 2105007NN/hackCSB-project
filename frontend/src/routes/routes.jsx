@@ -3,7 +3,6 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
 import Main from "../components/layout/Main";
-import Tests from "../pages/Tests/Tests";
 import Articles from "../pages/Articles/Articles";
 import LoginLayout from "../components/layout/LoginLayout";
 import Login from "../pages/Auth/Login";
@@ -17,6 +16,7 @@ import CreateTest from "../pages/Tests/CreateTest";
 import Tools from "../pages/Tools/Tools";
 import Resources from "../pages/Resources/Resources";
 import TakeTest from "../pages/Tests/TakeTest";
+import TestsMain from "../pages/Tests/TestsMain";
 
 export const routes = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/tests",
-        element: <Tests></Tests>,
+        element: <TestsMain></TestsMain>,
       },
       {
         path: "/articles",
@@ -68,8 +68,10 @@ export const routes = createBrowserRouter([
         element : <Resources />
       },
       {
-        path: "/take-test",
+        path: "/take-test/:id",
         element: <TakeTest></TakeTest>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/tests/get-test/${params.id}`),
       },
     ],
   },
