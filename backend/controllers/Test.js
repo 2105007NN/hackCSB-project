@@ -197,7 +197,7 @@ const getTests = catchAsync(async (req, res)=> {
     const db = await dbPromise;
     const result = await db.all(`SELECT * FROM tests`);
 
-
+    console.log(result);
     sendResponse(res, {
         statusCode : 200,
         success : true,
@@ -205,6 +205,7 @@ const getTests = catchAsync(async (req, res)=> {
         data : result
     })
 })
+
 
 // Function to get category ID based on category name
 const getCategoryID = async (db, categoryName) => {
@@ -216,10 +217,17 @@ const getCategoryID = async (db, categoryName) => {
 };
 
 const getResult = catchAsync(async(req,res)=> {
+    console.log('inside get');
+    const {userId, testId} = req.body;
+    console.log(userId);
     const db = await dbPromise;
-    const result = await db.all();
+    const result = await db.all(`SELECT t.*, q.*, ua.option_id AS user_answer
+                                FROM user_answers ua 
+                                LEFT JOIN questions q ON q.id = ua.question_id
+                                LEFT JOIN tests t ON t.id = q.test_id
+                                WHERE t.id = ? AND ua.user_id = ?`, [testId, userId]);
 
-
+    console.log(result);
     sendResponse(res,{
         statusCode : 200,
         success : 200,
@@ -228,11 +236,25 @@ const getResult = catchAsync(async(req,res)=> {
     })
 })
 
+
+const getAnswers = catchAsync(async (req, res) => {
+    const db = await dbPromise;
+    const result = await db.all("SELECT * FROM user_answers");
+
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "user_answers retrieved successfully",
+        data: result,
+    });
+})
+
 export const TestController = {
   createTest,
   getTests,
   takeTest,
   getOptions,
   getSingleTest,
-  getResult
+  getResult,
+  getAnswers
 };

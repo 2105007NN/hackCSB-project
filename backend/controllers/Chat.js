@@ -62,7 +62,7 @@ const getConnectedUsers = catchAsync(async (req, res) => {
     });
 })
 
-const getTherapists = async (req, res) => {
+const getTherapists = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const therapists = await db.all("SELECT * FROM users WHERE role = 'therapist'")
     const result = await Promise.all(therapists.map(async(therapist) => {
@@ -81,7 +81,8 @@ const getTherapists = async (req, res) => {
     });
 }
 
-const getSimilarUsers = async (req, res) => {
+)
+const getSimilarUsers = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const name = req.params.name
     const categories = await db.all(`SELECT category_name FROM users U JOIN user_category UC JOIN categories C
@@ -98,7 +99,6 @@ const getSimilarUsers = async (req, res) => {
     }))
     const result = r.filter(user => user !== undefined);
     console.log(result);
-    //const result = usernames
 
     sendResponse(res,{
         statusCode: 200,
@@ -106,7 +106,7 @@ const getSimilarUsers = async (req, res) => {
         message: "Users with same categories retrieved successfully",
         data: result,
     });
-}
+})
 
 
 export const ChatController = {

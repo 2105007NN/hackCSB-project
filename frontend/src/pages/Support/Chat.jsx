@@ -1,8 +1,12 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import {useState, useEffect, useRef} from "react"
 import ScrollToBottom from "react-scroll-to-bottom"
 import potat from '../../assets/potat.jpg'
 import send from '../../assets/send.png'
 
+// eslint-disable-next-line react/prop-types
 const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket}) => {
     const [message, setMessage] = useState("")
     const bottomRef = useRef(null);

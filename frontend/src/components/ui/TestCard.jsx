@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 const TestCard = ({ test }) => {
 //   const { title, description } = test;
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
-      <figure className="bg-secondary h-24">
+    <div className="card bg-base-300 w-96 shadow-xl">
+      <figure className="bg-info h-24">
         <h2 className="card-title text-white text-2xl">
           {test?.title}
           {/* <div className="badge badge-secondary">NEW</div> */}

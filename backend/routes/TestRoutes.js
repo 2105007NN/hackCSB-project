@@ -21,5 +21,7 @@ router.get("/get-options", TestController.getOptions);
 //get results for a certain test for a certain user
 router.get("/get-result", TestController.getResult);
 
+router.get("/get-answers", TestController.getAnswers);
+
 export default router;
 
