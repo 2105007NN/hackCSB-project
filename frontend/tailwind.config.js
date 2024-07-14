@@ -27,7 +27,7 @@ export default {
   },
   plugins: [
     require("daisyui"),
-    require('flowbite/plugin') // Assuming this is the package for React Flowbite
+    // require('flowbite/plugin') // Assuming this is the package for React Flowbite
   ],
   daisyui: {
     themes: ["sunset"], // Set the default theme to "sunset" for DaisyUI

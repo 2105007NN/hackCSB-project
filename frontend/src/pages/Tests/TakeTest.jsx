@@ -19,24 +19,13 @@ const TakeTest = () => {
             question_id : questionId,
             option_id : selectedOption
         }
-        // Check if questionId already exists in answers
-        // const existingIndex = answers.findIndex(obj => obj.question_id === questionId);
-
-        // If questionId exists, update the existing entry; otherwise, add a new entry
-        // if (existingIndex !== -1) {
-        //     const updatedAnswers = [...answers];
-        //     updatedAnswers[existingIndex] = Obj;
-        //     setAnswers(updatedAnswers);
-        // } else {
-        // }
         setAnswers(prevAnswers => [...prevAnswers, Obj]);
         console.log(answers);
     };
     console.log(answers);
 
 
-    const handleSubmit = async()=> {
-        
+    const handleSubmit = async()=> {  
         fetch(`http://localhost:3000/tests/take-test`, {
             method: 'POST',
             headers: {
@@ -61,16 +50,8 @@ const TakeTest = () => {
           .catch(error => {
             console.error('Error uploading result:', error);
           });
-    }//result/:testId/:userId
+    }
 
-
-    // console.log('test', test, 'questions', questions, 'options', options);
-    // console.log(questions.length);
-
-    //store the answers 
-
-    //create api endpoint to take the answers 
-    //
 
     if(questions.length === count) {
         console.log('test completed');
@@ -82,9 +63,9 @@ const TakeTest = () => {
         <div className="max-w-screen-xl m-auto">
             <div className="text-4xl text-center p-5">{test?.title}</div>
             <div className="my-60"></div>  
-{/* 
-            <progress className="progress progress-info w-56 bg-info py-3 my-4" value={0} max="100"></progress> */}
             <div className="bg-base-300 p-12 rounded-2xl">
+
+                
             <progress className="progress progress-error bg-neutral" value={count*10} max={questions.length * 10}></progress>
 
 <div className="carousel w-full bg-info rounded-2xl">
