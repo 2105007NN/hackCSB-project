@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import 'daisyui/dist/full.css';
 import potat from '../../assets/potat.jpg'
+import searchIcon from '../../assets/magnifying-glass.png'
+import therapistIcon from '../../assets/therapist.png'
+import similarIcon from '../../assets/compatible.png'
+import chat from '../../assets/chat.png'
 
 const url = "http://localhost:3000"
 
-const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, setTargetUser, socket, currentUser, joinChat}) => {
+const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, setTargetUser, socket, currentUser, joinChat, setShowTherapist, setShowSimilar}) => {
     const [searchName, setSearchName] = useState("")
     const [searchList, setSearchList] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
+    const [hoveredUserId, setHoveredUserId] = useState(null);
 
     console.log("Search Name: ", searchName);
 
@@ -36,14 +41,26 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
     <>
       
 
-      <div className="p-4 bg-gray-800 h-[680px]">
+      <div className="p-4 bg-neutral text-neutral-content h-[680px]">
 
       <button
         id="dropdownSearchButton"
         onClick={handleClick}
-        className="btn btn-primary ml-4 bg-blue-700 text-white border border-blue-700 hover:bg-blue-500 hover:border-blue-400"
+        className="btn btn-primary ml-4 text-primary-content"
       >
-        Search users 
+        <img src={searchIcon} className='h-6 w-6'/>
+      </button>
+      <button onClick={() => {
+        setShowTherapist(true)
+        setShowSimilar(false)
+      }} className='btn btn-primary ml-4'>
+        <img src={therapistIcon} className='h-6 w-6'/>
+      </button>
+      <button onClick={() => {
+        setShowSimilar(true)
+        setShowTherapist(false)
+      }} className='btn btn-primary ml-4'>
+        <img src={similarIcon} className='h-6 w-6'/>
       </button>
 
       <Menu
@@ -53,7 +70,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'dropdownSearchButton',
-          'className': 'bg-gray-700 w-[400px]'
+          'className': 'bg-base-100 w-[400px] h-[500px]'
         }}
         className="z-50"
       >
@@ -62,7 +79,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
               <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="w-4 h-4 text-base-content"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -93,21 +110,25 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
             />
           </div>
         </div>
-        <ul className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
-          {searchList && searchList.map((user) => {
-            return (
-                <li>
-                    <div className="flex items-center ps-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600" onClick={() => joinChat(user)}>
-                        <p 
-                            className='p-4 text-lg'
-                            
-                        >
-                            {user.username}
-                        </p>
-                    </div>
-                </li>
-            )
-          })}
+        <ul className="h-[350px] px-3 pb-3 overflow-y-auto text-sm text-base-content">
+        {searchList && searchList.map((user) => (
+          <li key={user.id} className="my-2">
+            <div 
+              className="flex items-center ps-2 rounded border border-base-100 hover:border-info"
+              onMouseEnter={() => setHoveredUserId(user.id)}
+              onMouseLeave={() => setHoveredUserId(null)}
+            >
+              <p className="p-4 text-lg">
+                {user.username}
+              </p>
+              {hoveredUserId === user.id && (
+                <button className="mr-2 ml-auto btn btn-primary" onClick={() => joinChat(user)}>
+                  <img src={chat} className='h-6 w-6'/>
+                </button>
+              )}
+            </div>
+          </li>
+        ))}
         </ul>
       </Menu>
 
@@ -116,14 +137,18 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
           {connectedUserList.map((u) => {
             if (u.id !== currentUser.id) {
               return (
-                <div className='flex items-center rounded-lg hover:bg-blue-800' onClick={() => joinChat(u)}>
-                    <img class="w-10 h-10 rounded-full ring-2 ring-gray-300" src={potat} alt="Rounded avatar"></img>
-                    <p
-                    key={u.id}
-                    className="p-2 m-4  font-medium  text-[20px]"
-                    >
-                    {u.username}
-                    </p>
+                <div className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
+                    <div className="flex items-center justify-between rounded-lg">
+                        <div className="flex items-center">
+                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />
+                        <p key={u.id} className="p-2 m-4 font-medium text-[20px]">
+                            {u.username}
+                        </p>
+                        </div>
+                        <button className="btn btn-primary ml-auto mr-3">
+                        <img src={chat} className="w-6 h-6" onClick={() => joinChat(u)} alt="Chat" />
+                        </button>
+                    </div>
                 </div>
               );
             }

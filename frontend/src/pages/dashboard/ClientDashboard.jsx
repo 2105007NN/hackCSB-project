@@ -46,8 +46,8 @@ const Dashboard = () => {
 			</div>
 			<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
 				<DashboardCard
-					title="Resources"
-					description="Access various mental health resources"
+					title="Journals"
+					description="Keep a track of your personal thoughts"
 					srcImg="https://img.freepik.com/free-vector/resource-management-concept-illustration_114360-7446.jpg?size=626&ext=jpg&ga=GA1.1.2119322207.1720886354&semt=sph"
                     targetUrl="/resources"
                 />
