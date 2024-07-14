@@ -4,10 +4,13 @@ import globalErrorHandler from "./errors/globalErrorHandler.js";
 import notFound from "./errors/notFound.js";
 import catchAsync from "./utils/catchAsync.js";
 import sendResponse from "./utils/sendResponse.js";
-import UserRoutes from "./routes/UserRoutes.js";
-import CategoryRoutes from "./routes/CategoryRoutes.js";
-import AuthRoutes from "./routes/AuthRoutes.js";
-import ChatRoutes from "./routes/ChatRoutes.js";
+import UserRoutes from "./routes/UserRoutes.js"
+import CategoryRoutes from "./routes/CategoryRoutes.js"
+import AuthRoutes from "./routes/AuthRoutes.js"
+import ChatRoutes from "./routes/ChatRoutes.js"
+import TestRoutes from "./routes/TestRoutes.js"
+import QuestionRoutes from "./routes/QuestionRoutes.js"
+import ToolsRoute from './routes/ToolsRoute.js'
 // import dotenv from 'dotenv';
 
 const port = 3000;
@@ -78,10 +81,20 @@ io.on("connection", async (socket) => {
 
 /****************
  * AUTH
- ****************/
-app.use("/users", UserRoutes);
-app.use("/categories", CategoryRoutes);
-app.use("/auth", AuthRoutes);
+****************/
+app.use('/users',UserRoutes)
+app.use('/categories',CategoryRoutes)
+app.use('/auth',AuthRoutes)
+// app.use('/tests',TestRoutes)
+app.use('/tests', TestRoutes)
+app.use('/questions', QuestionRoutes)
+
+/******** 
+INTERACTIVE TOOLS  
+********/
+
+app.use('/tools', ToolsRoute)
+
 
 /****************
  * CHAT

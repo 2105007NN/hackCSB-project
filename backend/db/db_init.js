@@ -116,9 +116,11 @@ const dbPromise = (async () => {
       INSERT INTO user_category (user_id, category_id) VALUES (1, 1);
       INSERT INTO user_category (user_id, category_id) VALUES (3, 2);
   
-      DROP TABLE IF EXISTS quizzes ;
-  CREATE TABLE IF NOT EXISTS quizzes (
+      DROP TABLE IF EXISTS tests ;
+  CREATE TABLE IF NOT EXISTS tests (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
       time TEXT NOT NULL,
       type TEXT NOT NULL
   );
@@ -126,22 +128,22 @@ const dbPromise = (async () => {
   DROP TABLE IF EXISTS questions ;
   CREATE TABLE questions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      quiz_id INTEGER NOT NULL,
+      test_id INTEGER NOT NULL,
       category_id INTEGER NOT NULL,
       question TEXT NOT NULL,
-      FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+      FOREIGN KEY (test_id) REFERENCES tests(id)
   );
   
   DROP TABLE IF EXISTS user_answers ;
   CREATE TABLE IF NOT EXISTS user_answers (
       user_id INTEGER NOT NULL,
       question_id INTEGER NOT NULL,
-      quiz_id INTEGER NOT NULL,
+      test_id INTEGER NOT NULL,
       option_id INTEGER NOT NULL,
-      PRIMARY KEY (user_id, question_id, quiz_id),
+      PRIMARY KEY (user_id, question_id, test_id),
       FOREIGN KEY (user_id) REFERENCES users(id),
       FOREIGN KEY (question_id) REFERENCES questions(id),
-      FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+      FOREIGN KEY (test_id) REFERENCES tests(id)
       FOREIGN KEY (option_id) REFERENCES options(id)
   );
   
@@ -150,21 +152,26 @@ const dbPromise = (async () => {
   CREATE TABLE IF NOT EXISTS options (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
-      score INTEGER NOT NULL,
-      quiz_id INTEGER NOT NULL,
-      FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+      score INTEGER NOT NULL
   );
   
+  INSERT INTO options (name, score) VALUES ('never', 0);
+  INSERT INTO options (name, score) VALUES ('rarely', 1);
+  INSERT INTO options (name, score) VALUES ('sometimes', 2);
+  INSERT INTO options (name, score) VALUES ('often', 3);
+  INSERT INTO options (name, score) VALUES ('very often', 4);
+
+
   DROP TABLE IF EXISTS suggestions ;
   CREATE TABLE IF NOT EXISTS suggestions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      quiz_id INTEGER NOT NULL,
+      test_id INTEGER NOT NULL,
       tip_text TEXT NOT NULL,
       type TEXT CHECK(type IN ('low', 'medium', 'high')) NOT NULL,
-      FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+      FOREIGN KEY (test_id) REFERENCES tests(id)
   );
   
-  
+
     `);
   
     return db;
