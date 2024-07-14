@@ -17,7 +17,7 @@ const TestCard = ({ test }) => {
         <p className="text-secondary">
          {test?.description}
         </p>
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-start">
             <Link to={`/take-test/${test?.id}`}>
                 <button className="btn btn-secondary text-xl text-white mt-8">
                     Start test

@@ -227,6 +227,67 @@ INSERT INTO questions (id, test_id, category_id, question) VALUES
 (31, 3, 6, 'I am very interested in other people’s lives and like to listen to them'),
 (32, 3, 6, 'I find it easy to make decisions, big and small');
 
+
+
+-- Insert the new test (example with test_id 4, update as needed)
+INSERT INTO tests (id, title, description, time, type) VALUES 
+(4, 'Autism Test', 'Assess common symptoms of Autism Spectrum Disorder with our test.', '15', 'autism');
+
+-- Insert the new questions
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(33, 4, 7, 'Do you find it challenging to maintain eye contact during conversations?'),
+(34, 4, 7, 'Do you have difficulty understanding or interpreting social cues, such as facial expressions and body language?'),
+(35, 4, 7, 'Do you prefer to stick to a routine and get upset when it is disrupted?'),
+(36, 4, 7, 'Do you find it difficult to initiate or maintain conversations with others?'),
+(37, 4, 7, 'Do you have intense interests or hobbies that you focus on for long periods?'),
+(38, 4, 7, 'Do you experience sensory sensitivities, such as being overwhelmed by loud noises, bright lights, or certain textures?'),
+(39, 4, 7, 'Do you engage in repetitive behaviors or movements, such as hand-flapping, rocking, or repeating phrases?'),
+(40, 4, 7, 'Do you struggle with understanding and responding to other people’s emotions?'),
+(41, 4, 7, 'Do you find it challenging to make friends or maintain social relationships?'),
+(42, 4, 7, 'Do you have difficulty adapting to changes in your environment or daily routine?');
+
+
+
+     -- Insert the new test (example with test_id 5, update as needed)
+INSERT INTO tests (id, title, description, time, type) VALUES 
+(5, 'PTSD Test', 'Assess common symptoms of PTSD with our test.', '10', 'ptsd');
+
+-- Insert the new questions
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(43, 5, 8, 'Any reminder brought back feelings about the event/s'),
+(44, 5, 8, 'I had trouble staying asleep'),
+(45, 5, 8, 'Other things kept making me think about it'),
+(46, 5, 8, 'I felt irritable and angry'),
+(47, 5, 8, 'I avoided letting myself get upset when I thought about it or was reminded of it'),
+(48, 5, 8, 'I thought about the event when I didn''t mean to'),
+(49, 5, 8, 'I felt as if the event hadn''t happened or it wasn''t real'),
+(50, 5, 8, 'I have stayed away from reminders about the situation'),
+(51, 5, 8, 'Images and pictures of the event pop into my mind'),
+(52, 5, 8, 'I have been jumpy and easily startled'),
+(53, 5, 8, 'I have tried not to think about the situation'),
+(54, 5, 8, 'I am aware I have a lot of feelings about what happened but I haven''t dealt with them'),
+(55, 5, 8, 'I feel quite numb about the situation');
+
+
+      -- Insert the new test (example with test_id 6, update as needed)
+INSERT INTO tests (id, title, description, time, type) VALUES 
+(6, 'ADHD Test', 'Assess common symptoms of ADHD with our test.', '10', 'adhd');
+
+-- Insert the new questions
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(56, 6, 9, 'I find it difficult finishing a task or project'),
+(57, 6, 9, 'I find it difficult to organise myself or a task'),
+(58, 6, 9, 'I find it difficult to remember appointments'),
+(59, 6, 9, 'If a task or project requires a lot of thought I will often delay in getting it started'),
+(60, 6, 9, 'I find it difficult to sit still and often fidget or squirm'),
+(61, 6, 9, 'I would describe myself as being ‘‘on the go’’ and feel compelled to do things, as if driven by a motor'),
+(62, 6, 9, 'I find it hard to remain focused in group settings'),
+(63, 6, 9, 'My mind feels very cluttered and it is hard for me to concentrate on one thing at a time'),
+(64, 6, 9, 'I make decisions quickly and fail to think through the consequences'),
+(65, 6, 9, 'I am often irritable, with a short fuse'),
+(66, 6, 9, 'I have mood swings, sometimes feeling quite high, other times low'),
+(67, 6, 9, 'I often miss what is being said to me in conversations');
+
     `);
   
     return db;

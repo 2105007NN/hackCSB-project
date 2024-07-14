@@ -22,7 +22,7 @@ const Tests = () => {
   console.log(tests);
 
   return (
-    <div className="max-w-screen-xl grid grid-cols-3 m-auto my-10 mb-20">
+    <div className="max-w-screen-xl grid grid-cols-3 m-auto my-10 mb-20 gap-10">
       {tests?.map((test) => (
         <TestCard key={test.id} test={test}></TestCard>// Assuming each test has a unique id
       ))}
