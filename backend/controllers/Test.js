@@ -3,6 +3,7 @@ import dbPromise from "../db/db_init.js";
 import catchAsync from "../utils/catchAsync.js";
 import sendResponse from "../utils/sendResponse.js";
 import AppError from "../errors/AppError.js";
+import httpStatus from "http-status";
 
 const createTest = catchAsync(async (req, res) => {
     console.log("create test");
@@ -10,12 +11,13 @@ const createTest = catchAsync(async (req, res) => {
         questions,
         time,
         title,
+        description,
         type,
         // suggestion_low,
         // suggestion_medium,
         // suggestion_high,
     } = req.body;
-    console.log(questions, time, title, type);
+    console.log(questions, time, title, type, description);
 
     let db;
     try {
@@ -32,7 +34,7 @@ const createTest = catchAsync(async (req, res) => {
 
         const testResult = await insertTestStmt.run(
         title,
-        "Description",
+        description,
         time,
         type
         );
@@ -119,15 +121,68 @@ const getOptions = catchAsync(async (req, res) => {
 });
 
 const takeTest = catchAsync(async (req, res) => {
-  const db = await dbPromise;
-  // const result = await db.all
+    console.log("inside take test api");
+    const db = await dbPromise;
+    const {test_id, answers, user_id} = req.body;
+    /*
+     *    let Obj = {
+            questionId : questionId,
+            optionId : selectedOption
+        }
+     */
 
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "quiz retrieved successfully",
-    data: result,
-  });
+    await db.run("BEGIN TRANSACTION");
+   
+    try{
+        const highestScoringOption = 4;
+        const questionCount = answers.length;
+        const maximumScore = questionCount*highestScoringOption;
+        const calculatedScore = 0;
+
+        for(const answer of answers) {
+            const option_id = answer.option_id;
+            const option = await db.run(`SELECT * FROM options WHERE id = ?`, [option_id]);
+            calculatedScore += option.score;
+        }
+        console.log(calculatedScore);
+        //count score out of 100
+        const percentageScore = (calculatedScore/maximumScore)*100;
+        
+        //insert into user_category table here
+        const category_id = await getCategoryID(db, question.category);
+        const insertCategoryStmt = await db.prepare(`
+            INSERT INTO user_category (user_id, category_id, score)
+            VALUES (?, ?, ?)
+            ON CONFLICT(user_id, category_id) DO UPDATE SET score = excluded.score
+          `);
+        await insertCategoryStmt.run(user_id, category_id, percentageScore)
+
+
+        //insert answers into the database   
+        for (const answer of answers) {
+            const { question_id, option_id } = answer;
+            const insertAnswerStmt = await db.prepare(`
+            INSERT INTO user_answers (user_id, question_id, quiz_id, option_id)
+            VALUES (?, ?, ?, ?)
+            `);
+            await insertAnswerStmt.run(user_id, question_id, test_id, option_id);
+        }    
+
+
+        await db.run("COMMIT");
+
+    }catch(error) {
+        await db.run("ROLLBACK");
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to insert answers');
+    }
+    
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "quiz retrieved successfully",
+        data: null,
+    });
 });
 
 const getTests = catchAsync(async (req, res)=> {

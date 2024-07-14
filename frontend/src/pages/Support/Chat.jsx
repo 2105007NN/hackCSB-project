@@ -1,5 +1,7 @@
 import {useState, useEffect, useRef} from "react"
 import ScrollToBottom from "react-scroll-to-bottom"
+import potat from '../../assets/potat.jpg'
+import send from '../../assets/send.png'
 
 const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket}) => {
     const [message, setMessage] = useState("")
@@ -44,7 +46,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
 
     
     return (
-        <div className="p-3 bg-gray-800">
+        <div className="p-3 bg-base-300">
             {!targetUser && (
                 <div>
 
@@ -53,7 +55,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
             {targetUser && 
             (
             <>
-                <div className="p-4 mb-5 bg-gray-900 text-lg font-bold rounded">
+                <div className="p-4 mb-5 bg-neutral text-lg text-neutral-content font-bold rounded">
                     <h1>Chatroom: {currentUser.username} & {targetUser.username}</h1>
                 </div>
                 <div class="flex-row items-start gap-2.5 h-[500px]">
@@ -63,12 +65,12 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                     return (
                     <div
                         key={index}
-                        className={`flex m-3 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
+                        className={`flex items-center gap-2 m-3 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
                     >
                         {!isCurrentUser && (
                         <img
                             className="w-8 h-8 rounded-full"
-                            src="/docs/images/people/profile-picture-3.jpg"
+                            src={potat}
                             alt="User"
                         />
                         )}
@@ -78,28 +80,28 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                         }`}
                         >
                         <div className="flex items-center space-x-2">
-                            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                            <span className="text-sm font-semibold text-base-content">
                             {m.author}
                             </span>
-                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                            <span className="text-sm font-normal text-base-content">
                             {m.time}
                             </span>
                         </div>
                         <div
-                            className={`flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-xl dark:bg-gray-700 text-white ${
+                            className={`flex flex-col leading-1.5 p-4 bg-neutral rounded-xl text-neutral-content ${
                             isCurrentUser ? 'bg-blue-500' : ''
                             }`}
                         >
                             <p className=" font-normal">{m.content}</p>
                         </div>
-                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <span className="text-sm font-normal text-base-content">
                             Delivered
                         </span>
                         </div>
                         {isCurrentUser && (
                         <img
                             className="w-8 h-8 rounded-full"
-                            src="/docs/images/people/profile-picture-3.jpg"
+                            src={potat}
                             alt="User"
                         />
                         )}
@@ -109,7 +111,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                 </ScrollToBottom>
 
                 </div>
-                <div className="h-[50px] mt-4 flex">
+                <div className="h-[50px] mt-4 flex gap-2">
                     <input 
                         type="text" 
                         id="default-input" 
@@ -120,18 +122,19 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                             event.key === "Enter" && sendMessage();
                         }}
                         autoComplete="off"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                        class="bg-neutral border border-neutral-content text-neutral-content text-lg rounded-lg focus:ring-success focus:border-success block w-full p-2.5" 
                     />
                     <button 
                         type="button" 
                         onClick={sendMessage}
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                    >Send</button>
+                        class="btn btn-primary text-primary-content"
+                    ><img src={send} className="w-8 h-8"/></button>
                 </div>
             </>
             )}
         </div>
     )
 }
-
+// "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+// "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
 export default Chat;
