@@ -11,7 +11,7 @@ import Forum from "../pages/Forum/Forum";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Support from "../pages/Support/Support";
 import ClientDashboard from "../pages/dashboard/ClientDashboard";
-import ClientProfile from "../pages/Profile/ClientProfile";
+import ClientProfile from "../pages/Profile/ClientProfile.jsx";
 import CreateTest from "../pages/Tests/CreateTest";
 import Tools from "../pages/Tools/Tools";
 import Resources from "../pages/Resources/Resources";
@@ -21,6 +21,7 @@ import ResultPage from "../pages/Tests/ResultPage";
 import Journal from "../pages/Journal/Journal";
 import ViewJournals from "../pages/Journal/ViewJournals.jsx";
 import MoodAnalysis from "../pages/MoodAnalysis/MoodAnalysis.jsx";
+
 
 export const routes = createBrowserRouter([
   {
@@ -51,9 +52,13 @@ export const routes = createBrowserRouter([
         path: "/client/dashboard",
         element: <ClientDashboard></ClientDashboard>,
       },
+      // {
+      //   path: "/client/profile/:id",
+      //   element: <ClientProfile></ClientProfile>,
+      // },
       {
-        path: "/client/profile/:id",
-        element: <ClientProfile></ClientProfile>,
+        path : "/client/profile/:id",
+        element: <ClientProfile></ClientProfile>
       },
       {
         path: "/support",
