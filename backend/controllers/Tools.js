@@ -104,9 +104,10 @@ const sendMoodRatings = async (req, res) => {
 		);
 		const userId = decodedToken.userId;
 		
-		const loggedMoods = await db.all(`SELECT * FROM mood_ratings WHERE user_id = ? ORDER BY createdAt`, [userId])
+		const loggedMoods = await db.all(`SELECT * FROM mood_ratings WHERE user_id = ? ORDER BY createdAt`, [userId]);
+		
 
-		console.log('in view journals, request query : ', req.query);
+		
 		res.status(200).json({
 			msg: "SUCCESS",
 			moodRatings: loggedMoods,
