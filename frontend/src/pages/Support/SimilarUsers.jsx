@@ -31,8 +31,8 @@ const SimilarUsers = ({currentUser, joinChat}) => {
                             {user.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3">
-                        <img src={chat} className="w-6 h-6" onClick={() => joinChat(user)} alt="Chat" />
+                        <button className="btn btn-primary ml-auto mr-3" title="Connect" onClick={() => joinChat(user)} alt="Chat" >
+                        <img src={chat} className="w-6 h-6" />
                         </button>
                     </div>
                     <div className="flex pb-3 flex-wrap">

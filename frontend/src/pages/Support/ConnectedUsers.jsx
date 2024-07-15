@@ -123,7 +123,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
                 {user.username}
               </p>
               {hoveredUserId === user.id && (
-                <button className="mr-2 ml-auto btn btn-primary" onClick={() => joinChat(user)}>
+                <button className="mr-2 ml-auto btn btn-primary" title='Connect' onClick={() => joinChat(user)}>
                   <img src={chat} className='h-6 w-6'/>
                 </button>
               )}
@@ -146,8 +146,8 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
                             {u.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3">
-                        <img src={chat} className="w-6 h-6" onClick={() => joinChat(u)} alt="Chat" />
+                        <button className="btn btn-primary ml-auto mr-3" title='Chat' onClick={() => joinChat(u)}>
+                        <img src={chat} className="w-6 h-6" alt="Chat" />
                         </button>
                     </div>
                 </div>

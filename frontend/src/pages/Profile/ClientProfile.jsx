@@ -46,6 +46,8 @@ import { GiTeacher } from "react-icons/gi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
 
+import Friends from "./Friends";
+
 // import CourseStudentCard from "./CourseStudentCard";
 const ClientProfile = () => {
   const { user } = useContext(AuthContext);
@@ -151,7 +153,9 @@ const ClientProfile = () => {
             className="tab px-20"
             aria-label="Friends"
             defaultChecked />
-          <div role="tabpanel" className="tab-content p-10">Friends</div>
+          <div role="tabpanel" className="tab-content p-10">
+            <Friends />
+          </div>
 
           <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Journal" />
           <div role="tabpanel" className="tab-content p-10">Journal</div>
