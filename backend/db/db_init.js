@@ -50,6 +50,7 @@ const dbPromise = (async () => {
     INSERT INTO categories (category_name) VALUES ('ptsd');
 
 
+
   `);
 
   return db;
