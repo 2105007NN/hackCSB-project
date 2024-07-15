@@ -294,6 +294,42 @@ INSERT INTO questions (id, test_id, category_id, question) VALUES
 (55, 6, 6, 'I feel quite numb about the situation');
 
 
+INSERT INTO tests (id, title, description, time, type) VALUES 
+(7, 'Mental Health Test', 'Assess common symptoms of mental health problems with our test.', '10', 'compulsory');
+
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(68, 7, 1, 'I have been irritable and easily become annoyed'),
+(69, 7, 1, 'I have experienced shortness of breath'),
+(70, 7, 1, 'I seem to be constantly worrying about things'),
+(71, 7, 1, 'I find it very hard to unwind, relax or sit still');
+
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(72, 7, 2, 'I feel overwhelmingly sad at times'),
+(73, 7, 2, 'When I think of the future I feel hopeless'),
+(74, 7, 2, 'I feel guilty about something most of the time'),
+(75, 7, 2, 'My sleep patterns have been really disrupted');
+
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(76, 7, 3, 'I find it challenging to maintain eye contact during conversations'),
+(77, 7, 3, 'I prefer to stick to a routine and get upset when it is disrupted?'),
+(78, 7, 3, 'I engage in repetitive behaviors or movements, such as hand-flapping, rocking, or repeating phrases?'),
+(79, 7, 3, 'I find it challenging to make friends or maintain social relationships');
+
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(80, 7, 4, 'If a task or project requires a lot of thought I will often delay in getting it started'),
+(81, 7, 4, 'I make decisions quickly and fail to think through the consequences'),
+(82, 7, 4, 'I find it difficult finishing a task or project'),
+(83, 7, 4, 'I find it hard to remain focused in group settings');
+
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(84, 7, 5, 'I have delusions, such as believing that you have special powers or are being controlled by external forces?'),
+(85, 7, 5, 'I feel that your thoughts are being inserted or removed from your mind by an outside force?'),
+(86, 7, 5, 'I experience significant mood swings, such as feeling extremely happy and then very depressed?'),
+(87, 7, 5, 'I find it difficult to organize your thoughts or follow conversations');
+
+INSERT INTO questions (id, test_id, category_id, question) VALUES 
+(88, 7, 6, 'I thought about the event when I didnt mean to'),
+(89, 7, 6, 'I have tried not to think about the situation');
 
     `);
   

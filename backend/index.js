@@ -13,8 +13,7 @@ import QuestionRoutes from "./routes/QuestionRoutes.js"
 import ToolsRoute from './routes/ToolsRoute.js'
 import 'dotenv/config'
 
-
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Use middleware and routes
 app.get("/", (req, res) => {

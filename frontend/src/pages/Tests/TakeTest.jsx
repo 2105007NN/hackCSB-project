@@ -60,10 +60,13 @@ const TakeTest = () => {
 
 
     return (
-        <div className="max-w-screen-xl m-auto">
-            <div className="text-4xl text-center p-5">{test?.title}</div>
-            <div className="my-60"></div>  
-            <div className="bg-base-300 p-12 rounded-2xl">
+        <div className=" m-auto">
+            <section className="py-24 bg-info text-center text-white m-auto">
+                <h3 className="text-5xl font-semibold text-center text-white">Take our quick {test?.title}</h3>
+                <h4 className="text-xl max-w-2xl mx-auto mt-4">The questions are based on an evidence-based screening tool but are indicative only and do not form a formal diagnosis</h4>
+            </section>
+            {/* <div className="my-60"></div>   */}
+            <div className="bg-base-300 p-12 rounded-2xl max-w-screen-xl mx-auto my-10">
 
                 
             <progress className="progress progress-error bg-neutral" value={count*10} max={questions.length * 10}></progress>
