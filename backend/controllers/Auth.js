@@ -3,10 +3,10 @@ import dbPromise from '../db/db_init.js';
 import catchAsync from '../utils/catchAsync.js';
 import sendResponse from '../utils/sendResponse.js';
 import { createToken } from '../utils/handleJWT.js';
+import 'dotenv/config';
 
-const jwt_access_secret = 'e7275323e5c49c75b6a12ebe80da5d6b53f5807a8fdd9537e64bc3a1480d8c072f4d5870109b81f7a26943bcc4b0c6ec0a0825f52b83ac1281f6ebca17a2e1fe';
-
-const jwt_access_expires_in = '1d';
+const jwt_access_secret = process.env.JWT_ACCESS_SECRET;
+const jwt_access_expires_in = process.env.JWT_EXPIRES_IN;
 
 const login = catchAsync(async (req, res) => {
     const { email, password } = req.body; // Assuming these are sent in the request body

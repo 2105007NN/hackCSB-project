@@ -14,8 +14,7 @@ import ToolsRoute from './routes/ToolsRoute.js'
 import DashboardRoutes from './routes/DashboardRoutes.js'
 import 'dotenv/config'
 
-
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Use middleware and routes
 app.get("/", (req, res) => {

@@ -194,10 +194,76 @@ const takeTest = catchAsync(async (req, res) => {
     }
 });
 
+const takeCompulsoryTest = catchAsync(async (req, res) => {
+    console.log('inside compulsory test api');
+    const db = await dbPromise;
+    const { test_id, answers, user_id } = req.body;
+    const highestScoringOption = 4;
+    const categories = {}; // To store scores for each category
+
+    try {
+        // Calculate scores per category
+        for (const answer of answers) {
+            const { question_id, option_id } = answer;
+            const option = await db.get(`SELECT * FROM options WHERE id = ?`, [option_id]);
+            const question = await db.get(`SELECT * FROM questions WHERE id = ?`, [question_id]);
+            const category_id = question.category_id;
+
+            if (!categories[category_id]) {
+                categories[category_id] = {
+                    totalScore: 0,
+                    questionCount: 0,
+                };
+            }
+
+            categories[category_id].totalScore += option.score;
+            categories[category_id].questionCount++;
+        }
+        console.log(categories);
+        // Calculate percentage score and insert/update user_category table
+        for (const category_id in categories) {
+            if (categories.hasOwnProperty(category_id)) {
+                const { totalScore, questionCount } = categories[category_id];
+                const maximumScore = questionCount * highestScoringOption;
+                const percentageScore = Math.floor((totalScore / maximumScore) * 100);
+
+                // Insert or update user_category
+                const insertCategoryStmt = await db.prepare(`
+                    INSERT INTO user_category (user_id, category_id, score)
+                    VALUES (?, ?, ?)
+                    ON CONFLICT(user_id, category_id) DO UPDATE SET score = excluded.score
+                `);
+                await insertCategoryStmt.run(user_id, category_id, percentageScore);
+            }
+        }
+
+        // Insert answers into the database
+        for (const answer of answers) {
+            const { question_id, option_id } = answer;
+            const insertAnswerStmt = await db.prepare(`
+                INSERT OR REPLACE INTO user_answers (user_id, question_id, test_id, option_id)
+                VALUES (?, ?, ?, ?)
+            `);
+            await insertAnswerStmt.run(user_id, question_id, test_id, option_id);
+        }
+
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: "Answers submitted successfully",
+            data: null,
+        });
+
+    } catch (error) {
+        console.error(error);
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to submit answers');
+    }
+});
+
 
 const getTests = catchAsync(async (req, res)=> {
     const db = await dbPromise;
-    const result = await db.all(`SELECT * FROM tests`);
+    const result = await db.all(`SELECT * FROM tests WHERE type != 'compulsory'`);
 
     console.log(result);
     sendResponse(res, {
@@ -266,17 +332,7 @@ const getAnswers = catchAsync(async (req, res) => {
         data: result,
     });
 })
-const getUserCategory = catchAsync(async (req, res) => {
-    const db = await dbPromise;
-    const result = await db.all("SELECT * FROM user_category");
 
-    sendResponse(res,{
-        statusCode: 200,
-        success: true,
-        message: "user_answers retrieved successfully",
-        data: result,
-    });
-})
 
 export const TestController = {
   createTest,
@@ -286,5 +342,5 @@ export const TestController = {
   getSingleTest,
   getResult,
   getAnswers,
-  getUserCategory
+  takeCompulsoryTest
 };
