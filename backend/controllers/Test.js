@@ -217,15 +217,20 @@ const getCategoryID = async (db, categoryName) => {
 };
 
 const getResult = catchAsync(async(req,res)=> {
-    console.log('inside get');
-    const {userId, testId} = req.body;
-    console.log(userId);
     const db = await dbPromise;
-    const result = await db.all(`SELECT t.*, q.*, ua.option_id AS user_answer
+    const {userId, testId} = req.params;
+    const test = await db.get('SELECT * FROM tests WHERE id = ?', [testId]);
+    console.log(test);
+    const categoryId = await getCategoryID(db, test.type);
+
+    console.log(userId, 'categoryId :' , categoryId);
+    const result = await db.all(`SELECT t.*, q.*, o.name AS user_answer, uc.score
                                 FROM user_answers ua 
                                 LEFT JOIN questions q ON q.id = ua.question_id
                                 LEFT JOIN tests t ON t.id = q.test_id
-                                WHERE t.id = ? AND ua.user_id = ?`, [testId, userId]);
+                                LEFT JOIN options o ON o.id = ua.option_id
+                                LEFT JOIN user_category uc on uc.user_id = ?
+                                WHERE t.id = ? AND ua.user_id = ? AND uc.category_id = ?`, [userId, testId, userId, categoryId]);
 
     console.log(result);
     sendResponse(res,{

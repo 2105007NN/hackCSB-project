@@ -19,9 +19,11 @@ router.get("/get-test/:testId", TestController.getSingleTest);
 router.get("/get-options", TestController.getOptions);
 
 //get results for a certain test for a certain user
-router.get("/get-result", TestController.getResult);
+router.get("/get-result/:testId/:userId", TestController.getResult);
 
 router.get("/get-answers", TestController.getAnswers);
 
 export default router;
+
+//http://localhost:3000/tests/get-result/:testId/:userId
 

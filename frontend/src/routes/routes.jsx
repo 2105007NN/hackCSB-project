@@ -70,7 +70,9 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/result/:testId/:userId",
-        element : <ResultPage/>
+        element : <ResultPage/>,
+        loader : ({params})=> 
+          fetch(`http://localhost:3000/tests/get-result/${params.testId}/${params.userId}`),
       },
       {
         path: "/take-test/:id",
