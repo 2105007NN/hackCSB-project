@@ -23,6 +23,8 @@ router.get("/get-result/:testId/:userId", TestController.getResult);
 
 router.get("/get-answers", TestController.getAnswers);
 
+router.get("/get-user-category", TestController.getUserCategory);
+
 export default router;
 
 //http://localhost:3000/tests/get-result/:testId/:userId

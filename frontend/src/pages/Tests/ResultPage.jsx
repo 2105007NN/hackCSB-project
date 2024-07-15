@@ -2,29 +2,14 @@ import { useLoaderData } from "react-router-dom";
 
 const ResultPage = () => {
     const data = useLoaderData();
-    const results = data.data;
-    const score = results[0].score;
-    console.log(results);
-    // const {data: bookings =[]} = useQuery({
-    //     queryKey:['bookings', user?.email],
-    //     queryFn: async ()=>{
-    //         const res = await fetch(url,{
-    //             headers:{
-    //                 authorization: `bearer ${localStorage.getItem('accessToken')}`
-    //             }
-    //         });
-    //         const data = await res.json();
-    //         console.log(data)
-    //         console.log(localStorage.getItem('accessToken'));
-    //         return data;
-    //     }
-    // })
-
+    const results = data?.data?.result;
+    const score = data?.data?.score;
+    console.log(data);
 
     return (
         <div>
             <section className="py-28 bg-info text-center text-white m-auto">
-                <h3 className="text-5xl text-white font-semibold text-center text-accent">ADHD Test Results</h3>
+                <h3 className="text-5xl font-semibold text-center text-accent">ADHD Test Results</h3>
                 <h4 className="text-xl max-w-2xl mx-auto mt-4">The questions are based on an evidence-based screening tool but are indicative only and do not form a formal diagnosis</h4>
             </section>
             {/* result section  */}
@@ -74,34 +59,6 @@ const ResultPage = () => {
     </div>
 </div>
 
-
-                {/* <h3 className="text-xl text-error hover:underline">Review my answers</h3> */}
-
-
-                {/* <div className="overflow-x-auto"> */}
-  {/* <table className="table table-zebra">
-    {/* head */}
-    {/* <thead>
-      <tr>
-        <th></th>
-        <th>Question</th>
-        <th>Answer</th>
-      </tr>
-    </thead>
-    <tbody>
-                {
-                    results.map((result, index) => (
-                        <tr key={result.id}>
-                            <th>{ index + 1 }</th>
-                            <td>{result?.question}</td>
-                            <td>{result?.user_answer}</td>
-                        </tr>
-                    )) */}
-                {/* } */} 
-    {/* </tbody>
-  </table>
-</div>
- */}
 
             </section>
         </div>
