@@ -59,7 +59,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
             {targetUser && 
             (
             <>
-                <div className="p-4 mb-5 bg-neutral text-lg text-neutral-content font-bold rounded">
+                <div className="p-4 mb-5 bg-gradient-to-r from-primary via-secondary to-accent text-lg text-neutral font-bold rounded">
                     <h1>Chatroom: {currentUser.username} & {targetUser.username}</h1>
                 </div>
                 <div class="flex-row items-start gap-2.5 h-[500px]">

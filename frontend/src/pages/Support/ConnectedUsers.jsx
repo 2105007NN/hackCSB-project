@@ -133,7 +133,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
       </Menu>
 
         <div className="h-[500px] overflow-y-auto overflow-x-hidden">
-          <h2 className='p-4 font-bold text-[25px]'>Connected users:</h2>
+          <h2 className='mt-4 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Connected users:</h2>
           {connectedUserList.map((u) => {
             if (u.id !== currentUser.id) {
               return (
