@@ -47,19 +47,20 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
         id="dropdownSearchButton"
         onClick={handleClick}
         className="btn btn-primary ml-4 text-primary-content"
+        title='Search users'
       >
         <img src={searchIcon} className='h-6 w-6'/>
       </button>
       <button onClick={() => {
         setShowTherapist(true)
         setShowSimilar(false)
-      }} className='btn btn-primary ml-4'>
+      }} className='btn btn-primary ml-4' title='Show Therapists'>
         <img src={therapistIcon} className='h-6 w-6'/>
       </button>
       <button onClick={() => {
         setShowSimilar(true)
         setShowTherapist(false)
-      }} className='btn btn-primary ml-4'>
+      }} className='btn btn-primary ml-4' title='Show users with similar issues'>
         <img src={similarIcon} className='h-6 w-6'/>
       </button>
 
