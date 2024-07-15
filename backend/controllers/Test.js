@@ -195,6 +195,7 @@ const takeTest = catchAsync(async (req, res) => {
 });
 
 const takeCompulsoryTest = catchAsync(async (req, res) => {
+    console.log('inside compulsory test api');
     const db = await dbPromise;
     const { test_id, answers, user_id } = req.body;
     const highestScoringOption = 4;
@@ -262,7 +263,7 @@ const takeCompulsoryTest = catchAsync(async (req, res) => {
 
 const getTests = catchAsync(async (req, res)=> {
     const db = await dbPromise;
-    const result = await db.all(`SELECT * FROM tests`);
+    const result = await db.all(`SELECT * FROM tests WHERE type != 'compulsory'`);
 
     console.log(result);
     sendResponse(res, {

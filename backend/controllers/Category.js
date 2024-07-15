@@ -36,7 +36,7 @@ const getSingleUserReport = catchAsync(async (req,res)=> {
     sendResponse(res, {
         statusCode : 200,
         success : 200,
-        message : "user categories retrieved successfully",
+        message : "single user categories retrieved successfully",
         data : result
     })
 })

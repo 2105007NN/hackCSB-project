@@ -7,6 +7,7 @@ const TakeTest = () => {
     const {user} = useContext(AuthContext);
     const data = useLoaderData().data;
     const test = data.test[0];
+    console.log(test);
     const questions = data.questions;
     const options = data.options;
     console.log(test.id);
@@ -51,13 +52,43 @@ const TakeTest = () => {
             console.error('Error uploading result:', error);
           });
     }
-
-
-    if(questions.length === count) {
-        console.log('test completed');
-        handleSubmit();
+    const handleCompulsorySubmit = async()=> { 
+        console.log('compulsory submitted'); 
+        fetch(`http://localhost:3000/tests/take-compulsory-test`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                answers: answers,
+                user_id : user?.id,
+                test_id : test?.id
+            }),
+          })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+            console.log('Answers uploaded successfully:', data);
+            window.location = `/client/dashboard`
+          })
+          .catch(error => {
+            console.error('Error uploading result:', error);
+          });
     }
-
+    console.log(test?.type);
+    if(questions.length === count) {
+        if(test?.type !== 'compulsory') {
+            console.log('test completed');
+            handleSubmit();
+        }else {
+            handleCompulsorySubmit();
+        }    
+    }
+    
 
     return (
         <div className=" m-auto">
@@ -79,7 +110,10 @@ const TakeTest = () => {
             className="carousel-item relative w-full"
         >
             <div className="p-4 m-auto py-20">
-                <h3 className="text-2xl m-auto text-center text-white font-semibold">{question.question}</h3>
+                <h2 className="text-3xl text-center text-white font-bold mb-4">Question - {count + 1}</h2>
+                <h3 className="text-xl m-auto text-center text-white font-semibold">
+                    {question.question}
+                </h3>
                 <div className="flex gap-20 items-center mt-10">
                     {options
                         .map(option => (

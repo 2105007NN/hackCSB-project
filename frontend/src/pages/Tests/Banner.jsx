@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Banner = () => {
   return (
     <div
@@ -19,7 +21,12 @@ const Banner = () => {
             Uttom Chowdhury - MB ChB, MRC Psych - Consultant Child & Adolescent
             Psychiatrist
           </p>
-          <button className="btn btn-primary text-xl">Take Tests</button>
+          {/* <button className="btn btn-primary text-xl"><a href="#tests">Take Tests</a></button> */}
+            <Link to={`/take-test/7`}>
+                <button className="btn btn-secondary text-xl text-white mt-8">
+                    Start test
+                </button>
+            </Link>
         </div>
       </div>
     </div>
