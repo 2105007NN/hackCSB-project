@@ -23,8 +23,8 @@ const Banner = () => {
           </p>
           {/* <button className="btn btn-primary text-xl"><a href="#tests">Take Tests</a></button> */}
             <Link to={`/take-test/7`}>
-                <button className="btn btn-secondary text-xl text-white mt-8">
-                    Start test
+                <button className="btn btn-primary text-xl text-white mt-8">
+                    Take Test
                 </button>
             </Link>
         </div>

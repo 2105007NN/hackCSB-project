@@ -1,4 +1,5 @@
 import FeatureBlock from "../../components/helperComponents/FeatureBlock.jsx";
+import Banner from "./Banner.jsx";
 
 const features = [
   {
@@ -34,16 +35,9 @@ const features = [
 ];
 
 const Home = () => {
-  return (
-    <div className="max-w-screen-2xl m-auto">
-      <header className="text-center py-10 ">
-        <h1 className="text-5xl font-bold text-primary">
-          Welcome to Mental Health Support
-        </h1>
-        <p className="text-lg text-secondary mt-4">
-          Your journey to better mental health starts here.
-        </p>
-      </header>
+  return (<>
+   <Banner></Banner>
+    <div className="max-w-screen-2xl m-auto mt-20">
       <div className="feature-container flex flex-wrap h-full w-full gap-5">
         {features.map((feature, index) => (
           <div
@@ -61,6 +55,7 @@ const Home = () => {
         ))}
       </div>
     </div>
+  </>
   );
 };
 
