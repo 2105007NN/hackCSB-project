@@ -13,6 +13,9 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Support from "../pages/Support/Support";
 import ClientDashboard from "../pages/dashboard/ClientDashboard";
 import ClientProfile from "../pages/Profile/ClientProfile";
+import Blogs from "../pages/Blogs/Blogs";
+import BlogsPage from "../pages/Blogs/BlogsPage";
+import SingleBlog from "../pages/Blogs/SingleBlog";
 
 export const routes = createBrowserRouter([
   {
@@ -50,6 +53,16 @@ export const routes = createBrowserRouter([
       {
         path: "/support",
         element: <Support></Support>,
+      },
+      {
+        path: "/blogs",
+        element: <BlogsPage></BlogsPage>
+      },
+      {
+        path: "/blogs/:blog_id",
+        element: <SingleBlog></SingleBlog>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/blogs/${params.blog_id}`),
       },
     ],
   },

@@ -8,6 +8,7 @@ import UserRoutes from "./routes/UserRoutes.js"
 import CategoryRoutes from "./routes/CategoryRoutes.js"
 import AuthRoutes from "./routes/AuthRoutes.js"
 import dotenv from 'dotenv';
+import BlogRoutes from "./routes/BlogRoutes.js";
 
 const port = 3000;
 
@@ -35,6 +36,7 @@ io.on("connection", async (socket) => {
 app.use('/users',UserRoutes)
 app.use('/categories',CategoryRoutes)
 app.use('/auth',AuthRoutes)
+app.use('/blogs',BlogRoutes)
 
 //global error handler
 app.use(globalErrorHandler);
