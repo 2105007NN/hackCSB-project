@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 const Footer = () => {
     return (
-      <footer className="footer footer-center bg-primary text-primary-content p-10">
+      <footer className="footer footer-center bg-primary text-primary-content py-10">
   <aside>
     <svg
       width="50"
