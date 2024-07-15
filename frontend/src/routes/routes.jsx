@@ -20,6 +20,7 @@ import TestsMain from "../pages/Tests/TestsMain";
 import ResultPage from "../pages/Tests/ResultPage";
 import Journal from "../pages/Journal/Journal";
 import ViewJournals from "../pages/Journal/ViewJournals.jsx";
+import MoodAnalysis from "../pages/MoodAnalysis/MoodAnalysis.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -74,6 +75,11 @@ export const routes = createBrowserRouter([
       {
         path: "/view-journal/:id",
         element : <ViewJournals/>
+      },
+
+      {
+        path: "/mood-analysis/:id",
+        element : <MoodAnalysis/>
       },
 
       {
