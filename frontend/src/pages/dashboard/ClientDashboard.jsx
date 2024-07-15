@@ -12,15 +12,15 @@ const Dashboard = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className="max-w-screen-2xl m-auto">
 			{quote && (<div className="flex flex-col items-center bg-gradient-to-r from-primary via-secondary to-accent p-6 m-12 rounded-lg shadow-lg">
 				<h1 className="text-5xl text-neutral font-bold mb-4">Quote of the day</h1>
 				<p className="text-2xl italic text-base-100 mb-2">"{quote.quote}"</p>
 				<p className="text-lg text-base-content">-{quote.name}</p>
 			</div>)}
 
-			<div className="flex flex-wrap justify-center gap-4 p-7">
-				<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
+			<div className="grid grid-cols-3 justify-center gap-10 m-auto py-20">
+				<div className="mx-auto">
 					<DashboardCard
 						title="Articles"
 						description="Explore Articles written by our experts"
@@ -29,7 +29,7 @@ const Dashboard = () => {
 					/>
 				</div>
 
-				<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
+				<div className="mx-auto">
 					<DashboardCard
 						title="Journal"
 						description="Keep a track of your personal thoughts"
@@ -38,7 +38,7 @@ const Dashboard = () => {
 					/>
 				</div>
 
-				<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
+				<div className="mx-auto">
 					<DashboardCard
 						title="Support"
 						description="Get Support from professionals"
@@ -46,7 +46,7 @@ const Dashboard = () => {
 						targetUrl="/support"
 					/>
 				</div>
-				<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
+				<div className="mx-auto">
 					<DashboardCard
 						title="Forum"
 						description="Join the community for peer support"
@@ -54,7 +54,7 @@ const Dashboard = () => {
 						targetUrl="/forum"
 					/>
 				</div>
-				<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
+				<div className="mx-auto">
 					<DashboardCard
 						title="Quizzes"
 						description="Take mental health quizzes"
@@ -62,7 +62,7 @@ const Dashboard = () => {
 						targetUrl="/create-quiz"
 					/>
 				</div>
-				<div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-2">
+				<div className="mx-auto">
 					<DashboardCard
 						title="Tools"
 						description="Explore Tools for mental health"

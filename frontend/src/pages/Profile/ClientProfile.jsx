@@ -45,6 +45,8 @@ import { BiSolidInstitution } from "react-icons/bi";
 import { GiTeacher } from "react-icons/gi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
+import Settings from "./Settings";
+import PassChange from "./PassChange";
 
 // import CourseStudentCard from "./CourseStudentCard";
 const ClientProfile = () => {
@@ -141,8 +143,15 @@ const ClientProfile = () => {
         <div className=" shadow-lg col-start-3 col-end-9 p-5 m-5 border rounded-xl">
           {/* tabs  */}
           <div role="tablist" className="tabs tabs-bordered">
-          <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="profile info" />
+          <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Info" />
           <div role="tabpanel" className="tab-content p-10">Profile</div>
+          
+          <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Settings" />
+          <div role="tabpanel" className="tab-content p-10">
+            {/* update additional info  */}
+              <PassChange></PassChange>
+              <Settings></Settings>
+          </div>
 
           <input
             type="radio"
