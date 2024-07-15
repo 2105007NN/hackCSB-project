@@ -136,7 +136,7 @@ const takeTest = catchAsync(async (req, res) => {
     const maximumScore = questionCount * highestScoringOption;
     let calculatedScore = 0;
 
-    await db.run("BEGIN TRANSACTION");
+    // await db.run("BEGIN TRANSACTION");
 
     try {
         // Calculate the total score
@@ -157,6 +157,7 @@ const takeTest = catchAsync(async (req, res) => {
         const question = await db.get(`SELECT * FROM questions WHERE id = ?`, [question_id]);
         // console.log(question);
         const category_id = question.category_id;
+        console.log(category_id, 'from take test');
 
         // console.log(answers); // Assuming all questions belong to the same category
         // console.log(user_id, category_id, percentageScore);
@@ -171,24 +172,25 @@ const takeTest = catchAsync(async (req, res) => {
         for (const answer of answers) {
             const { question_id, option_id } = answer;
             const insertAnswerStmt = await db.prepare(`
-                INSERT INTO user_answers (user_id, question_id, test_id, option_id)
+                INSERT OR REPLACE INTO user_answers (user_id, question_id, test_id, option_id)
                 VALUES (?, ?, ?, ?)
             `);
             await insertAnswerStmt.run(user_id, question_id, test_id, option_id);
         }
 
-        await db.run("COMMIT");
+        // await db.run("COMMIT");
 
         sendResponse(res, {
             statusCode: 200,
             success: true,
-            message: "quiz retrieved successfully",
+            message: "Answerts submitted successfully",
             data: null,
         });
+
     } catch (error) {
-        await db.run("ROLLBACK");
+        // await db.run("ROLLBACK");
         console.error(error);
-        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to insert answers');
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to submit answers');
     }
 });
 
@@ -217,29 +219,56 @@ const getCategoryID = async (db, categoryName) => {
 };
 
 const getResult = catchAsync(async(req,res)=> {
-    console.log('inside get');
-    const {userId, testId} = req.body;
-    console.log(userId);
     const db = await dbPromise;
-    const result = await db.all(`SELECT t.*, q.*, ua.option_id AS user_answer
-                                FROM user_answers ua 
-                                LEFT JOIN questions q ON q.id = ua.question_id
-                                LEFT JOIN tests t ON t.id = q.test_id
-                                WHERE t.id = ? AND ua.user_id = ?`, [testId, userId]);
+    const {userId, testId} = req.params;
+    const test = await db.get('SELECT * FROM tests WHERE id = ?', [testId]);
+    console.log(test);
+    const categoryId = await getCategoryID(db, test.type);
 
-    console.log(result);
-    sendResponse(res,{
-        statusCode : 200,
-        success : 200,
-        message : "Results for this tests are retrived successfully",
-        data : result
-    })
-})
+    console.log('userId ', userId, 'categoryId :' , categoryId, 'testId' , testId);
+    const result = await db.all(`
+        SELECT t.*, q.*, o.name AS user_answer
+        FROM tests t 
+        LEFT JOIN questions q ON q.test_id = t.id
+        LEFT JOIN user_answers ua ON ua.question_id = q.id 
+        LEFT JOIN options o ON o.id = ua.option_id
+        WHERE t.id = ? AND ua.user_id = ?`, [testId, userId]);
+
+    const scoreResult = await db.get(`
+        SELECT uc.score 
+        FROM user_category uc
+        WHERE uc.user_id = ? and uc.category_id = ?    
+    `, [userId, categoryId]);
+
+    console.log('score', scoreResult);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Results for this test are retrieved successfully",
+        data: {
+            result,
+            score: scoreResult ? scoreResult.score : null
+        }
+    });
+});
+
 
 
 const getAnswers = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const result = await db.all("SELECT * FROM user_answers");
+
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "user_answers retrieved successfully",
+        data: result,
+    });
+})
+const getUserCategory = catchAsync(async (req, res) => {
+    const db = await dbPromise;
+    const result = await db.all("SELECT * FROM user_category");
 
     sendResponse(res,{
         statusCode: 200,
@@ -256,5 +285,6 @@ export const TestController = {
   getOptions,
   getSingleTest,
   getResult,
-  getAnswers
+  getAnswers,
+  getUserCategory
 };

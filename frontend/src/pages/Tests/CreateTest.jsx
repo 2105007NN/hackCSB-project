@@ -24,7 +24,6 @@ const CreateTest = () => {
     // Retrieve values from formData
     const question = formData.get("question");
     const category = formData.get("category");
-    // const description = formData.get("description");
     console.log(question, category);
     let Obj;
     if(type === 'Compulsory') {
@@ -63,9 +62,6 @@ const CreateTest = () => {
     // const suggestion_high = formData.get("suggestion_high");
 
     formData.append("questions", serializedArray);
-    // formData.append('creator_id', user?.teacher_id);
-    // formData.append('course_id', course?.course_id);
-
     console.log("quiz submitted");
     console.log(time, title, formData);
     console.log(formData.get("questions"));
@@ -201,15 +197,6 @@ const CreateTest = () => {
           ></textarea>
         </div>
 
-        {/* <label className="input input-bordered flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" /><path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" /></svg>
-            <input type="text" name="lesson_id" className="grow" placeholder="Enter suggestions Medium" />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" /><path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" /></svg>
-            <input type="text" name="lesson_id" className="grow" placeholder="Enter suggestions High" />
-            </label> */}
-
         {/*
                     displaying questions  
              */}
@@ -299,7 +286,6 @@ const CreateTest = () => {
       >
         Add question
       </button>
-      {/* <button className="btn w-full mt-2" onClick={sendQuestionsToServer}>Create Quiz</button> */}
     </div>
   );
 };
