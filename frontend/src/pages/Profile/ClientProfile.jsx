@@ -47,6 +47,9 @@ import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
 import Settings from "./Settings";
 import PassChange from "./PassChange";
+import ProfileInfo from "./ProfileInfo";
+import { FaUserCircle } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 // import CourseStudentCard from "./CourseStudentCard";
 const ClientProfile = () => {
@@ -123,15 +126,15 @@ const ClientProfile = () => {
             
           </div>
           <div className="p-5 border rounded-xl">
-            <h2 className="flex items-center gap-3 text-3xl border rounded-md p-2 my-1">
-              {/* <FontAwesomeIcob icon={faUser} /> */}
+            <h2 className="flex items-center gap-3 text-2xl border rounded-md p-2 my-1">
+              <FaUserCircle className="text-black"/>
               {username}
             </h2>
-            <h3 className="flex items-center gap-3 text-xl py-2 border rounded-md p-2"><span><BiSolidInstitution /></span>{email}</h3>
-            <div className="flex items-center gap-3 text-xl py-2 border rounded-md my-2">
-              <IoLocation className="text-yellow-400 text-3xl"/>
+            <h3 className="flex items-center gap-3 text-xl py-2 border rounded-md p-2 "><span className="text-black"><MdEmail /></span>{email}</h3>
+            <div className="flex items-center gap-3 text-xl py-2 border rounded-md my-2 p-2">
+              <IoLocation className="text-black text-2xl"/>
               <h3 className="text-xl">
-                Client
+                {user?.role}
               </h3>
             </div>
             <div className="flex items-center gap-5 pt-10">
@@ -144,7 +147,9 @@ const ClientProfile = () => {
           {/* tabs  */}
           <div role="tablist" className="tabs tabs-bordered">
           <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Info" />
-          <div role="tabpanel" className="tab-content p-10">Profile</div>
+          <div role="tabpanel" className="tab-content p-10">
+            <ProfileInfo></ProfileInfo>
+          </div>
           
           <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Settings" />
           <div role="tabpanel" className="tab-content p-10">
