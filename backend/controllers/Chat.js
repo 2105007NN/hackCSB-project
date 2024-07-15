@@ -86,15 +86,15 @@ const getSimilarUsers = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const name = req.params.name
     const categories = await db.all(`SELECT category_name FROM users U JOIN user_category UC JOIN categories C
-                    WHERE U.username = ? AND UC.user_id = U.id AND UC.category_id = C.id`, [name])
+                    WHERE U.username = ? AND UC.user_id = U.id AND UC.category_id = C.id AND UC.score >= 70`, [name])
     const filteredCategories = categories.map(c => c.category_name)
     const placeholders = filteredCategories.map(() => '?').join(',');
     const params = [name, ...filteredCategories]
     const users = await db.all(`SELECT U.* FROM users U JOIN user_category UC JOIN categories C
-                    WHERE U.id = UC.user_id AND UC.category_id = C.id AND U.role != 'therapist' AND U.username != ? AND C.category_name IN (${placeholders})`, params)
+                    WHERE U.id = UC.user_id AND UC.category_id = C.id AND U.role != 'therapist' AND U.username != ? AND UC.score >= 70 AND C.category_name IN (${placeholders})`, params)
     const r = await Promise.all(users.map(async(user) => {
         const categories = await db.all(`SELECT C.category_name, C.color FROM user_category UC JOIN categories C 
-                    WHERE UC.category_id = C.id AND UC.user_id = ?`, [user.id])
+                    WHERE UC.category_id = C.id AND UC.user_id = ? AND UC.score >= 70`, [user.id])
         return {...user, categories: categories}
     }))
     const result = r.filter(user => user !== undefined);

@@ -19,7 +19,7 @@ const SimilarUsers = ({currentUser, joinChat}) => {
 
     return (
         <div className="h-[680px] overflow-y-auto overflow-x-hidden bg-neutral">
-          <h2 className='p-4 font-bold text-[25px]'>Users with similar issues:</h2>
+          <h2 className='m-2 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Users with similar issues:</h2>
           {similarUsers.map((user) => {
             
               return (

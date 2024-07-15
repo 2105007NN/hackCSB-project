@@ -16,7 +16,7 @@ const Therapists = ({joinChat}) => {
 
     return (
         <div className="h-[680px] overflow-y-auto overflow-x-hidden bg-neutral">
-          <h2 className='p-4 font-bold text-[25px]'>Available therapists:</h2>
+          <h2 className='m-2 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Available therapists:</h2>
           {therapistList.map((therapist) => {
             
               return (
