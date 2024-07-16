@@ -14,7 +14,8 @@ const TakeTest = () => {
     const [answers, setAnswers] = useState([]);
     const [count, setCount] = useState(0);
     console.log(count);
-    const handleOptionClick = (questionId, selectedOption) => {
+    const handleOptionClick = (e,questionId, selectedOption) => {
+        e.preventDefault();
         setCount(prevCount => prevCount + 1);
         let Obj = {
             question_id : questionId,
@@ -120,7 +121,7 @@ const TakeTest = () => {
                             <a key={option.id} href={`#slide${index === questions.length - 1 ? 1 : index + 2}`}>
                                 <button
                                     className="btn btn-lg btn-secondary text-xl text-white"
-                                    onClick={()=>handleOptionClick(question?.id, option.id)}
+                                    onClick={(e)=>handleOptionClick(e, question?.id, option.id)}
                                 >
                                     {option.name}
                                 </button>
