@@ -15,7 +15,7 @@ const url = "http://localhost:3000"
 const socket = io.connect(url)
 
 const Support = () => {
-    const { user, setUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [connectedUserList, setConnectedUserList] = useState([])
     const [targetUser, setTargetUser] = useState(null)
     const [list, setList] = useState([])

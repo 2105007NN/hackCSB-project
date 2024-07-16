@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -5,7 +7,7 @@ import potat from "../../assets/potat.jpg"
 import chat from '../../assets/chat.png'
 
 const SimilarUsers = ({currentUser, joinChat}) => {
-    const { user, setUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [similarUsers, setSimilarUsers] = useState([])
 
     useEffect(() => {
@@ -23,11 +25,11 @@ const SimilarUsers = ({currentUser, joinChat}) => {
           {similarUsers.map((user) => {
             
               return (
-                <div className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
+                <div key={user.id} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
                     <div className="flex items-center justify-between rounded-lg">
                         <div className="flex items-center">
                         <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />
-                        <p key={user.id} className="p-2 m-4 font-medium text-[20px]">
+                        <p  className="p-2 m-4 font-medium text-[20px]">
                             {user.username}
                         </p>
                         </div>

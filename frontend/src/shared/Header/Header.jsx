@@ -5,12 +5,13 @@ import { useContext } from "react";
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
   console.log(user ? user : "null");
-  const imgUrl = user?.user_photo?.substring(6 + 1);
+  const imgUrl = user?.profileImg?.substring(6 + 1);
+  console.log(imgUrl);
   console.log(user?.role);
   //logout user
   const handleLogout = () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("access-token");
+    localStorage.removeItem("access_token");
     setUser(null);
   };
   // useEffect(() => {
@@ -25,11 +26,11 @@ const Header = () => {
     <>
       <nav className="bg-blue-950 border-gray-200 dark:bg-gray-900 ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <Link to="/" class="flex items-center space-x-2 rtl:space-x-reverse">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src="/public/png-clipart-avatar-youtube-cat-cute-dog-heroes-cat-like-mammal-removebg-preview.png"
               className="h-8"
-              alt="Flowbite Logo"
+              alt="App Logo"
             />
             <span className="self-center text-base-200  text-2xl font-semibold whitespace-nowrap dark:text-white">
               HelpUrSelf
@@ -55,11 +56,7 @@ const Header = () => {
                         className="btn btn-ghost btn-circle avatar"
                       >
                         <div className="w-10 rounded-full">
-                          {
-                            user?.user_photo ?  <img src={`http://localhost:5002/${imgUrl}`} /> :  
-                            <img src="https://png.pngtree.com/png-vector/20210702/ourmid/pngtree-black-chess-pawn-png-image_3539520.jpg" />
-
-                          }
+                             <img src={imgUrl ? `http://localhost:3000/${imgUrl}` : "https://png.pngtree.com/png-vector/20210702/ourmid/pngtree-black-chess-pawn-png-image_3539520.jpg"} />
                         </div>
                       </label>
                     </div>
