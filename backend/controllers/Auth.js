@@ -4,6 +4,8 @@ import catchAsync from '../utils/catchAsync.js';
 import sendResponse from '../utils/sendResponse.js';
 import { createToken } from '../utils/handleJWT.js';
 import 'dotenv/config';
+import AppError from '../errors/AppError.js';
+import httpStatus from 'http-status';
 
 const jwt_access_secret = process.env.JWT_ACCESS_SECRET;
 const jwt_access_expires_in = process.env.JWT_EXPIRES_IN;
@@ -138,9 +140,46 @@ const therapistRegistration = catchAsync(async (req, res) => {
     });
 });
 
+const changePassword = catchAsync(async(req,res)=> {
+    console.log('change password');
+    const db = await dbPromise;
+    const userId = req.user.userId;
+    const {newpassword, oldpassword} = req.body;
+    console.log(userId, newpassword, oldpassword);
+
+    const user = await db.get('SELECT * FROM users WHERE id = ?', [userId]);
+    //check if old password matches
+    const oldPassword = user?.password;
+    console.log(oldPassword);
+    if(oldPassword !== oldpassword) {
+        throw new AppError(httpStatus.FORBIDDEN, 'password did not match');
+    }
+
+    //update the password
+    const updatePasswordResult = await db.prepare(`
+            UPDATE users 
+            SET password = ? 
+            WHERE id = ?
+        `)
+    await updatePasswordResult.run(newpassword, userId);
+
+
+    const result = await db.get('SELECT * FROM users WHERE id = ?', [userId]);
+
+    sendResponse(res, {
+        statusCode : 200,
+        success : true,
+        message : "password updated successfully",
+        data : result
+    })
+
+})
+
 
 export const AuthController = {
     login,
     clientRegistration,
-    therapistRegistration
+    therapistRegistration,
+    changePassword,
+
 }

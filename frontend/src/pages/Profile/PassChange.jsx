@@ -3,51 +3,32 @@ import { AuthContext } from "../../context/AuthProvider";
 
 const PassChange = () => {
     const {user} = useContext(AuthContext);
-    const [selectedDate, setDate] = useState(new Date());
-    const user_id = user?.id;
-    console.log(selectedDate);
-   
-    // console.log(formattedDate)
-    // const date = new Date();
-    const year = selectedDate.getFullYear();
-    const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
-    const day = String(selectedDate.getDate()).padStart(2, '0'); // Add leading zero if needed
-    const formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
-        console.log("heloo")
-        const country = form.country.value;
-        const education = form.education.value;
-        console.log(country, education, formattedDate);
-        //date_of_birth, country, city, years_of_experience, institution, mentored_students, teacher_description
-        // /update/:userId/:teacherId
+
+        const newpassword = form.newpassword.value;
+        const oldpassword = form.oldpassword.value;
+        console.log(newpassword, oldpassword);
+        
         try {
             console.log(user?.teacher_id);
             
-          const response = await fetch(`http://localhost:5002/update/Profile/${user?.id}/${user?.student_id}`, {
+          const response = await fetch(`http://localhost:3000/auth/change-password`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
             },
             body: JSON.stringify({
-                education: education,
-                country: country,
-                city: city,
-                profession : profession,
-                date_of_birth: selectedDate,
-                job_profile: job_profile
+                newpassword : newpassword,
+                oldpassword : oldpassword
             }),
           });
           console.log({
-            education : education, 
-            country: country,
-            city: city,
-            profession : profession,
-            date_of_birth: selectedDate,
-            job_profile: job_profile
+            newpassword : newpassword,
+            oldpassword : oldpassword
         })
           if (response.ok) {
             const result = await response.json();
@@ -57,7 +38,8 @@ const PassChange = () => {
             console.error('Failed to add course.');
           }
           //reset the form
-        //   form.reset();
+          form.reset();
+
         } catch (error) {
           console.error('Error:', error);
           
@@ -71,16 +53,16 @@ const PassChange = () => {
                     <label className="label">
                         <span className="label-text text-primary"><span className="text-red-500">*</span>New Password</span>
                     </label>
-                    <input type="password" name='newpassword' placeholder="Enter new password" className="input input-bordered w-full bg-slate-300"  required/>
+                    <input type="password" name='newpassword' placeholder="Enter new password" className="input input-bordered w-full text-slate-400"  required/>
                     </div>
                 <div className="form-control w-full ">
                     <label className="label">
                         <span className="label-text text-primary"><span className="text-red-500">*</span>Old Password</span>
                     </label>
-                    <input type="password" name='oldpassword' placeholder="Enter old password" className="input input-bordered w-full bg-slate-300"  required/>
+                    <input type="password" name='oldpassword' placeholder="Enter old password" className="input input-bordered w-full text-slate-400"  required/>
                 </div>
-                <button type="submit" className="w-full inline-block border mt-5 border-primary text-md text-primary font-medium leading-normal uppercase rounded hover:bg-primary hover:text-white  focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                    Update password
+                <button type="submit" className="w-full inline-block border mt-5 border-primary text-md text-primary font-sm leading-normal uppercase rounded hover:bg-primary hover:text-white  focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                    Change password
                 </button>
                 </form>
         </div>

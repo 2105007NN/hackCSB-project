@@ -36,69 +36,55 @@
 
 // export default ClientProfile;
 
-
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthProvider";
-// import CourseTeacherCard from "../Teacher/CourseTeacherCard";
 import { IoLocation } from "react-icons/io5";
-import { BiSolidInstitution } from "react-icons/bi";
-import { GiTeacher } from "react-icons/gi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
-import { useLoaderData } from "react-router-dom";
 import Settings from "./Settings";
 import PassChange from "./PassChange";
 import ProfileInfo from "./ProfileInfo";
 import { FaUserCircle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
-// import CourseStudentCard from "./CourseStudentCard";
+
+
 const ClientProfile = () => {
   const { user } = useContext(AuthContext);
-//   const data = useLoaderData();
-//   const courses = data.courses;
-//   const userInfo = data.user;
-//   console.log(courses, userInfo);
-//   const [selectedFile, setSelectedFile] = useState(null);
-  const {
-    id,
-    password,
-    username,
-    email,
-  } = user;
-//   console.log(userInfo?.user_photo);
-//   const imgUrl = userInfo?.user_photo?.substring(6 + 1);
-  // console.log(user)
-//   const handleFileChange = (event) => {
-//     setSelectedFile(event.target.files[0]);
-//   };
+  const { username, email } = user;
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  
+  const imgUrl = user?.profileImg?.substring(6 + 1);
 
-//   const handleFileUpload = () => {
-//     console.log("he");
-//     if (selectedFile) {
-//       const formData = new FormData();
-//       formData.append("file", selectedFile);
-
-//       fetch(`http://localhost:5002/upload/image/${user?.id}`, {
-//         method: "PATCH",
-//         body: formData,
-//       })
-//         .then((response) => {
-//           if (response.ok) {
-//             return response.json();
-//           }
-//           throw new Error("Network response was not ok.");
-//         })
-//         .then((data) => {
-//           console.log("File uploaded successfully:", data);
-//         })
-//         .catch((error) => {
-//           console.error("Error uploading file:", error);
-//         });
-//     }
-//     // getSubmissions();
-//     // getCommits();
-//   };
-  //   const image = "../../../../server/public/images/2023-09-18 11.52.21.jpg";
+  
+  const handleFileUpload = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      fetch(`http://localhost:3000/users/update-avatar`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+        method: "PATCH",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          console.log("File uploaded successfully:", data);
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+        });
+    }
+  };
+  //   const image = "../../../../server/public/2023-09-18 11.52.21.jpg";
   return (
     <>
       <div className="grid grid-cols-8">
@@ -106,8 +92,12 @@ const ClientProfile = () => {
           <div className="w-100% h-[450px] m-auto static">
             <img
               className="rounded-full w-[330px] h-[330px] m-auto mt-6"
-              // src={`http://localhost:5002/${imgUrl}`}
-              src="https://i.pinimg.com/originals/04/d2/78/04d2780a71ef395e373859caf8411b10.jpg"
+              src={
+                imgUrl
+                  ? `http://localhost:3000/${imgUrl}`
+                  : "https://i.pinimg.com/originals/04/d2/78/04d2780a71ef395e373859caf8411b10.jpg"
+              }
+              //
               alt=""
             />
             <label className="absolute bottom-[550px] left-[400px] cursor-pointer">
@@ -115,27 +105,33 @@ const ClientProfile = () => {
               <input
                 className="hidden"
                 type="file"
-                // onChange={handleFileChange}
+                onChange={handleFileChange}
               />
             </label>
-            {/* {
-              selectedFile ? <><button className="btn" onClick={handleFileUpload}>
-              save
-            </button></> : <></>
-            } */}
-            
+            {selectedFile ? (
+              <>
+                <button className="btn" onClick={handleFileUpload}>
+                  save
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="p-5 border rounded-xl">
             <h2 className="flex items-center gap-3 text-2xl border rounded-md p-2 my-1">
-              <FaUserCircle className="text-black"/>
+              <FaUserCircle className="text-black" />
               {username}
             </h2>
-            <h3 className="flex items-center gap-3 text-xl py-2 border rounded-md p-2 "><span className="text-black"><MdEmail /></span>{email}</h3>
+            <h3 className="flex items-center gap-3 text-xl py-2 border rounded-md p-2 ">
+              <span className="text-black">
+                <MdEmail />
+              </span>
+              {email}
+            </h3>
             <div className="flex items-center gap-3 text-xl py-2 border rounded-md my-2 p-2">
-              <IoLocation className="text-black text-2xl"/>
-              <h3 className="text-xl">
-                {user?.role}
-              </h3>
+              <IoLocation className="text-black text-2xl" />
+              <h3 className="text-xl">{user?.role}</h3>
             </div>
             <div className="flex items-center gap-5 pt-10">
               <p className="text-xl">Followers (0) </p>
@@ -146,30 +142,53 @@ const ClientProfile = () => {
         <div className=" shadow-lg col-start-3 col-end-9 p-5 m-5 border rounded-xl">
           {/* tabs  */}
           <div role="tablist" className="tabs tabs-bordered">
-          <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Info" />
-          <div role="tabpanel" className="tab-content p-10">
-            <ProfileInfo></ProfileInfo>
-          </div>
-          
-          <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Settings" />
-          <div role="tabpanel" className="tab-content p-10">
-            {/* update additional info  */}
+            <input
+              type="radio"
+              name="my_tabs_1"
+              role="tab"
+              className="tab px-20"
+              aria-label="Info"
+            />
+            <div role="tabpanel" className="tab-content p-10">
+              <ProfileInfo></ProfileInfo>
+            </div>
+
+            <input
+              type="radio"
+              name="my_tabs_1"
+              role="tab"
+              className="tab px-20"
+              aria-label="Settings"
+            />
+            <div role="tabpanel" className="tab-content p-10">
+              {/* update additional info  */}
               <PassChange></PassChange>
               <Settings></Settings>
+            </div>
+
+            <input
+              type="radio"
+              name="my_tabs_1"
+              role="tab"
+              className="tab px-20"
+              aria-label="Friends"
+              defaultChecked
+            />
+            <div role="tabpanel" className="tab-content p-10">
+              Friends
+            </div>
+
+            <input
+              type="radio"
+              name="my_tabs_1"
+              role="tab"
+              className="tab px-20"
+              aria-label="Journal"
+            />
+            <div role="tabpanel" className="tab-content p-10">
+              Journal
+            </div>
           </div>
-
-          <input
-            type="radio"
-            name="my_tabs_1"
-            role="tab"
-            className="tab px-20"
-            aria-label="Friends"
-            defaultChecked />
-          <div role="tabpanel" className="tab-content p-10">Friends</div>
-
-          <input type="radio" name="my_tabs_1" role="tab" className="tab px-20" aria-label="Journal" />
-          <div role="tabpanel" className="tab-content p-10">Journal</div>
-        </div>   
         </div>
       </div>
     </>

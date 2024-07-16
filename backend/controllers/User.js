@@ -17,7 +17,64 @@ const getUsers = catchAsync(async (req, res) => {
 })
 
 
+const updateClientProfile = catchAsync(async (req,res)=> {
+    const db = await dbPromise;
+    const {firstname, lastname, contactNo, gender, ageGroup} = req.body;
+    const userId = req.user.userId;
+
+    console.log('Updating user info:', { firstname, lastname, contactNo, gender, ageGroup });
+    console.log('User ID:', userId);
+
+    const updateUserInfo = await db.prepare(`
+            UPDATE users 
+            SET firstname = ?, lastname = ?, contactNo = ?, gender = ?, ageGroup = ?, updatedAt = CURRENT_TIMESTAMP
+            WHERE id = ?
+        `)
+    await updateUserInfo.run(firstname, lastname, contactNo, gender, ageGroup, userId);
+
+
+    const result = await db.get('SELECT * FROM users WHERE id = ?', [userId]);
+
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "User updated successfully",
+        data: result,
+    });
+})
+
+
+const updateProfilePicture = catchAsync(async(req,res)=>{
+    const db = await dbPromise;
+    const userId = req.user.userId;
+    // const userId = req.params.id;
+
+    if (!req.file) {
+        return res.status(400).send("No file uploaded");
+    }
+    const { path } = req.file;
+
+    const updateProfilePic = await db.prepare(`
+            UPDATE users 
+            SET profileImg = ?
+            WHERE id = ?
+    `);
+    
+    await updateProfilePic.run(path, userId);
+
+    const result = await db.get('SELECT * FROM users WHERE id = ?', [userId]);
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "Updated profile picture successfully",
+        data: result,
+    });
+})
+
+
 export const UserController = {
     getUsers,
-    
+    updateClientProfile,
+    updateProfilePicture,
+
 }

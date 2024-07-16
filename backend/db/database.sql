@@ -9,6 +9,7 @@ CREATE TABLE users (
     firstname TEXT ,
     lastname TEXT,
     dateOfBirth TEXT, -- You can use TEXT to store dates or use a specific format 
+    ageGroup TEXT CHECK(type IN ('1-10', '10-18', '18-25', '25-40', '40-60', '60++')),
     contactNo TEXT,
     profileImg TEXT,
     gender TEXT

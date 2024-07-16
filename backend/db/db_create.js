@@ -22,6 +22,7 @@ import { open } from 'sqlite';
         lastname TEXT,
         dateOfBirth TEXT,
         contactNo TEXT,
+        ageGroup TEXT CHECK(ageGroup IN ('1-10', '10-18', '18-25', '25-40', '40-60', '60++')),
         profileImg TEXT,
         gender TEXT,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

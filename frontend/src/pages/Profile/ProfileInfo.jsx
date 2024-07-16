@@ -43,18 +43,18 @@ const ProfileInfo = () => {
                 <h2 className="text-lg bg-gradient-to-r from-primary to-secondary p-1 text-white">My Profile</h2>
                 <div className="grid grid-cols-2 text-xl">
                 <div className="font-light text-sm p-4">First Name 
-                        <p className="text-white font-sm text-lg">Tamzeed</p>{user?.firstname}
+                        <p className="text-white font-sm text-lg">{user?.firstname}</p>
                     </div>
                     <div className="font-light text-sm p-4">Last Name 
-                        <p className="text-white font-sm text-lg">Mahfuz</p>{user?.lastname}
+                        <p className="text-white font-sm text-lg">{user?.lastname}</p>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 my-5">
                     <div className="font-light text-sm p-4">Gender 
-                        <p className="text-white font-sm text-lg">Male</p>{user?.gender}
+                        <p className="text-white font-sm text-lg">{user?.gender}</p>
                     </div>
                     <div className="font-light text-sm p-4">Contact No 
-                        <p className="text-white font-sm text-lg">01321663191</p>{user?.contactNo}
+                        <p className="text-white font-sm text-lg">{user?.contactNo}</p>
                     </div>
                 </div>
                 <div className="grid grid-cols-2">
