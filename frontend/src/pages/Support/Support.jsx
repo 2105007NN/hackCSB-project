@@ -6,6 +6,9 @@ import ConnectedUsers from "./ConnectedUsers";
 import Chat from "./Chat";
 import Therapists from "./Therapists";
 import SimilarUsers from "./SimilarUsers";
+import AutoSlidingCarousel from "./AutoSlidingCarousel"; 
+
+import chatting from '../../assets/Chatting.jpg'
 
 
 const url = "http://localhost:3000"
@@ -86,6 +89,13 @@ const Support = () => {
                     setShowSimilar={setShowSimilar}
                 />
             </div>
+            {!targetUser && !showTherapist && !showSimilar && (
+                <div className="col-span-9">
+                    <AutoSlidingCarousel />
+                </div>
+            )}
+            {!(!targetUser && !showTherapist && !showSimilar) && (
+            <>
             <div className="col-span-5">
                 <Chat 
                     currentUser={user}
@@ -114,6 +124,8 @@ const Support = () => {
                     </div>
                 )}
             </div>
+            </>)}
+            
         </div>
      );
 }
