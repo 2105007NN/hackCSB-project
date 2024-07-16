@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import "daisyui/dist/full.css";
 
 const FeatureBlock = ({ title, description, imageUrl }) => {

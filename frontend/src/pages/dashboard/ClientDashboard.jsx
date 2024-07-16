@@ -15,7 +15,7 @@ const Dashboard = () => {
 		<div className="max-w-screen-2xl m-auto">
 			{quote && (<div className="flex flex-col items-center bg-gradient-to-r from-primary via-secondary to-accent p-6 m-12 rounded-lg shadow-lg">
 				<h1 className="text-5xl text-neutral font-bold mb-4">Quote of the day</h1>
-				<p className="text-2xl italic text-base-100 mb-2">"{quote.quote}"</p>
+				<p className="text-2xl italic text-base-100 mb-2">{`"${quote.quote}"`}</p>
 				<p className="text-lg text-base-content">-{quote.name}</p>
 			</div>)}
 

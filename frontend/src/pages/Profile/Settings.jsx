@@ -1,9 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { FaCalendarAlt } from "react-icons/fa";
+
 
 const Settings = () => {
     const {user} = useContext(AuthContext);
@@ -18,9 +15,7 @@ const Settings = () => {
         const ageGroup = form.ageGroup.value;
         console.log(firstname, lastname, contactNo, gender, ageGroup);
 
-        try {
-            console.log(user?.teacher_id);
-            
+        try {            
           const response = await fetch(`http://localhost:3000/users/update-client-profile`, {
             method: 'PATCH',
             headers: {

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import 'daisyui/dist/full.css';
@@ -88,9 +90,9 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                 />
               </svg>
@@ -138,7 +140,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
           {connectedUserList.map((u) => {
             if (u.id !== currentUser.id) {
               return (
-                <div className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
+                <div key={u.id} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
                     <div className="flex items-center justify-between rounded-lg">
                         <div className="flex items-center">
                         <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />

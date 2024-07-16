@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 
 const DashboardCard = ({ title, description, srcImg, targetUrl }) => {
