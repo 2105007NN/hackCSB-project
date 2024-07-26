@@ -138,17 +138,34 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
         <div className="h-[500px] overflow-y-auto overflow-x-hidden">
           <h2 className='mt-4 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Connected users:</h2>
           {connectedUserList.map((u) => {
-            if (u.id !== currentUser.id) {
+            if (u.username !== currentUser.username && u.read) {
               return (
-                <div key={u.id} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
+                <div key={u.username} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
                     <div className="flex items-center justify-between rounded-lg">
                         <div className="flex items-center">
                         <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />
-                        <p key={u.id} className="p-2 m-4 font-medium text-[20px]">
+                        <p key={u.username} className="p-2 m-4 font-medium text-[20px]">
                             {u.username}
                         </p>
                         </div>
                         <button className="btn btn-primary ml-auto mr-3" title='Chat' onClick={() => joinChat(u)}>
+                        <img src={chat} className="w-6 h-6" alt="Chat" />
+                        </button>
+                    </div>
+                </div>
+              );
+            }
+            if (u.username !== currentUser.username && !u.read) {
+              return (
+                <div key={u.username} className="m-2 pl-4 bg-accent border border-info rounded-lg">
+                    <div className="flex items-center justify-between rounded-lg">
+                        <div className="flex items-center">
+                        <img className="w-10 h-10 rounded-full ring-2 ring-base-100" src={potat} alt="Rounded avatar" />
+                        <p key={u.username} className="p-2 m-4 font-medium text-[20px] text-base-100">
+                            {u.username}
+                        </p>
+                        </div>
+                        <button className="btn btn-primary ml-auto mr-3 border border-base-100 border-x-6 border-y-6" title='Chat' onClick={() => joinChat(u)}>
                         <img src={chat} className="w-6 h-6" alt="Chat" />
                         </button>
                     </div>

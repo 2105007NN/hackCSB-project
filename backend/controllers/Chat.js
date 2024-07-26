@@ -38,21 +38,28 @@ const getUsers = catchAsync(async (req, res) => {
 const getConnectedUsers = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const user = req.params.name
-    const r1 = await db.all("SELECT user2 FROM room WHERE user1 = ?", [user])
-    const r2 = await db.all("SELECT user1 FROM room WHERE user2 = ?", [user])
-    const filtered1 = r1.map((u) => u.user2)
-    const filtered2 = r2.map((u) => u.user1)
-    const usernames = [...filtered1, ...filtered2]
-    console.log(usernames);
-    const filteredUsers = await Promise.all(
-        usernames.map(async (username) => {
-            const t = await db.get("SELECT * FROM users WHERE username = ? AND role = 'client' ", [username]);
-            return t;
-        })
-    );
-    const result = filteredUsers.filter(user => user !== undefined);
-    console.log("Sending connected userlist: \n", result);
-    //const result = usernames
+    const contactList = await db.all("SELECT id, read, updated_at FROM room WHERE user1 = ? OR user2 = ? ORDER BY datetime(updated_at) DESC", [user, user])
+    const userlist = await Promise.all(contactList.map(async(contact) => {
+        let t = await db.all(`SELECT * FROM message WHERE room_id = ?`, [contact.id])
+        if(t.length > 0){
+            const users = await db.get(`SELECT user1, user2 FROM room WHERE id = ?`, [contact.id])
+            const receiver = (users.user1 === user) ? users.user2 : users.user1
+            console.log(receiver);
+            const uid = await db.get(`SELECT id, role from users WHERE username = ?`, [receiver])
+            if(uid.role === 'therapist'){
+                return undefined;
+            }
+            const data = {
+                room_id: contact.id,
+                id: uid.id,
+                username: receiver,
+                read: contact.read,
+                updated_at: contact.updated_at
+            }
+            return data;
+        }
+    }))
+    const result = userlist.filter(user => user !== undefined)
 
     sendResponse(res,{
         statusCode: 200,

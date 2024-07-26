@@ -42,6 +42,8 @@ import { open } from 'sqlite';
           name TEXT UNIQUE  NOT NULL,
           user1 TEXT NOT NULL,
           user2 TEXT NOT NULL,
+          read BOOLEAN DEFAULT TRUE,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   
           FOREIGN KEY (user1) REFERENCES users(username),
           FOREIGN KEY (user1) REFERENCES users(username)
@@ -52,6 +54,7 @@ import { open } from 'sqlite';
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           content TEXT NOT NULL,
           author TEXT NOT NULL,
+          receiver TEXT NOT NULL,
           time TEXT NOT NULL,
           room_id INTEGER,
           FOREIGN KEY (author) REFERENCES users(username),

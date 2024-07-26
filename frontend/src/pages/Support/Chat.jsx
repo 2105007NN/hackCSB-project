@@ -7,7 +7,7 @@ import potat from '../../assets/potat.jpg'
 import send from '../../assets/send.png'
 
 // eslint-disable-next-line react/prop-types
-const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket}) => {
+const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket, connectedUserList, setConnectedUserList}) => {
     const [message, setMessage] = useState("")
     const bottomRef = useRef(null);
 
@@ -20,23 +20,37 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
             const data = {
                 room_id: roomId,
                 author: currentUser.username,
+                receiver: targetUser.username,
                 content: message,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             };
 
-            console.log("inside sendMessage\n", data);
-
             await socket.emit("send_message", data);
             setList((prev) => [...prev, data]);
             setMessage("");
+            const t = connectedUserList.find(user => user.username === targetUser.username)
+            if (t){
+                setConnectedUserList(prev => {
+                const t2 = prev.filter(user => user.username !== targetUser.username)
+                return [{...t, read: true}, ...t2]
+            })}
         }
     }
 
     useEffect(() => {
         const handleMessageReceive = (data) => {
-            console.log(data.room_id, roomId);
             if (data.room_id === roomId) {
                 setList((prev) => [...prev, data]);
+                socket.emit("set_read", {room_id: data.room_id})
+            }
+            else{
+                socket.emit("set_unread", {room_id: data.room_id})
+                const t = connectedUserList.find(user => user.username === data.author)
+                if (t){
+                    setConnectedUserList(prev => {
+                    const t2 = prev.filter(user => user.username !== data.author)
+                    return [{...t, read:false}, ...t2]
+                })}
             }
         };
 

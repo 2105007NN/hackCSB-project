@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
 	res.send("Express server started");
 });
 
+/****************
+ * CHAT SOCKET
+****************/
+
 io.on("connection", async (socket) => {
 	console.log("Client connected\n", socket.id);
 
@@ -65,15 +69,32 @@ io.on("connection", async (socket) => {
 		console.log("Received\n", data);
 		const db = await dbPromise;
 		await db.run(
-			"INSERT INTO message (content, author, time, room_id) VALUES (?, ?, ?, ?)",
-			[data.content, data.author, data.time, data.room_id]
+			"INSERT INTO message (content, author, receiver, time, room_id) VALUES (?, ?, ?, ?, ?)",
+			[data.content, data.author, data.receiver, data.time, data.room_id]
 		);
+		await db.run(
+			`UPDATE room SET read = FALSE WHERE id = ?`,
+			[data.room_id]
+		)
+		await db.run(
+			`UPDATE room SET updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+			[data.room_id]
+		)
 		const room = await db.get("SELECT name FROM room WHERE id = ?", [
 			data.room_id,
 		]);
-		console.log("Inside send_message\n", room);
 		socket.to(room.name).emit("receive_message", data);
 	});
+
+	socket.on("set_read", async(data) => {
+		const db = await dbPromise;
+		await db.run(`UPDATE room SET read = TRUE WHERE id = ?`, [data.room_id])
+	})
+
+	socket.on("set_unread", async(data) => {
+		const db = await dbPromise;
+		await db.run(`UPDATE room SET read = FALSE WHERE id = ?`, [data.room_id])
+	})
 
 	socket.on("disconnect", async () => {
 		console.log("Client disconnected");

@@ -29,7 +29,7 @@ const Support = () => {
         setTargetUser(targetUser)
         console.log("Connected userlist:\n", connectedUserList);
         if(!connectedUserList.some(user => user.username == targetUser.username) && !isTherapist){
-            setConnectedUserList((prev) => [...prev, targetUser])
+            setConnectedUserList((prev) => [{...targetUser, read: true}, ...prev])
         }
     }
 
@@ -105,6 +105,8 @@ const Support = () => {
                     roomId={roomId}
                     setRoomId={setRoomId}
                     socket={socket}
+                    connectedUserList={connectedUserList}
+                    setConnectedUserList={setConnectedUserList}
                 />
             </div>
             <div className="col-span-4">
