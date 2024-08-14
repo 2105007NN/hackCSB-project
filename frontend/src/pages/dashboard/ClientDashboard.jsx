@@ -2,9 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import DashboardCard from "../../components/helperComponents/DashboardCard.jsx";
 import { useState, useEffect } from "react";
 import Loading from "../../components/ui/Loading.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+import MoodAnalysis from "../MoodAnalysis/MoodAnalysis.jsx";
+import Journal from "../Journal/Journal.jsx";
+import ViewJournals from "../Journal/ViewJournals.jsx";
 
 const Dashboard = () => {
 	const [quote, setQuote] = useState(null);
+	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetch("http://localhost:3000/quote")
@@ -39,6 +45,22 @@ const Dashboard = () => {
         return <Loading />;
     }
 
+	const handleClickJournals = () => {
+		console.log("Navigate to journal show for user : ", id);
+		navigate(`/view-journal/${id}`, { replace: false });
+	};
+
+	const handleClickMood = () => {
+		console.log("Navigate to journal show for user : ", id);
+		navigate(`/mood-analysis/${id}`, { replace: false });
+	};
+	const colors = ["primary", "secondary", "accent", "info", "warning", "success"];
+
+	scores.map((score, i) => {
+		score.color = colors[i];
+		return score;
+	});
+	console.log(scores[0]);
 	return (
 		<div className="max-w-screen-2xl m-auto">
 			{quote && (<div className="flex flex-col items-center bg-gradient-to-r from-primary via-secondary to-accent p-6 m-12 rounded-lg shadow-lg">
@@ -47,20 +69,35 @@ const Dashboard = () => {
 				<p className="text-lg text-base-content">-{quote.name}</p>
 			</div>)}
 
-			<section className="max-w-screen-2xl p-5 border rounded-lg mx-auto">
-                <h2 className="text-lg ">Category-wise Stats</h2>
-                <div>
-                    {scores.map((score) => (
-                        <div key={score.id}>
-                            <p>Category: {score.category_name}</p>
-                            <p>Score: {score.score}</p>
-                        </div>
-                    ))}
-                </div>
+			<section className="max-w-screen-2xl p-5 border rounded-lg mx-auto grid grid-cols-3 gap-4">
+				<div className="col-span-1 border rounded-xl p-2">
+					<h2 className="text-xl mb-2">Category-wise Stats</h2>
+					<div className="text-lg">
+						{scores.map((score) => (
+							<div key={score.id}>
+								<p>{score.category_name}</p>
+								<progress className={`progress progress-${score.color} w-full`} value={score.score} max="100"></progress>
+							</div>
+						))}
+					</div>
+				</div>
+                
+				<div
+					className="text-xl col-span-1 border rounded-xl p-2"
+					onClick={handleClickJournals}
+				>
+					<ViewJournals></ViewJournals>
+				</div>
+				<div
+					className="text-lg col-span-1 border rounded-xl p-2"
+					onClick={handleClickMood}
+				>
+					<MoodAnalysis></MoodAnalysis>
+				</div>
             </section>
 
-
 			<div className="grid grid-cols-3 justify-center gap-10 m-auto py-20">
+			
 				<div className="mx-auto">
 					<DashboardCard
 						title="Articles"

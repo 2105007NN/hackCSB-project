@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 const ViewJournals = () => {
@@ -23,13 +23,12 @@ const ViewJournals = () => {
 	}, []);
 
 	return (
-		<div>
-			<h1 className="text-2xl text-center mt-4">YOUR JOURNALS </h1>
+		<div className="my-4">
+			<h1 className="text-xl text-center">YOUR JOURNALS </h1>
 			{journals.map((journal, indx) => (
 				<div
 					key={journal.id}
-					className="journal-entry mx-auto 
-            my-4 p-4 border border-gray-600 rounded-lg shadow-lg w-2/3"
+					className="journal-entry mx-auto my-1 p-2 border border-gray-600 rounded-lg shadow-lg"
 				>
 					<div className="flex justify-between mb-2">
 						<h3 className="text-sm text-primary">

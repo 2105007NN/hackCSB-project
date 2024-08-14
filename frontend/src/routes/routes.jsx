@@ -97,12 +97,6 @@ export const routes = createBrowserRouter([
         loader : ({params})=> 
           fetch(`http://localhost:3000/tests/get-result/${params.testId}/${params.userId}`),
       },
-      {
-        path: "/take-test/:id",
-        element: <TakeTest></TakeTest>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:3000/tests/get-test/${params.id}`),
-      },
     ],
   },
   {
@@ -120,7 +114,12 @@ export const routes = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "/take-test/:id",
+    element: <TakeTest></TakeTest>,
+    loader: ({ params }) =>
+      fetch(`http://localhost:3000/tests/get-test/${params.id}`),
+  },
   {
     path: "*",
     element: <ErrorPage></ErrorPage>,

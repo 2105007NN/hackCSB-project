@@ -92,7 +92,7 @@ const TakeTest = () => {
     
 
     return (
-        <div className=" m-auto">
+        <div className=" m-auto h-screen">
             <section className="py-24 bg-primary text-center text-white m-auto">
                 <h3 className="text-5xl font-semibold text-center text-white">Take our quick {test?.title}</h3>
                 <h4 className="text-xl max-w-2xl mx-auto mt-4">The questions are based on an evidence-based screening tool but are indicative only and do not form a formal diagnosis</h4>
