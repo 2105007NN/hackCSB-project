@@ -1,4 +1,3 @@
-import express from 'express'
 import dbPromise from '../db/db_init.js';
 import catchAsync from '../utils/catchAsync.js';
 import sendResponse from '../utils/sendResponse.js';
@@ -39,7 +38,6 @@ const login = catchAsync(async (req, res) => {
         jwt_access_expires_in,
     );
 
-    // User authenticated successfully
     sendResponse(res, {
         statusCode: 200,
         success: true,
@@ -118,7 +116,7 @@ const therapistRegistration = catchAsync(async (req, res) => {
     const insertParams = [role, username, email, password];
     await db.run(insertUserQuery, insertParams);
 
-    // Optionally, retrieve the newly inserted user data
+    // retrieve the newly inserted user data
     const newUser = await db.get('SELECT * FROM users WHERE username = ?', username);
 
      // Create tokens and send to the client
@@ -141,7 +139,6 @@ const therapistRegistration = catchAsync(async (req, res) => {
 });
 
 const changePassword = catchAsync(async(req,res)=> {
-    console.log('change password');
     const db = await dbPromise;
     const userId = req.user.userId;
     const {newpassword, oldpassword} = req.body;
@@ -150,7 +147,6 @@ const changePassword = catchAsync(async(req,res)=> {
     const user = await db.get('SELECT * FROM users WHERE id = ?', [userId]);
     //check if old password matches
     const oldPassword = user?.password;
-    console.log(oldPassword);
     if(oldPassword !== oldpassword) {
         throw new AppError(httpStatus.FORBIDDEN, 'password did not match');
     }

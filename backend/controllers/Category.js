@@ -31,7 +31,11 @@ const getUserCategories = catchAsync(async (req,res)=> {
 const getSingleUserReport = catchAsync(async (req,res)=> {
     const db = await dbPromise;
     const userId = req.user.userId;
-    const result = await db.all("SELECT * FROM user_category WHERE user_id = ?", [userId]);
+    const result = await db.all(`SELECT uc.*, c.* 
+        FROM user_category uc 
+        JOIN categories c ON c.id = uc.category_id
+        WHERE uc.user_id = ?
+    `, [userId]);
 
     sendResponse(res, {
         statusCode : 200,

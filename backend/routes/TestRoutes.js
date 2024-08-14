@@ -30,5 +30,4 @@ router.get("/get-answers", TestController.getAnswers);
 
 export default router;
 
-//http://localhost:3000/tests/get-result/:testId/:userId
 

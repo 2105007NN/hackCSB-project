@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import DashboardCard from "../../components/helperComponents/DashboardCard.jsx";
 import { useState, useEffect } from "react";
+import Loading from "../../components/ui/Loading.jsx";
 
 const Dashboard = () => {
 	const [quote, setQuote] = useState(null);
@@ -11,6 +13,32 @@ const Dashboard = () => {
 		.catch((error) => console.error("Error fetching the quote of the day:", error));
 	}, []);
 
+	const { data: scores, isLoading } = useQuery({
+        queryKey: ['scores'],
+        queryFn: async () => {
+            try {
+                const res = await fetch('http://localhost:3000/categories/user-category/single', {
+                    headers: {
+                        // 'content-type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                    }
+                });
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await res.json();
+                return data.data; // assuming the data is in the 'data' property
+            } catch (error) {
+                console.log(error);
+                return [];
+            }
+        }
+    });
+	console.log(scores);
+    if (isLoading) {
+        return <Loading />;
+    }
+
 	return (
 		<div className="max-w-screen-2xl m-auto">
 			{quote && (<div className="flex flex-col items-center bg-gradient-to-r from-primary via-secondary to-accent p-6 m-12 rounded-lg shadow-lg">
@@ -18,6 +46,19 @@ const Dashboard = () => {
 				<p className="text-2xl italic text-base-100 mb-2">{`"${quote.quote}"`}</p>
 				<p className="text-lg text-base-content">-{quote.name}</p>
 			</div>)}
+
+			<section className="max-w-screen-2xl p-5 border rounded-lg mx-auto">
+                <h2 className="text-lg ">Category-wise Stats</h2>
+                <div>
+                    {scores.map((score) => (
+                        <div key={score.id}>
+                            <p>Category: {score.category_name}</p>
+                            <p>Score: {score.score}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
 
 			<div className="grid grid-cols-3 justify-center gap-10 m-auto py-20">
 				<div className="mx-auto">

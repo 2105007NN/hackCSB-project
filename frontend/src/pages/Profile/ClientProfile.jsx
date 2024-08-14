@@ -48,6 +48,8 @@ import { MdEmail } from "react-icons/md";
 
 
 
+import Friends from "./Friends";
+
 const ClientProfile = () => {
   const { user } = useContext(AuthContext);
   const { username, email } = user;
@@ -88,10 +90,11 @@ const ClientProfile = () => {
   return (
     <>
       <div className="grid grid-cols-8">
-        <div className="bg-primary text-white col-start-1 col-end-3 p-6">
+        <div className="text-white col-start-1 col-end-3 p-6 bg-gradient-to-r from-accent via-secondary">
           <div className="w-100% h-[450px] m-auto static">
-            <img
-              className="rounded-full w-[330px] h-[330px] m-auto mt-6"
+          <div className="static">
+          <img
+              className="rounded-full border-2 w-[330px] h-[330px] m-auto mt-6"
               src={
                 imgUrl
                   ? `http://localhost:3000/${imgUrl}`
@@ -100,14 +103,15 @@ const ClientProfile = () => {
               //
               alt=""
             />
-            <label className="absolute bottom-[550px] left-[400px] cursor-pointer">
-              <MdOutlineSystemUpdateAlt className="text-3xl text-yellow-400" />
+            <label className="absolute bottom-[520px] left-[300px] cursor-pointer">
+              <MdOutlineSystemUpdateAlt className="text-3xl text-black" />
               <input
                 className="hidden"
                 type="file"
                 onChange={handleFileChange}
               />
             </label>
+          </div>
             {selectedFile ? (
               <>
                 <button className="btn" onClick={handleFileUpload}>
@@ -166,17 +170,16 @@ const ClientProfile = () => {
               <Settings></Settings>
             </div>
 
-            <input
-              type="radio"
-              name="my_tabs_1"
-              role="tab"
-              className="tab px-20"
-              aria-label="Friends"
-              defaultChecked
-            />
-            <div role="tabpanel" className="tab-content p-10">
-              Friends
-            </div>
+          <input
+            type="radio"
+            name="my_tabs_1"
+            role="tab"
+            className="tab px-20"
+            aria-label="Friends"
+            defaultChecked />
+          <div role="tabpanel" className="tab-content p-10">
+            <Friends />
+          </div>
 
             <input
               type="radio"

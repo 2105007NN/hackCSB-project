@@ -29,8 +29,8 @@ const Therapists = ({joinChat}) => {
                             {therapist.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3">
-                        <img src={chat} className="w-6 h-6" onClick={() => joinChat(therapist, true)} alt="Chat" />
+                        <button className="btn btn-primary ml-auto mr-3" title="Chat" onClick={() => joinChat(therapist, true)} >
+                        <img src={chat} className="w-6 h-6" alt="Chat" />
                         </button>
                     </div>
                     <div className="flex pb-3 flex-wrap">

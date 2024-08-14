@@ -8,10 +8,8 @@ const globalErrorHandler = (err, req, res, next) => {
       },
   ];
 
-  // Log the error details for debugging purposes
   console.error('Error:', err);
 
-  // For detailed error information
   let errorDetails = {
       name: err.name || 'Error',
       message: err.message,
