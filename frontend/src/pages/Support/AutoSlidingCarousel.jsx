@@ -20,7 +20,7 @@ const AutoSlidingCarousel = () => {
   }, [slides.length]);
 
   return (
-    <div className="relative w-full overflow-hidden h-96">
+    <div className="relative w-full overflow-hidden h-full rounded-xl p-10">
       <div className="carousel-inner relative h-full">
         {slides.map((slide, index) => (
           <div
@@ -31,7 +31,7 @@ const AutoSlidingCarousel = () => {
             <div className="flex justify-center items-center h-full">
               <img 
                 src={slide} 
-                className="h-full object-center object-cover mx-auto" 
+                className="h-full w-full object-center object-cover mx-auto rounded-xl" 
                 alt={`Slide ${index + 1}`}
               />
             </div>

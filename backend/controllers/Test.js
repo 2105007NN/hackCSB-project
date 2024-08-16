@@ -1,4 +1,3 @@
-import express from "express";
 import dbPromise from "../db/db_init.js";
 import catchAsync from "../utils/catchAsync.js";
 import sendResponse from "../utils/sendResponse.js";
@@ -32,39 +31,33 @@ const createTest = catchAsync(async (req, res) => {
                 VALUES (?, ?, ?, ?)
             `);
 
-        const testResult = await insertTestStmt.run(
-        title,
-        description,
-        time,
-        type
-        );
-        console.log(testResult);
+        const testResult = await insertTestStmt.run(title, description, time, type);
         const testId = testResult.lastID;
-        console.log(testId);
 
         for (const question of questions) {
-        // Insert question into questions table
-        const insertQuestionStmt = await db.prepare(`
-                    INSERT INTO questions (test_id, category_id, question)
-                    VALUES (?, ?, ?)
-                `);
-        const categoryId = await getCategoryID(db, question.category); // Assuming you have a function to get category ID
-        console.log(categoryId);
-        const questionResult = await insertQuestionStmt.run(
-            testId,
-            categoryId,
-            question.question
-        );
+            const categoryId = await getCategoryID(db, question.category); 
+            
+            // Insert question into questions table
+            const insertQuestionStmt = await db.prepare(`
+                        INSERT INTO questions (test_id, category_id, question)
+                        VALUES (?, ?, ?)
+                    `);
+
+            await insertQuestionStmt.run(
+                testId,
+                categoryId,
+                question.question
+            );
         }
 
         // Commit transaction
         await db.run("COMMIT");
 
         sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "Test created successfully",
-        data: null, // Modify as per your response requirements
+            statusCode: 200,
+            success: true,
+            message: "Test created successfully",
+            data: null,
         });
     } catch (error) {
         console.log(error);
@@ -94,7 +87,6 @@ const getSingleTest = catchAsync(async (req, res) => {
 
     const options = await db.all("SELECT * FROM options");
 
-    //also bring in the options
     const result = {
         test,
         questions,
@@ -103,7 +95,7 @@ const getSingleTest = catchAsync(async (req, res) => {
     sendResponse(res, {
         statusCode: 200,
         success: true,
-        message: "test retrieved successfully",
+        message: "Test retrieved successfully",
         data: result,
     });
 });
@@ -125,18 +117,15 @@ const takeTest = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const { test_id, answers, user_id } = req.body;
     /*
-     *    let Obj = {
+        let Obj = {
             questionId : questionId,
             optionId : selectedOption
         }
-     */
-    // console.log('test_Id', test_id, 'user+id',  user_id );
+    */
     const highestScoringOption = 4;
     const questionCount = answers.length;
     const maximumScore = questionCount * highestScoringOption;
     let calculatedScore = 0;
-
-    // await db.run("BEGIN TRANSACTION");
 
     try {
         // Calculate the total score
@@ -146,21 +135,18 @@ const takeTest = catchAsync(async (req, res) => {
             calculatedScore += option.score;
         }
         console.log('test_Id', test_id, 'user+id',  user_id );
-        // console.log(calculatedScore);
 
         // Count score out of 100
         const percentageScore = Math.floor((calculatedScore / maximumScore) * 100);
-        // console.log(percentageScore);
-        // Insert into user_category table
         const question_id = answers[0].question_id;
         // console.log('question_id', answers[0].question_id);
-        const question = await db.get(`SELECT * FROM questions WHERE id = ?`, [question_id]);
-        // console.log(question);
-        const category_id = question.category_id;
-        console.log(category_id, 'from take test');
 
-        // console.log(answers); // Assuming all questions belong to the same category
+        // Get category Id
+        const question = await db.get(`SELECT * FROM questions WHERE id = ?`, [question_id]);
+        const category_id = question.category_id;
         // console.log(user_id, category_id, percentageScore);
+
+        // Assuming all questions belong to the same category
         const insertCategoryStmt = await db.prepare(`
             INSERT INTO user_category (user_id, category_id, score)
             VALUES (?, ?, ?)
@@ -178,8 +164,6 @@ const takeTest = catchAsync(async (req, res) => {
             await insertAnswerStmt.run(user_id, question_id, test_id, option_id);
         }
 
-        // await db.run("COMMIT");
-
         sendResponse(res, {
             statusCode: 200,
             success: true,
@@ -188,7 +172,6 @@ const takeTest = catchAsync(async (req, res) => {
         });
 
     } catch (error) {
-        // await db.run("ROLLBACK");
         console.error(error);
         throw new AppError(httpStatus.BAD_REQUEST, 'Failed to submit answers');
     }

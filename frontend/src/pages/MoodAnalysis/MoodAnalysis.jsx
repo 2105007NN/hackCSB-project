@@ -46,12 +46,12 @@ const MoodAnalysis = () => {
 
 	if (moodRatings.length > 0) {
 		return (
-			<div className="flex flex-col items-center mb-4">
+			<div className="flex flex-col items-center">
 				<h1 className="text-2xl text-center">Mood analysis PAGE</h1>
 				<Chart
 					chartType="LineChart"
-					width={"80%"}
-					height={"60vh"}
+					width={"100%"}
+					height={"40vh"}
 					data={[
 						["Time", "Mood Rating"],
 						...data.map((rating, index) => [labels[index], rating]),
@@ -81,7 +81,7 @@ const MoodAnalysis = () => {
 				</h2>
 
 				<h3 className="text-gray-300 text-lg text-center">
-					{moodAnalysis}
+					{/* {moodAnalysis} */}
 				</h3>
 			</div>
 		);

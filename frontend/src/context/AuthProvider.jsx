@@ -9,11 +9,11 @@ export const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
-
+    
 
    useEffect(()=>{
         setUser(JSON.parse(localStorage.getItem('user')));
-        console.log(user);
+        // console.log(user);
    },[])
 
 

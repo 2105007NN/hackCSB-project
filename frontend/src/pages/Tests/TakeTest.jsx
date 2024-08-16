@@ -14,7 +14,8 @@ const TakeTest = () => {
     const [answers, setAnswers] = useState([]);
     const [count, setCount] = useState(0);
     console.log(count);
-    const handleOptionClick = (questionId, selectedOption) => {
+    const handleOptionClick = (e,questionId, selectedOption) => {
+        // e.preventDefault();
         setCount(prevCount => prevCount + 1);
         let Obj = {
             question_id : questionId,
@@ -91,8 +92,8 @@ const TakeTest = () => {
     
 
     return (
-        <div className=" m-auto">
-            <section className="py-24 bg-info text-center text-white m-auto">
+        <div className=" m-auto h-screen">
+            <section className="py-24 bg-primary text-center text-white m-auto">
                 <h3 className="text-5xl font-semibold text-center text-white">Take our quick {test?.title}</h3>
                 <h4 className="text-xl max-w-2xl mx-auto mt-4">The questions are based on an evidence-based screening tool but are indicative only and do not form a formal diagnosis</h4>
             </section>
@@ -102,7 +103,7 @@ const TakeTest = () => {
                 
             <progress className="progress progress-error bg-neutral" value={count*10} max={questions.length * 10}></progress>
 
-<div className="carousel w-full bg-info rounded-2xl">
+<div className="carousel w-full rounded-2xl">
     {questions.map((question, index) => (
         <div
             key={question.id}
@@ -110,8 +111,9 @@ const TakeTest = () => {
             className="carousel-item relative w-full"
         >
             <div className="p-4 m-auto py-20">
-                <h2 className="text-3xl text-center text-white font-bold mb-4">Question - {count + 1}</h2>
-                <h3 className="text-xl m-auto text-center text-white font-semibold">
+                <h2 className="text-3xl text-center text-white font-semibold mb-4">Question - {count + 1}</h2>
+                <div className="divider"></div>
+                <h3 className="text-xl m-auto text-center text-white font-medium">
                     {question.question}
                 </h3>
                 <div className="flex gap-20 items-center mt-10">
@@ -120,7 +122,7 @@ const TakeTest = () => {
                             <a key={option.id} href={`#slide${index === questions.length - 1 ? 1 : index + 2}`}>
                                 <button
                                     className="btn btn-lg btn-secondary text-xl text-white"
-                                    onClick={()=>handleOptionClick(question?.id, option.id)}
+                                    onClick={(e)=>handleOptionClick(e, question?.id, option.id)}
                                 >
                                     {option.name}
                                 </button>

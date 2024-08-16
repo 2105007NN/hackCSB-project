@@ -7,6 +7,13 @@ const router = express.Router();
 
 router.get("/", UserController.getUsers);
 
+//get me route
+router.get(
+    "/me",
+    auth(UserRole.client, UserRole.therapist, UserRole.admin),
+    UserController.getMe
+);
+
 //update user
 router.patch(
     "/update-client-profile", 

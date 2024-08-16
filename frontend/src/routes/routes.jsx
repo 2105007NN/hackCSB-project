@@ -7,7 +7,7 @@ import Articles from "../pages/Articles/Articles";
 import LoginLayout from "../components/layout/LoginLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import Forum from "../pages/Forum/Forum";
+import Forum from "../pages/Blogs/Forum.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Support from "../pages/Support/Support";
 import ClientDashboard from "../pages/dashboard/ClientDashboard";
@@ -97,12 +97,6 @@ export const routes = createBrowserRouter([
         loader : ({params})=> 
           fetch(`http://localhost:3000/tests/get-result/${params.testId}/${params.userId}`),
       },
-      {
-        path: "/take-test/:id",
-        element: <TakeTest></TakeTest>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:3000/tests/get-test/${params.id}`),
-      },
     ],
   },
   {
@@ -120,7 +114,12 @@ export const routes = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "/take-test/:id",
+    element: <TakeTest></TakeTest>,
+    loader: ({ params }) =>
+      fetch(`http://localhost:3000/tests/get-test/${params.id}`),
+  },
   {
     path: "*",
     element: <ErrorPage></ErrorPage>,

@@ -16,6 +16,19 @@ const getUsers = catchAsync(async (req, res) => {
     });
 })
 
+const getMe = catchAsync(async (req,res)=> {
+    const db = await dbPromise;
+    const userId = req.user.userId;
+    const result = await db.all('SELECT * FROM users WHERE id = ?', [userId]);
+
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "user retrieved successfully",
+        data: result,
+    });
+})
+
 
 const updateClientProfile = catchAsync(async (req,res)=> {
     const db = await dbPromise;
@@ -76,5 +89,5 @@ export const UserController = {
     getUsers,
     updateClientProfile,
     updateProfilePicture,
-
+    getMe
 }

@@ -8,7 +8,7 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE,
     firstname TEXT ,
     lastname TEXT,
-    dateOfBirth TEXT, -- You can use TEXT to store dates or use a specific format 
+    dateOfBirth TEXT,
     ageGroup TEXT CHECK(type IN ('1-10', '10-18', '18-25', '25-40', '40-60', '60++')),
     contactNo TEXT,
     profileImg TEXT,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS user_answers (
     FOREIGN KEY (option_id) REFERENCES options(id),
 );
 
--- Table: options
+
 DROP TABLE IF EXISTS options ;
 CREATE TABLE IF NOT EXISTS options (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,10 +105,9 @@ CREATE TABLE IF NOT EXISTS suggestions (
 
  
 
- INSERT INTO tests (id, title, description, time, type) VALUES
+INSERT INTO tests (id, title, description, time, type) VALUES
 (1, 'Anxiety Test', 'Find out if your anxiety could be a sign of something more serious.', '5', 'anxiety');
 
--- Insert data into the questions table
 INSERT INTO questions (id, test_id, category_id, question) VALUES
 (1, 1, 1, 'I find it very hard to unwind, relax or sit still'),
 (2, 1, 1, 'I have had stomach problems, such as feeling sick or stomach cramps'),
