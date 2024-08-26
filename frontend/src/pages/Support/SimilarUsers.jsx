@@ -2,13 +2,16 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
+import { useNavigate } from 'react-router-dom';
 
 import potat from "../../assets/potat.jpg"
 import chat from '../../assets/chat.png'
+import { IoArrowRedo } from "react-icons/io5";
 
 const SimilarUsers = ({currentUser, joinChat}) => {
     const { user } = useContext(AuthContext);
     const [similarUsers, setSimilarUsers] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:3000/similar/user/${user.username}`)
@@ -33,9 +36,14 @@ const SimilarUsers = ({currentUser, joinChat}) => {
                             {user.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3" title="Connect" onClick={() => joinChat(user)} alt="Chat" >
-                        <img src={chat} className="w-6 h-6" />
-                        </button>
+                        <div className="flex ml-auto">
+                          <button className="btn btn-primary ml-auto mr-3" title='Chat' onClick={() => joinChat(user)}>
+                          <img src={chat} className="w-6 h-6" alt="Chat" />
+                          </button>
+                          <button className="mr-1 ml-auto btn btn-primary" title='Profile' onClick={() => navigate(`/user/profile/${user.username}`)}>
+                          <IoArrowRedo className='text-black w-6 h-6'/>
+                          </button>
+                        </div>
                     </div>
                     <div className="flex pb-3 flex-wrap">
                         {user.categories.map((category, index) => (

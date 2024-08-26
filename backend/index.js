@@ -72,8 +72,17 @@ io.on("connection", async (socket) => {
 			"INSERT INTO message (content, author, receiver, time, room_id) VALUES (?, ?, ?, ?, ?)",
 			[data.content, data.author, data.receiver, data.time, data.room_id]
 		);
+		const users = await db.get("SELECT user1, user2 FROM room WHERE id = ?", [data.room_id])
+		const author_num = (users.user1 === data.author) ? 1 : 2
+		const receiver_num = (users.user1 === data.author) ? 2 : 1
+		console.log(`author: ${data.author} ${author_num}, receiver: ${data.receiver} ${receiver_num}`);
+		
 		await db.run(
-			`UPDATE room SET read = FALSE WHERE id = ?`,
+			`UPDATE room SET read_user${author_num} = TRUE WHERE id = ?`,
+			[data.room_id]
+		)
+		await db.run(
+			`UPDATE room SET read_user${receiver_num} = FALSE WHERE id = ?`,
 			[data.room_id]
 		)
 		await db.run(
@@ -88,12 +97,16 @@ io.on("connection", async (socket) => {
 
 	socket.on("set_read", async(data) => {
 		const db = await dbPromise;
-		await db.run(`UPDATE room SET read = TRUE WHERE id = ?`, [data.room_id])
+		const users = await db.get("SELECT user1, user2 FROM room WHERE id = ?", [data.room_id])
+		const user_num = (users.user1 === data.user) ? 1 : 2
+		await db.run(`UPDATE room SET read_user${user_num} = TRUE WHERE id = ?`, [data.room_id])
 	})
 
 	socket.on("set_unread", async(data) => {
 		const db = await dbPromise;
-		await db.run(`UPDATE room SET read = FALSE WHERE id = ?`, [data.room_id])
+		const users = await db.get("SELECT user1, user2 FROM room WHERE id = ?", [data.room_id])
+		const user_num = (users.user1 === data.user) ? 1 : 2
+		await db.run(`UPDATE room SET read_user${user_num} = FALSE WHERE id = ?`, [data.room_id])
 	})
 
 	socket.on("disconnect", async () => {

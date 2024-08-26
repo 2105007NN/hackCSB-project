@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, MenuItem } from '@mui/material';
 import 'daisyui/dist/full.css';
 import potat from '../../assets/potat.jpg'
@@ -8,6 +9,7 @@ import searchIcon from '../../assets/magnifying-glass.png'
 import therapistIcon from '../../assets/therapist.png'
 import similarIcon from '../../assets/compatible.png'
 import chat from '../../assets/chat.png'
+import { IoArrowRedo } from "react-icons/io5";
 
 const url = "http://localhost:3000"
 
@@ -16,6 +18,7 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
     const [searchList, setSearchList] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
     const [hoveredUserId, setHoveredUserId] = useState(null);
+    const navigate = useNavigate();
 
     console.log("Search Name: ", searchName);
 
@@ -125,9 +128,14 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
                 {user.username}
               </p>
               {hoveredUserId === user.id && (
-                <button className="mr-2 ml-auto btn btn-primary" title='Connect' onClick={() => joinChat(user)}>
-                  <img src={chat} className='h-6 w-6'/>
-                </button>
+                <div className="flex ml-auto">
+                  <button className="mr-2 ml-auto btn btn-primary" title='Connect' onClick={() => joinChat(user)}>
+                    <img src={chat} className='h-6 w-6'/>
+                  </button>
+                  <button className="mr-1 ml-auto btn btn-primary" title='Profile' onClick={() => navigate(`/user/profile/${user.username}`)}>
+                  <IoArrowRedo className='text-black w-6 h-6'/>
+                  </button>
+                </div>
               )}
             </div>
           </li>
@@ -148,9 +156,14 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
                             {u.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3" title='Chat' onClick={() => joinChat(u)}>
-                        <img src={chat} className="w-6 h-6" alt="Chat" />
-                        </button>
+                        <div className="flex ml-auto">
+                          <button className="btn btn-primary ml-auto mr-3" title='Chat' onClick={() => joinChat(u)}>
+                          <img src={chat} className="w-6 h-6" alt="Chat" />
+                          </button>
+                          <button className="mr-1 ml-auto btn btn-primary" title='Profile' onClick={() => navigate(`/user/profile/${u.username}`)}>
+                          <IoArrowRedo className='text-black w-6 h-6'/>
+                          </button>
+                        </div>
                     </div>
                 </div>
               );
@@ -165,9 +178,14 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
                             {u.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3 border border-base-100 border-x-6 border-y-6" title='Chat' onClick={() => joinChat(u)}>
-                        <img src={chat} className="w-6 h-6" alt="Chat" />
-                        </button>
+                        <div className="flex ml-auto">
+                          <button className="btn btn-primary ml-auto mr-3 border border-base-100 border-x-6 border-y-6" title='Chat' onClick={() => joinChat(u)}>
+                          <img src={chat} className="w-6 h-6" alt="Chat" />
+                          </button>
+                          <button className="mr-1 ml-auto btn btn-primary border border-base-100 border-x-6 border-y-6" title='Profile' onClick={() => navigate(`/user/profile/${u.username}`)}>
+                          <IoArrowRedo className='text-black w-6 h-6'/>
+                          </button>
+                        </div>
                     </div>
                 </div>
               );

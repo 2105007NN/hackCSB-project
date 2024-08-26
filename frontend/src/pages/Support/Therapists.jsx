@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import potat from "../../assets/potat.jpg"
 import chat from '../../assets/chat.png'
+import { IoArrowRedo } from "react-icons/io5";
 
 const Therapists = ({joinChat}) => {
     const [therapistList, setTherapistList] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:3000/therapists")
@@ -29,9 +32,14 @@ const Therapists = ({joinChat}) => {
                             {therapist.username}
                         </p>
                         </div>
-                        <button className="btn btn-primary ml-auto mr-3" title="Chat" onClick={() => joinChat(therapist, true)} >
-                        <img src={chat} className="w-6 h-6" alt="Chat" />
-                        </button>
+                        <div className="flex ml-auto">
+                          <button className="btn btn-primary ml-auto mr-3" title='Chat' onClick={() => joinChat(therapist, true)}>
+                          <img src={chat} className="w-6 h-6" alt="Chat" />
+                          </button>
+                          <button className="mr-1 ml-auto btn btn-primary" title='Profile' onClick={() => navigate(`/user/profile/${therapist.username}`)}>
+                          <IoArrowRedo className='text-black w-6 h-6'/>
+                          </button>
+                        </div>
                     </div>
                     <div className="flex pb-3 flex-wrap">
                         {therapist.categories.map((category, index) => (

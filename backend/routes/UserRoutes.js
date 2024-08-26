@@ -29,6 +29,9 @@ router.patch(
     UserController.updateProfilePicture
 )
 
+// get other user
+router.get("/other/:username", UserController.getOtherUser)
+
 
 export default router;
 
