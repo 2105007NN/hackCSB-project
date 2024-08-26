@@ -16,6 +16,8 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
     }, [list]);
 
     async function sendMessage() {
+        console.log(`sending from ${currentUser.username} to ${targetUser.username}`);
+        
         if (message !== "") {
             const data = {
                 room_id: roomId,
@@ -39,12 +41,14 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
 
     useEffect(() => {
         const handleMessageReceive = (data) => {
+            console.log("received in " + currentUser.username + "in room " + data.room_id);
+            
             if (data.room_id === roomId) {
                 setList((prev) => [...prev, data]);
-                socket.emit("set_read", {room_id: data.room_id})
+                socket.emit("set_read", {room_id: data.room_id, user: currentUser.username})
             }
             else{
-                socket.emit("set_unread", {room_id: data.room_id})
+                socket.emit("set_unread", {room_id: data.room_id, user: currentUser.username})
                 const t = connectedUserList.find(user => user.username === data.author)
                 if (t){
                     setConnectedUserList(prev => {
@@ -52,6 +56,8 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                     return [{...t, read:false}, ...t2]
                 })}
             }
+            console.log("list of connected users:\n", connectedUserList);
+            
         };
 
         socket.on("receive_message", handleMessageReceive);

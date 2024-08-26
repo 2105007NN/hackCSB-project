@@ -58,12 +58,13 @@ const getUsers = catchAsync(async (req, res) => {
 const getConnectedUsers = catchAsync(async (req, res) => {
     const db = await dbPromise;
     const user = req.params.name
-    const contactList = await db.all("SELECT id, read, updated_at FROM room WHERE user1 = ? OR user2 = ? ORDER BY datetime(updated_at) DESC", [user, user])
+    const contactList = await db.all("SELECT id, read_user1, read_user2, updated_at FROM room WHERE user1 = ? OR user2 = ? ORDER BY datetime(updated_at) DESC", [user, user])
     const userlist = await Promise.all(contactList.map(async(contact) => {
         let t = await db.all(`SELECT * FROM message WHERE room_id = ?`, [contact.id])
         if(t.length > 0){
             const users = await db.get(`SELECT user1, user2 FROM room WHERE id = ?`, [contact.id])
             const receiver = (users.user1 === user) ? users.user2 : users.user1
+            const author_num = (users.user1 === user) ? 1 : 2
             console.log(receiver);
             const uid = await db.get(`SELECT id, role from users WHERE username = ?`, [receiver])
             if(uid.role === 'therapist'){
@@ -73,7 +74,7 @@ const getConnectedUsers = catchAsync(async (req, res) => {
                 room_id: contact.id,
                 id: uid.id,
                 username: receiver,
-                read: contact.read,
+                read: (author_num == 1) ? contact.read_user1: contact.read_user2,
                 updated_at: contact.updated_at
             }
             return data;

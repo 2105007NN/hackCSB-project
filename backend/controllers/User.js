@@ -84,10 +84,31 @@ const updateProfilePicture = catchAsync(async(req,res)=>{
     });
 })
 
+const getOtherUser = async(req, res) => {
+    const db = await dbPromise
+    const username = req.params.username
+
+    const user_info = await db.get("SELECT id, role, firstname, lastname, ageGroup, profileImg, gender, createdAt FROM users WHERE username = ?", [username])
+    const category_info = await db.all(`
+            SELECT C.category_name, C.color
+            FROM user_category UC JOIN categories C
+            WHERE UC.user_id = ? AND UC.category_id = C.id AND UC.score >= 50
+        `, [user_info.id])
+
+    const result = {user_info: user_info, category_info: category_info}
+    sendResponse(res,{
+        statusCode: 200,
+        success: true,
+        message: "Info sent successfully",
+        data: result,
+    });
+}
+
 
 export const UserController = {
     getUsers,
     updateClientProfile,
     updateProfilePicture,
-    getMe
+    getMe,
+    getOtherUser
 }

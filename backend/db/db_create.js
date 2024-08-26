@@ -42,7 +42,8 @@ import { open } from 'sqlite';
           name TEXT UNIQUE  NOT NULL,
           user1 TEXT NOT NULL,
           user2 TEXT NOT NULL,
-          read BOOLEAN DEFAULT TRUE,
+          read_user1 BOOLEAN DEFAULT TRUE,
+          read_user2 BOOLEAN DEFAULT TRUE,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   
           FOREIGN KEY (user1) REFERENCES users(username),

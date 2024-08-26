@@ -21,6 +21,7 @@ import ResultPage from "../pages/Tests/ResultPage";
 import Journal from "../pages/Journal/Journal";
 import ViewJournals from "../pages/Journal/ViewJournals.jsx";
 import MoodAnalysis from "../pages/MoodAnalysis/MoodAnalysis.jsx";
+import OtherUserProfile from "../pages/Profile/OtherUserProfile.jsx"
 
 
 export const routes = createBrowserRouter([
@@ -96,6 +97,11 @@ export const routes = createBrowserRouter([
         element : <ResultPage/>,
         loader : ({params})=> 
           fetch(`http://localhost:3000/tests/get-result/${params.testId}/${params.userId}`),
+      },
+
+      {
+        path: "/user/profile/:username",
+        element : <OtherUserProfile/>
       },
     ],
   },
