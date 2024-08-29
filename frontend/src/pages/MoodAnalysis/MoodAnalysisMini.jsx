@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Chart } from "react-google-charts";
-const MoodAnalysis = () => {
+const MoodAnalysisMini = () => {
 	const { id } = useParams();
 	const access_token = JSON.parse(localStorage.getItem("access_token"));
 
@@ -77,12 +77,8 @@ const MoodAnalysis = () => {
 				/>
 
 				<h2 className="text-purple-300 underline underline-offset-8 mb-4">
-					MOOD ANALYSIS
+					CLICK TO SEE MOOD ANALYSIS IN DETAILS
 				</h2>
-
-				<h3 className="text-gray-300 text-lg text-center">
-					{moodAnalysis}
-				</h3>
 			</div>
 		);
 	}
@@ -96,4 +92,4 @@ const MoodAnalysis = () => {
 	
 };
 
-export default MoodAnalysis;
+export default MoodAnalysisMini;
