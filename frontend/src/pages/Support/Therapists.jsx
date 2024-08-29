@@ -22,14 +22,14 @@ const Therapists = ({joinChat}) => {
         <div className="h-[680px] overflow-y-auto overflow-x-hidden bg-neutral">
           <h2 className='m-2 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Available therapists:</h2>
           {therapistList.map((therapist) => {
-            
+            const imgUrl = therapist?.profileImg?.substring(6 + 1);
               return (
                 <div key={therapist.id} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
                     <div className="flex items-center justify-between rounded-lg">
                         <div className="flex items-center">
-                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />
+                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={imgUrl ? `http://localhost:3000/${imgUrl}` : potat} alt={potat} />
                         <p  className="p-2 m-4 font-medium text-[20px]">
-                            {therapist.username}
+                            {`${therapist.firstname} ${therapist.lastname}`} 
                         </p>
                         </div>
                         <div className="flex ml-auto">

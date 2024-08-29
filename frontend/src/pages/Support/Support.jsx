@@ -7,7 +7,7 @@ import Chat from "./Chat";
 import Therapists from "./Therapists";
 import SimilarUsers from "./SimilarUsers";
 import AutoSlidingCarousel from "./AutoSlidingCarousel"; 
-
+import useTitle from "../../hooks/useTitle";
 import chatting from '../../assets/Chatting.jpg'
 
 
@@ -15,7 +15,9 @@ const url = "http://localhost:3000"
 const socket = io.connect(url)
 
 const Support = () => {
+    //useTitle("Support")
     const { user } = useContext(AuthContext);
+    //const user = localStorage.getItem('user')
     const [connectedUserList, setConnectedUserList] = useState([])
     const [targetUser, setTargetUser] = useState(null)
     const [list, setList] = useState([])
@@ -35,7 +37,7 @@ const Support = () => {
 
     useEffect(()=>{
         console.log("Current user: ", user);
-        fetch("http://localhost:3000/connected/users/" + user.username)
+        fetch("http://localhost:3000/connected/users/" + user?.username)
         .then(res => res.json())
         .then(res => {
             console.log("Connected Userlist received:\n", res.data);

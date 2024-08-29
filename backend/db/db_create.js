@@ -99,14 +99,35 @@ import { open } from 'sqlite';
       INSERT INTO users (username, password, role, email)
       VALUES ('nafis', '123456', 'client', 'nafis@gmail.com');
 
-      INSERT INTO users (username, password, role, email)
-      VALUES ('tanzima', '123456', 'therapist', 'tanzima@gmail.com');
+
+      INSERT INTO users (username, firstname, lastname, password, role, email, profileImg)
+      VALUES ('dakota', 'Dakota', 'Johnson', '123456', 'therapist', 'dakota@gmail.com', '/public/dakota.jpg');
+
   
     INSERT INTO users (username, password, role, email)
     VALUES ('tuhin', '123456', 'client', 'tuhin@gmail.com');
 
     INSERT INTO users (username, password, role, email)
     VALUES ('ibtida', '123456', 'client', 'ibtida@gmail.com');
+
+
+
+    INSERT INTO users (username, firstname, lastname, password, role, email, profileImg)
+    VALUES ('bradpit', 'Brad', 'Pitt', '123456', 'client', 'bradpit@gmail.com', '/public/bradpit.jpg');
+
+    INSERT INTO users (username, firstname, lastname, password, role, email, profileImg)
+    VALUES ('cavil', 'Henry', 'Cavil', '123456', 'client', 'cavil@gmail.com', '/public/cavil.jpg');
+
+    INSERT INTO users (username, firstname, lastname, password, role, email, profileImg)
+    VALUES ('dicaprio', 'Leonardo', 'Dicaprio', '123456', 'client', 'dicaprio@gmail.com', '/public/dicaprio.png');
+
+    INSERT INTO users (username, firstname, lastname, password, role, email, profileImg, gender, ageGroup)
+    VALUES ('emma', 'Emma', 'Watson', '123456', 'client', 'emma@gmail.com', '/public/emma.jpg', 'female', '25-40');
+
+    INSERT INTO users (username, firstname, lastname, password, role, email, profileImg)
+    VALUES ('jenni', 'Jennifer', 'Lawrence', '123456', 'client', 'jennil@gmail.com', '/public/jenni.jpg');
+
+
 
       INSERT INTO categories (category_name, color) VALUES ('anxiety', 'red');
       INSERT INTO categories (category_name, color) VALUES ('depression', 'green');
@@ -118,11 +139,21 @@ import { open } from 'sqlite';
       INSERT INTO user_category (user_id, category_id, score) VALUES (4, 2, 100);
       INSERT INTO user_category (user_id, category_id, score) VALUES (4, 5, 100);
       INSERT INTO user_category (user_id, category_id, score) VALUES (4, 6, 100);
-      INSERT INTO user_category (user_id, category_id, score) VALUES (2, 1, 80);
-      INSERT INTO user_category (user_id, category_id, score) VALUES (2, 2, 70);
-      INSERT INTO user_category (user_id, category_id, score) VALUES (1, 1, 75);
-      INSERT INTO user_category (user_id, category_id, score) VALUES (1, 2, 35);
-      INSERT INTO user_category (user_id, category_id, score) VALUES (3, 2, 90);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (2, 5, 80);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (2, 6, 70);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (1, 5, 75);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (1, 6, 35);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (3, 6, 90);
+
+      INSERT INTO user_category (user_id, category_id, score) VALUES (9, 1, 80);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (9, 2, 70);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (7, 1, 90);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (7, 2, 90);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (8, 1, 90);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (11, 2, 90);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (10, 4, 70);
+      INSERT INTO user_category (user_id, category_id, score) VALUES (10, 6, 90);
+
   
       DROP TABLE IF EXISTS tests ;
   CREATE TABLE IF NOT EXISTS tests (

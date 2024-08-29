@@ -147,11 +147,15 @@ const ConnectedUsers = ({connectedUserList, setConnectedUserList, targetUser, se
           <h2 className='mt-4 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Connected users:</h2>
           {connectedUserList.map((u) => {
             if (u.username !== currentUser.username && u.read) {
+              //const imgUrl = u?.profileImg?.substring(6 + 1);
+              const imgUrl = `${u.username}.jpg`
+              console.log("profile pic: \n", imgUrl);
+              
               return (
                 <div key={u.username} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
                     <div className="flex items-center justify-between rounded-lg">
                         <div className="flex items-center">
-                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />
+                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={imgUrl ? `http://localhost:3000/${imgUrl}` : potat} alt={potat} />
                         <p key={u.username} className="p-2 m-4 font-medium text-[20px]">
                             {u.username}
                         </p>

@@ -10,6 +10,8 @@ import send from '../../assets/send.png'
 const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket, connectedUserList, setConnectedUserList}) => {
     const [message, setMessage] = useState("")
     const bottomRef = useRef(null);
+    const currimgUrl = currentUser?.profileImg?.substring(6 + 1);
+    const targetimgUrl = targetUser?.profileImg?.substring(6 + 1);
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -73,7 +75,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
         <div className="p-3 bg-base-300">
             {!targetUser && (
                 <div>
-
+                    Start chatting...
                 </div>
             )}
             {targetUser && 
@@ -94,7 +96,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                         {!isCurrentUser && (
                         <img
                             className="w-8 h-8 rounded-full"
-                            src={potat}
+                            src={targetimgUrl ? `http://localhost:3000/${targetimgUrl}` : potat}
                             alt="User"
                         />
                         )}
@@ -125,7 +127,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                         {isCurrentUser && (
                         <img
                             className="w-8 h-8 rounded-full"
-                            src={potat}
+                            src={currimgUrl ? `http://localhost:3000/${currimgUrl}` : potat}
                             alt="User"
                         />
                         )}

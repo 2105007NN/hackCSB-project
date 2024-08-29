@@ -66,7 +66,7 @@ const getConnectedUsers = catchAsync(async (req, res) => {
             const receiver = (users.user1 === user) ? users.user2 : users.user1
             const author_num = (users.user1 === user) ? 1 : 2
             console.log(receiver);
-            const uid = await db.get(`SELECT id, role from users WHERE username = ?`, [receiver])
+            const uid = await db.get(`SELECT id, role, profileImg from users WHERE username = ?`, [receiver])
             if(uid.role === 'therapist'){
                 return undefined;
             }
@@ -118,21 +118,25 @@ const getTherapists = catchAsync(async (req, res) => {
 const getSimilarUsers = catchAsync(async (req, res) => {
   const db = await dbPromise;
   const name = req.params.name;
+  console.log(`params: ${req.params.name}`);
+  
   const categories = await db.all(
     `SELECT category_name 
         FROM users U 
         JOIN user_category UC 
         JOIN categories C
-        WHERE U.username = ? AND UC.user_id = U.id AND UC.category_id = C.id AND UC.score >= 70`,
+        WHERE U.username = ? AND UC.user_id = U.id AND UC.category_id = C.id AND UC.score >= 50`,
     [name]
   );
+  console.log("categories for " + name + "\n" + categories);
+  
 
   const filteredCategories = categories.map((c) => c.category_name);
   const placeholders = filteredCategories.map(() => "?").join(",");
   const params = [name, ...filteredCategories];
 
   const users = await db.all(
-    `SELECT U.* 
+    `SELECT DISTINCT U.id 
         FROM users U 
         JOIN user_category UC 
         JOIN categories C
@@ -148,7 +152,8 @@ const getSimilarUsers = catchAsync(async (req, res) => {
         WHERE UC.category_id = C.id AND UC.user_id = ? AND UC.score >= 70`,
         [user.id]
       );
-      return { ...user, categories: categories };
+      const info = await db.get(`SELECT * FROM users WHERE id = ?`, [user.id])
+      return { ...info, categories: categories };
     })
   );
   const result = r.filter((user) => user !== undefined);

@@ -10,11 +10,14 @@ import { IoArrowRedo } from "react-icons/io5";
 
 const SimilarUsers = ({currentUser, joinChat}) => {
     const { user } = useContext(AuthContext);
+    //const user = localStorage.getItem('user')
+    console.log("current user: \n", user);
+    
     const [similarUsers, setSimilarUsers] = useState([])
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:3000/similar/user/${user.username}`)
+        fetch(`http://localhost:3000/similar/user/${user?.username}`)
         .then(res => res.json())
         .then(res => {
             console.log("Similar users list received:\n", res);
@@ -26,12 +29,12 @@ const SimilarUsers = ({currentUser, joinChat}) => {
         <div className="h-[680px] overflow-y-auto overflow-x-hidden bg-neutral">
           <h2 className='m-2 p-4 font-bold bg-gradient-to-r from-primary via-secondary to-accent text-[25px] text-neutral rounded-lg'>Users with similar issues:</h2>
           {similarUsers.map((user) => {
-            
+            const imgUrl = user?.profileImg?.substring(6 + 1);
               return (
                 <div key={user.id} className="m-2 pl-4 bg-base-100 border border-info rounded-lg">
                     <div className="flex items-center justify-between rounded-lg">
                         <div className="flex items-center">
-                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={potat} alt="Rounded avatar" />
+                        <img className="w-10 h-10 rounded-full ring-2 ring-neutral" src={imgUrl ? `http://localhost:3000/${imgUrl}` : potat} alt={potat}/>
                         <p  className="p-2 m-4 font-medium text-[20px]">
                             {user.username}
                         </p>

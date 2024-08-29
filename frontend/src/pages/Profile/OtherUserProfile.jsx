@@ -13,6 +13,7 @@ const OtherUserProfile = () => {
   const {username} = useParams()
   const [user, setUser] = useState(null)
   const [categories, setCategories] = useState([])
+  const imgUrl = user?.profileImg?.substring(6 + 1);
 
   useEffect(() => {
     fetch("http://localhost:3000/users/other/" + username)
@@ -33,7 +34,7 @@ const OtherUserProfile = () => {
           <div className="static">
           <img
               className="rounded-full border-2 w-[330px] h-[330px] m-auto mt-6"
-              src={potat}
+              src={imgUrl ? `http://localhost:3000/${imgUrl}` : potat}
               //
               alt=""
             />
