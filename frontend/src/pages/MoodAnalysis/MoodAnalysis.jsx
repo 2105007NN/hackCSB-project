@@ -44,7 +44,7 @@ const MoodAnalysis = () => {
 			});
 	}, []);
 
-	if (moodRatings.length > 0) {
+	if (moodRatings?.length > 0) {
 		return (
 			<div className="flex flex-col items-center">
 				<h1 className="text-2xl text-center">Mood analysis PAGE</h1>
