@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
+
 const Banner = () => {
+  const navigate = useNavigate();
+  const getStarted = () => {
+    navigate('/auth/login', {replace : true})
+  }
   return (
     <div
       className="hero h-[550px]"
@@ -15,7 +22,7 @@ const Banner = () => {
             We are here for you.Your journey to better mental health starts
             here.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <button onClick={getStarted} className="btn btn-primary">Get Started</button>
         </div>
         <div className="col-span-1"></div>
       </div>

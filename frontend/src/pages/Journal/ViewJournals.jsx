@@ -1,4 +1,4 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 const ViewJournals = () => {
@@ -22,40 +22,50 @@ const ViewJournals = () => {
 			});
 	}, []);
 
-	return (
-		<div className="my-4">
-			<h1 className="text-xl text-center">YOUR JOURNALS </h1>
-			{journals.map((journal, indx) => (
-				<div
-					key={journal.id}
-					className="journal-entry mx-auto my-1 p-2 border border-gray-600 rounded-lg shadow-lg"
-				>
-					<div className="flex justify-between mb-2">
-						<h3 className="text-sm text-primary">
-							NO : {indx + 1}
-						</h3>
-						<p className="text-right text-md text-gray-400 font-medium mb-2">
-							{new Date(journal.createdAt).toLocaleString(
-								"en-US",
-								{
-									year: "numeric",
-									month: "long",
-									day: "numeric",
-									hour: "2-digit",
-									minute: "2-digit",
-								}
-							)}
-						</p>
-					</div>
-
+	if (journals?.length > 0) {
+		return (
+			<div className="my-4">
+				<h1 className="text-xl text-center">YOUR JOURNALS </h1>
+				{journals?.map((journal, indx) => (
 					<div
-						dangerouslySetInnerHTML={{ __html: journal.content }}
-						className="text-xl"
-					/>
-				</div>
-			))}
-		</div>
-	);
+						key={journal.id}
+						className="journal-entry mx-auto my-1 p-2 border border-gray-600 rounded-lg shadow-lg"
+					>
+						<div className="flex justify-between mb-2">
+							<h3 className="text-sm text-primary">
+								NO : {indx + 1}
+							</h3>
+							<p className="text-right text-md text-gray-400 font-medium mb-2">
+								{new Date(journal.createdAt).toLocaleString(
+									"en-US",
+									{
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+										hour: "2-digit",
+										minute: "2-digit",
+									}
+								)}
+							</p>
+						</div>
+
+						<div
+							dangerouslySetInnerHTML={{
+								__html: journal.content,
+							}}
+							className="text-xl"
+						/>
+					</div>
+				))}
+			</div>
+		);
+	}
+
+	else{
+		return (
+			<h3 className="text-center m-4 text-purple-300">NO JOURNAL LOGGED TILL NOW</h3>
+		)
+	}
 };
 
 export default ViewJournals;

@@ -14,14 +14,6 @@ const Header = () => {
     localStorage.removeItem("access_token");
     setUser(null);
   };
-  // useEffect(() => {
-  //     // Load user data from localStorage on component mount
-  //     const storedUser = localStorage.getItem('user');
-  //     if (storedUser) {
-  //       setUser(JSON.parse(storedUser));
-  //     }
-  //   }, []);
-  //   console.log(user);
   return (
     <>
       <nav className="bg-blue-950 border-gray-200 dark:bg-gray-900 ">
@@ -89,15 +81,6 @@ const Header = () => {
                 </Link> */}
                       </li>
                       <li>
-                        {user?.role === "admin" ? (
-                          <Link to="/admin/notification">aNotification </Link>
-                        ) : user?.role === "student" ? (
-                          <Link to="/student/notification">sNotification</Link>
-                        ) : (
-                          <Link to="/teacher/notification">Notification</Link>
-                        )}
-                      </li>
-                      <li>
                         <Link onClick={handleLogout} to="/auth/login">
                           Logout
                         </Link>
@@ -154,14 +137,17 @@ const Header = () => {
                   <> </>
                 )}
               </li>
-              <li>
-                <Link
+
+              {user ? (
+                  <></>
+                ) : (
+                  <Link
                   to="/"
                   class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Home
                 </Link>
-              </li>
+                )}
               <li>
                 <Link
                   to="/support"

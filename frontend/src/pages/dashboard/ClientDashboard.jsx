@@ -4,19 +4,23 @@ import { useState, useEffect } from "react";
 import Loading from "../../components/ui/Loading.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import MoodAnalysis from "../MoodAnalysis/MoodAnalysis.jsx";
+import MoodAnalysisMini from "../MoodAnalysis/MoodAnalysisMini.jsx";
 import Journal from "../Journal/Journal.jsx";
 import ViewJournals from "../Journal/ViewJournals.jsx";
 
 const Dashboard = () => {
 	const [quote, setQuote] = useState(null);
-	const { id } = useParams();
 	const navigate = useNavigate();
+	const userID = JSON.parse(localStorage.getItem('user')).id;
 
 	useEffect(() => {
 		fetch("http://localhost:3000/quote")
 		.then((response) => response.json())
 		.then((res) => setQuote(res.data))
 		.catch((error) => console.error("Error fetching the quote of the day:", error));
+
+		console.log('USER ID IS : ', userID);
+
 	}, []);
 
 	const { data: scores, isLoading } = useQuery({
@@ -46,13 +50,13 @@ const Dashboard = () => {
     }
 
 	const handleClickJournals = () => {
-		console.log("Navigate to journal show for user : ", id);
-		navigate(`/view-journal/${id}`, { replace: false });
+		console.log("Navigate to journal show for user : ", userID);
+		navigate(`/view-journal/${userID}`, { replace: false });
 	};
 
 	const handleClickMood = () => {
-		console.log("Navigate to journal show for user : ", id);
-		navigate(`/mood-analysis/${id}`, { replace: false });
+		console.log("Navigate to MOOD ANALYSIS for user : ", userID);
+		navigate(`/mood-analysis/${userID}`, { replace: false });
 	};
 	const colors = ["primary", "secondary", "accent", "info", "warning", "success"];
 
@@ -92,7 +96,7 @@ const Dashboard = () => {
 					className="text-lg col-span-1 border rounded-xl p-2"
 					onClick={handleClickMood}
 				>
-					<MoodAnalysis></MoodAnalysis>
+					<MoodAnalysisMini></MoodAnalysisMini>
 				</div>
             </section>
 
@@ -149,6 +153,7 @@ const Dashboard = () => {
 					/>
 				</div>
 			</div>
+			<h1>user ID is : {userID}</h1>
 		</div>
 	);
 };
