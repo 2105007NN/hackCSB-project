@@ -17,7 +17,7 @@ const editJournalController = async (req, res) => {
 		console.log("user Info ", decodedToken);
 
 		const insertJournalSQL = `INSERT INTO journals(user_id, content, createdAt) 
-            VALUES (?, ?, datetime('now'))`;
+            VALUES (?, ?, datetime('now', 'localtime))`;
 
 		await db.run(insertJournalSQL, [userId, journalContent]);
 
@@ -46,7 +46,7 @@ const moodTrackerController = async (req, res) => {
 		);
 		const userId = decodedToken.userId;
 		const insertMoodRatingSQL = `INSERT INTO mood_ratings(user_id, rating, createdAt) 
-            VALUES (?, ?, datetime('now'))`;
+            VALUES (?, ?, datetime('now', 'localtime'))`;
 
 		await db.run(insertMoodRatingSQL, [userId, moodRating]);
 
@@ -89,7 +89,7 @@ const viewJournalsController = async (req, res) => {
 			journals: loggedJournals,
 		});
 	} catch (error) {
-		console.log('ERROR IN VIEW JOURNALS : ', error);
+		console.log("ERROR IN VIEW JOURNALS : ", error);
 		res.status(500).json(
 			new ApiError(500, "ERROR IN VIEW JOURNALS CONTROLLER")
 		);
@@ -115,7 +115,7 @@ const sendMoodRatings = async (req, res) => {
 			[userId]
 		);
 
-		let moodAnalysisData = '';
+		let moodAnalysisData = "";
 
 		if (loggedMoods) {
 			let prompt = "";
@@ -130,7 +130,7 @@ const sendMoodRatings = async (req, res) => {
 			});
 			prompt =
 				prompt +
-				". This is my mood ratings on a scale of 1 to 10 where 1 being very bad and 10 being very good. give me a brief analysis of my mood and the common reason of mood changes depending on the timeframe. Generate text in bullet points and don't add any special characters in the text";
+				". This is my mood ratings on a scale of 1 to 10 where 1 being very bad and 10 being very good. give me a brief analysis of my mood and the common reason of mood changes depending on the timeframe. Generate text in bullet points and don't add any special characters in the text. Also don't ask for any more inputs and make it as validating as possible";
 			const result = await model.generateContent(prompt);
 			const res = await result.response;
 			moodAnalysisData = res.text();
@@ -140,10 +140,10 @@ const sendMoodRatings = async (req, res) => {
 		res.status(200).json({
 			msg: "SUCCESS",
 			moodRatings: loggedMoods,
-			data : moodAnalysisData || '',
+			data: moodAnalysisData || "",
 		});
 	} catch (error) {
-		console.log('error in send mood ratings ', error);
+		console.log("error in send mood ratings ", error);
 		res.status(500).json(
 			new ApiError(500, "ERROR IN SENDING MOOD RATINGS CONTROLLER")
 		);
