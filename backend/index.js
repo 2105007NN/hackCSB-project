@@ -12,6 +12,7 @@ import TestRoutes from "./routes/TestRoutes.js"
 import QuestionRoutes from "./routes/QuestionRoutes.js"
 import ToolsRoute from './routes/ToolsRoute.js'
 import DashboardRoutes from './routes/DashboardRoutes.js'
+import BlogRoutes from './routes/BlogRoutes.js'
 import 'dotenv/config'
 
 const port = process.env.PORT || 3000;
@@ -140,6 +141,13 @@ app.use(ChatRoutes);
  * DASHBOARD
  ****************/
 app.use(DashboardRoutes)
+
+
+/*****
+ * BLOGS
+ */
+
+app.use(BlogRoutes)
 
 // Eita delete koris na plz, database check korte shubidha hoy
 app.get("/database", async (req, res) => {
