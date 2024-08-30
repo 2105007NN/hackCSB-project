@@ -7,7 +7,7 @@ import Articles from "../pages/Articles/Articles";
 import LoginLayout from "../components/layout/LoginLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import Forum from "../pages/Blogs/Forum.jsx";
+import Forum from '../pages/Forum/Forum.jsx'
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Support from "../pages/Support/Support";
 import ClientDashboard from "../pages/dashboard/ClientDashboard";
