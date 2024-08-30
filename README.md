@@ -1,5 +1,5 @@
 **check package.json for dev dependencies**
-
+<!-- 
 
 <!-- 1  -->
 <!-- to start the project  -->
@@ -21,4 +21,12 @@ git merge --no-ff
 <!-- step: 5:Now u are ready to commit-->
 git add .
 git commit -m "merge resolved" 
-git push origin main
+git push origin main -->
+
+
+clone the repository
+in the terminal, go into frontend folder (cd frontend)
+in another terminal, go into backend folder (cd backend)
+in backend terminal run the command "npm run dev"
+also in the frontend terminal run "npm run dev"
+use the link shown in the frontend terminal to run the application

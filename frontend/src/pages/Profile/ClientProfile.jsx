@@ -45,13 +45,14 @@ import PassChange from "./PassChange";
 import ProfileInfo from "./ProfileInfo";
 import { FaUserCircle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import Journal from "../Journal/Journal.jsx"
 
 
 
 import Friends from "./Friends";
 
 const ClientProfile = () => {
-  const { user } = useContext(AuthContext);
+  const user  = JSON.parse(localStorage.getItem('user'));
   const { username, email } = user;
   const [selectedFile, setSelectedFile] = useState(null);
   const handleFileChange = (event) => {
@@ -188,8 +189,8 @@ const ClientProfile = () => {
               className="tab px-20"
               aria-label="Journal"
             />
-            <div role="tabpanel" className="tab-content p-10">
-              Journal
+            <div role="tabpanel" className="tab-content p-4 text-lg">
+              <Journal></Journal>
             </div>
           </div>
         </div>
