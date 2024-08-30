@@ -14,7 +14,7 @@ const ResultPage = () => {
             </section>
             {/* result section  */}
             <section className="py-28 text-center text-white m-auto max-w-screen-xl">
-                <h3 className="text-2xl font-medium text-error p-5">Your results are highly consistent with ADHD</h3>
+                <h3 className="text-2xl font-medium text-error p-5">Your results for the {testName}</h3>
                 <progress className="progress progress-info w-full" value={score} max="100"></progress>
                 <div className="grid grid-cols-3 text-xl text-accent p-5">
                     <div>
