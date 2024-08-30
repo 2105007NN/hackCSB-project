@@ -5,6 +5,7 @@ import {useState, useEffect, useRef} from "react"
 import ScrollToBottom from "react-scroll-to-bottom"
 import potat from '../../assets/potat.jpg'
 import send from '../../assets/send.png'
+import {useToxicityModel, getToxicityPredictions} from '../../context/ModelProvider'
 
 // eslint-disable-next-line react/prop-types
 const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket, connectedUserList, setConnectedUserList}) => {
@@ -12,6 +13,7 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
     const bottomRef = useRef(null);
     const currimgUrl = currentUser?.profileImg?.substring(6 + 1);
     const targetimgUrl = targetUser?.profileImg?.substring(6 + 1);
+    const model = useToxicityModel();
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -28,6 +30,17 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
                 content: message,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             };
+
+            let issues = await getToxicityPredictions(model, message);
+            if(issues.length !== 0){
+                let message = "YOUR MESSAGE CONTAINS : \n";
+                issues.forEach((issue, indx) => {
+                    message += (indx + 1).toString() + ". " + issue + '\n';
+                })
+                message += 'PLEASE REFRAIN FROM USING SUCH LANGUAGE.'
+                alert(message);
+                return;
+            }
 
             await socket.emit("send_message", data);
             setList((prev) => [...prev, data]);
@@ -69,7 +82,6 @@ const Chat = ({currentUser, targetUser, list, setList, roomId, setRoomId, socket
             socket.off("receive_message", handleMessageReceive);
         };
     }, [roomId, socket]);
-
     
     return (
         <div className="p-3 bg-base-300">

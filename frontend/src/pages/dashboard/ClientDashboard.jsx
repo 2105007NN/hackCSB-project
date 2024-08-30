@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Loading from "../../components/ui/Loading.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import MoodAnalysisMini from "../MoodAnalysis/MoodAnalysisMini.jsx";
-import ViewJournals from "../Journal/ViewJournals.jsx";
 import JournalOverview from "../Journal/JournalOverview.jsx";
 
 const Dashboard = () => {
