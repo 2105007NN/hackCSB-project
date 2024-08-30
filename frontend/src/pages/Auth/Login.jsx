@@ -27,7 +27,6 @@ const Login = () => {
 		const form = event.target;
 		const password = form.password.value;
 		const email = form.email.value;
-		console.log(email, password);
 		if (!email || !password) {
 			setError("Email and Password needed to login");
 			return;
@@ -43,7 +42,7 @@ const Login = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log("Data : ", data);
+				console.log("Data : ", data.message);
 				if (!data.success) {
 					setError("Email or password is incorrect");
 					return;
@@ -58,9 +57,6 @@ const Login = () => {
 						JSON.stringify(data.data.accessToken)
 					);
 					// Navigate()
-					console.log("parent URL : ", from);
-					console.log("Location object : ", location);
-
 					navigate('/client/dashboard', { replace: true });
 				}
 

@@ -3,9 +3,7 @@ import DashboardCard from "../../components/helperComponents/DashboardCard.jsx";
 import { useState, useEffect } from "react";
 import Loading from "../../components/ui/Loading.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import MoodAnalysis from "../MoodAnalysis/MoodAnalysis.jsx";
 import MoodAnalysisMini from "../MoodAnalysis/MoodAnalysisMini.jsx";
-import Journal from "../Journal/Journal.jsx";
 import ViewJournals from "../Journal/ViewJournals.jsx";
 
 const Dashboard = () => {
@@ -44,7 +42,6 @@ const Dashboard = () => {
             }
         }
     });
-	console.log(scores);
     if (isLoading) {
         return <Loading />;
     }
@@ -64,7 +61,6 @@ const Dashboard = () => {
 		score.color = colors[i];
 		return score;
 	});
-	console.log(scores[0]);
 	return (
 		<div className="max-w-screen-2xl m-auto">
 			{quote && (<div className="flex flex-col items-center bg-gradient-to-r from-primary via-secondary to-accent p-6 m-12 rounded-lg shadow-lg">
@@ -90,13 +86,13 @@ const Dashboard = () => {
 					className="text-xl col-span-1 border rounded-xl p-2"
 					onClick={handleClickJournals}
 				>
-					<ViewJournals></ViewJournals>
+					<ViewJournals id={userID}></ViewJournals>
 				</div>
 				<div
 					className="text-lg col-span-1 border rounded-xl p-2"
 					onClick={handleClickMood}
 				>
-					<MoodAnalysisMini></MoodAnalysisMini>
+					<MoodAnalysisMini id={userID}></MoodAnalysisMini>
 				</div>
             </section>
 
@@ -153,7 +149,6 @@ const Dashboard = () => {
 					/>
 				</div>
 			</div>
-			<h1>user ID is : {userID}</h1>
 		</div>
 	);
 };

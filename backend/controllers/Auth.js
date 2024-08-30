@@ -11,7 +11,7 @@ const jwt_access_expires_in = process.env.JWT_EXPIRES_IN;
 
 const login = catchAsync(async (req, res) => {
     const { email, password } = req.body; // Assuming these are sent in the request body
-    console.log(`IN LOGIN : email : ${email} & password : ${password}`);
+    console.log(`IN LOGIN : email : ${email}`);
     const db = await dbPromise;
 
     // Check if the user exists with the given username and password

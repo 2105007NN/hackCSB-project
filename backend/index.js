@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 ****************/
 
 io.on("connection", async (socket) => {
-	console.log("Client connected\n", socket.id);
+	console.log("Client connected\n");
 
 	socket.on("join_room", async (data) => {
 		let room_name =
@@ -61,7 +61,7 @@ io.on("connection", async (socket) => {
 		}
 		socket.join(room_name);
 		console.log(
-			`User: ${socket.id} with name: ${data.currentUser.username} joined room: ${room_name}`
+			`Username: ${data.currentUser.username} joined room: ${room_name}`
 		);
 	});
 

@@ -6,6 +6,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const editJournalController = async (req, res) => {
 	try {
+		
 		const db = await dbPromise;
 		const journalContent = req.body.content;
 		const decodedToken = verifyToken(
@@ -14,10 +15,9 @@ const editJournalController = async (req, res) => {
 		);
 		const userId = decodedToken.userId;
 
-		console.log("user Info ", decodedToken);
 
 		const insertJournalSQL = `INSERT INTO journals(user_id, content, createdAt) 
-            VALUES (?, ?, datetime('now', 'localtime))`;
+            VALUES (?, ?, datetime('now', 'localtime'))`;
 
 		await db.run(insertJournalSQL, [userId, journalContent]);
 
@@ -83,7 +83,7 @@ const viewJournalsController = async (req, res) => {
 		);
 		// const loggedMoods = await db.all(`SELECT * FROM mood_ratings WHERE user_id = ? ORDER BY createdAt`, [userId])
 
-		// console.log('in view journals, request query : ', req.query);
+		console.log('in view journals');
 		res.status(200).json({
 			msg: "SUCCESS",
 			journals: loggedJournals,
@@ -117,7 +117,7 @@ const sendMoodRatings = async (req, res) => {
 
 		let moodAnalysisData = "";
 
-		if (loggedMoods) {
+		if (loggedMoods.length > 0) {
 			let prompt = "";
 			loggedMoods.forEach((moodObj) => {
 				prompt =

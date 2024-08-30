@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Chart } from "react-google-charts";
-const MoodAnalysisMini = () => {
-	const { id } = useParams();
+const MoodAnalysisMini = (props) => {
+	console.log("props in mood analysis mini : ", props);
+	const id  = props.id;
 	const access_token = JSON.parse(localStorage.getItem("access_token"));
 
 	const [moodRatings, setMoodRatings] = useState([{}]);
@@ -24,8 +25,6 @@ const MoodAnalysisMini = () => {
 		return `${formattedDate} ${formattedTime}`;
 	});
 
-	console.log(labels);
-
 	const data = moodRatings?.map((entry) => entry.rating);
 
 	useEffect(() => {
@@ -35,7 +34,7 @@ const MoodAnalysisMini = () => {
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log("response from backend : ", data);
+				console.log("response from backend for mood analysis : ", data);
 				setMoodRatings(data.moodRatings);
 				setMoodAnalysis(data.data);
 			})

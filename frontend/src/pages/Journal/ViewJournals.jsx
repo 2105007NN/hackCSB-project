@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-const ViewJournals = () => {
-	const { id } = useParams();
+const ViewJournals = (props) => {
+	console.log('props in view journal : ', props);
+	const { id } = useParams() || props.id;
 	const access_token = JSON.parse(localStorage.getItem("access_token"));
 
 	const [journals, setJournals] = useState([{}]);
@@ -14,7 +15,7 @@ const ViewJournals = () => {
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log("response from backend : ", data);
+				console.log("response from backend for journals : ", data);
 				setJournals(data.journals);
 			})
 			.catch((error) => {

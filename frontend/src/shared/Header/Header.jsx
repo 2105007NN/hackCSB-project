@@ -4,9 +4,7 @@ import { useContext } from "react";
 
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
-  console.log(user ? user : "null");
   const imgUrl = user?.profileImg?.substring(6 + 1);
-  console.log(imgUrl);
   console.log(user?.role);
   //logout user
   const handleLogout = () => {
