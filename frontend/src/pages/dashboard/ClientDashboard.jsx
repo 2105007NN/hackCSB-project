@@ -118,7 +118,7 @@ const Dashboard = () => {
 				</div>
 			</section>
 
-			<div className="grid grid-cols-3 justify-center gap-10 m-auto py-20">
+			<div className="grid grid-cols-2 gap-10 m-auto py-20">
 				<div className="mx-auto">
 					<DashboardCard
 						title="Articles"
@@ -128,7 +128,7 @@ const Dashboard = () => {
 					/>
 				</div>
 
-				<div className="mx-auto">
+				<div className="ml-20">
 					<DashboardCard
 						title="Journal"
 						description="Keep a track of your personal thoughts"
@@ -145,28 +145,12 @@ const Dashboard = () => {
 						targetUrl="/support"
 					/>
 				</div>
-				<div className="mx-auto">
-					<DashboardCard
-						title="Forum"
-						description="Join the community for peer support"
-						srcImg="https://img.freepik.com/free-vector/psychologist-concept-illustration_114360-3805.jpg?size=626&ext=jpg&ga=GA1.1.2119322207.1720886354&semt=sph"
-						targetUrl="/forum"
-					/>
-				</div>
-				<div className="mx-auto">
+				<div className="ml-20">
 					<DashboardCard
 						title="Quizzes"
 						description="Take mental health quizzes"
 						srcImg="https://img.freepik.com/free-vector/online-school-platform-abstract-concept-vector-illustration-homeschooling-covid2019-qarantine-online-education-platform-digital-classes-virtual-courses-lms-school-abstract-metaphor_335657-5850.jpg?ga=GA1.1.2119322207.1720886354&semt=sph"
-						targetUrl="/create-quiz"
-					/>
-				</div>
-				<div className="mx-auto">
-					<DashboardCard
-						title="Tools"
-						description="Explore Tools for mental health"
-						srcImg="https://img.freepik.com/free-vector/mental-health-concept-illustration_114360-893.jpg?size=626&ext=jpg&ga=GA1.1.2119322207.1720886354&semt=sph"
-						targetUrl="/tools"
+						targetUrl="/tests"
 					/>
 				</div>
 			</div>
