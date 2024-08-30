@@ -121,10 +121,10 @@ const Dashboard = () => {
 			<div className="grid grid-cols-2 gap-10 m-auto py-20">
 				<div className="mx-auto">
 					<DashboardCard
-						title="Articles"
+						title="Forum"
 						description="Explore Articles written by our experts"
 						srcImg="https://img.freepik.com/free-vector/online-article-concept-illustration_114360-5193.jpg?size=626&ext=jpg&ga=GA1.1.2119322207.1720886354&semt=sph"
-						targetUrl="/articles"
+						targetUrl="/forum"
 					/>
 				</div>
 

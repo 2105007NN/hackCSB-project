@@ -164,10 +164,10 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to="/articles"
+                  to="/forum"
                   class="block py-2 px-3 text-base-100  rounded hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
-                  Articles
+                  Forum
                 </Link>
               </li>
               
