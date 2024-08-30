@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-const ViewJournals = (props) => {
-	console.log('props in view journal : ', props);
-	const { id } = useParams() || props.id;
+const ViewJournals = () => {
+	const { id } = useParams();
 	const access_token = JSON.parse(localStorage.getItem("access_token"));
 
 	const [journals, setJournals] = useState([{}]);
@@ -15,7 +14,7 @@ const ViewJournals = (props) => {
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log("response from backend for journals : ", data);
+				console.log("response from backend : ", data);
 				setJournals(data.journals);
 			})
 			.catch((error) => {
@@ -23,14 +22,17 @@ const ViewJournals = (props) => {
 			});
 	}, []);
 
-	if (journals?.length > 0) {
+	if (journals.length > 0) {
 		return (
-			<div className="my-4">
-				<h1 className="text-xl text-center">YOUR JOURNALS </h1>
-				{journals?.map((journal, indx) => (
+			<div>
+				<h1 className="text-2xl text-center mt-4 text-purple-300 underline underline-offset-4">
+					YOUR JOURNALS{" "}
+				</h1>
+				{journals.map((journal, indx) => (
 					<div
 						key={journal.id}
-						className="journal-entry mx-auto my-1 p-2 border border-gray-600 rounded-lg shadow-lg"
+						className="journal-entry mx-auto 
+				my-4 p-4 border border-gray-600 rounded-lg shadow-lg w-2/3"
 					>
 						<div className="flex justify-between mb-2">
 							<h3 className="text-sm text-primary">
@@ -54,18 +56,18 @@ const ViewJournals = (props) => {
 							dangerouslySetInnerHTML={{
 								__html: journal.content,
 							}}
-							className="text-xl"
+							className="text-xl max-h-40 overflow-y-auto"
 						/>
 					</div>
 				))}
 			</div>
 		);
-	}
-
-	else{
+	} else {
 		return (
-			<h3 className="text-center m-4 text-purple-300">NO JOURNAL LOGGED TILL NOW</h3>
-		)
+			<h1 className="text-center m-4 text-purple-300 text-3xl">
+				NO JOURNALS LOGGED
+			</h1>
+		);
 	}
 };
 

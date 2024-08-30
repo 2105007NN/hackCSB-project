@@ -6,7 +6,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const editJournalController = async (req, res) => {
 	try {
-		
 		const db = await dbPromise;
 		const journalContent = req.body.content;
 		const decodedToken = verifyToken(
@@ -14,7 +13,6 @@ const editJournalController = async (req, res) => {
 			process.env.JWT_ACCESS_SECRET
 		);
 		const userId = decodedToken.userId;
-
 
 		const insertJournalSQL = `INSERT INTO journals(user_id, content, createdAt) 
             VALUES (?, ?, datetime('now', 'localtime'))`;
@@ -83,10 +81,36 @@ const viewJournalsController = async (req, res) => {
 		);
 		// const loggedMoods = await db.all(`SELECT * FROM mood_ratings WHERE user_id = ? ORDER BY createdAt`, [userId])
 
-		console.log('in view journals');
+		console.log("in view journals");
 		res.status(200).json({
 			msg: "SUCCESS",
 			journals: loggedJournals,
+		});
+	} catch (error) {
+		console.log("ERROR IN VIEW JOURNALS : ", error);
+		res.status(500).json(
+			new ApiError(500, "ERROR IN VIEW JOURNALS CONTROLLER")
+		);
+	}
+};
+
+const journalOverview = async (req, res) => {
+	try {
+		const db = await dbPromise;
+		const access_token = req.query.access_token;
+		const decodedToken = verifyToken(
+			access_token,
+			process.env.JWT_ACCESS_SECRET
+		);
+		const userId = decodedToken.userId;
+		const loggedJournals = await db.all(
+			`SELECT * FROM journals WHERE user_id = ? ORDER BY createdAt`,
+			[userId]
+		);
+		res.status(200).json({
+			msg: "SUCCESS",
+			lastJournal: loggedJournals[loggedJournals.length - 1],
+			journalCount : loggedJournals.length
 		});
 	} catch (error) {
 		console.log("ERROR IN VIEW JOURNALS : ", error);
@@ -130,11 +154,11 @@ const sendMoodRatings = async (req, res) => {
 			});
 			prompt =
 				prompt +
-				". This is my mood ratings on a scale of 1 to 10 where 1 being very bad and 10 being very good. give me a brief analysis of my mood and the common reason of mood changes depending on the timeframe. Generate text in bullet points and don't add any special characters in the text. Also don't ask for any more inputs and make it as validating as possible";
+				". This is my mood ratings on a scale of 1 to 10 where 1 being very bad and 10 being very good. give me a brief analysis of my mood emphasizing the common reason of mood changes depending on the timeframe. Generate text in bullet points and don't add any special characters in the text. Also don't ask for any more inputs and make it as validating as possible while suggesting in a new paragraph what should I do to make my mood better";
 			const result = await model.generateContent(prompt);
 			const res = await result.response;
 			moodAnalysisData = res.text();
-			console.log("Mood analysis : ", moodAnalysisData);
+			console.log("Mood analysis rating : ", loggedMoods);
 		}
 
 		res.status(200).json({
@@ -155,4 +179,5 @@ export {
 	moodTrackerController,
 	viewJournalsController,
 	sendMoodRatings,
+	journalOverview,
 };
