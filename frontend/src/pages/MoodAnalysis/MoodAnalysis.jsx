@@ -112,7 +112,7 @@ const MoodAnalysis = () => {
 						MOOD ANALYSIS
 					</h2>
 
-					<ol className="bg-purple-900 text-white p-4 rounded-lg shadow-md m-4">
+					<ol className="bg-purple-900 text-white p-4 rounded-lg shadow-md m-4 mx-8">
 						{textArray.map((item, index) => (
 							<li
 								key={index}
