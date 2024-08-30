@@ -3,15 +3,36 @@
 
 <!-- 1  -->
 <!-- to start the project  --> 
+# Installation
 
-clone the repository
+1. Clone the repository, open terminal
 <!-- -->
-in the terminal, go into frontend folder (cd frontend) then run "npm install"
+2. Navigate to frontend folder
+   ```
+   cd frontend
+   ```
+   Run
+   ```
+   npm install
+   ```
 <!-- -->
-in another terminal, go into backend folder (cd backend) then run "npm install"
+3. In another terminal, navigate to backend folder
+   ```
+   cd backend
+   ```
+   Run
+   ```
+   npm install
+   ```
 <!-- -->
-in backend terminal run the command "npm run dev"
+4. In backend terminal, run
+   ```
+   npm run dev
+   ```
 <!-- -->
-also in the frontend terminal run "npm run dev"
+5. Also in frontend terminal, run
+   ```
+   npm run dev
+   ```
 <!-- -->
-use the link shown in the frontend terminal to run the application
+6. Use the link shown in the frontend terminal to run the application
