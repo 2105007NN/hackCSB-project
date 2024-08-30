@@ -66,10 +66,6 @@ export const routes = createBrowserRouter([
         element: <Support></Support>,
       },
       {
-        path: "/create-quiz",
-        element: <CreateTest></CreateTest>,
-      },
-      {
         path: "/tools",
         element : <Tools />
       },
@@ -125,6 +121,10 @@ export const routes = createBrowserRouter([
     element: <TakeTest></TakeTest>,
     loader: ({ params }) =>
       fetch(`http://localhost:3000/tests/get-test/${params.id}`),
+  },
+  {
+    path: "/create-quiz",
+    element: <CreateTest></CreateTest>,
   },
   {
     path: "*",
